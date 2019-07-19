@@ -1,6 +1,6 @@
 const path = require('path');
 
-const files = require('./core/files');
+const files = require('./files');
 
 module.exports = {
   show: () => {

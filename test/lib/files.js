@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const tmp = require('tmp');
 
-const subject = require('../../../src/lib/core/files')
+const subject = require('../../src/lib/files')
 
 require('chai').should()
 
