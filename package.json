@@ -1,0 +1,8 @@
+{
+  "name": "secure-validator",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "git@34.65.147.28:kusama/secure-validator.git",
+  "author": "Federico Gimenez <federico.gimenez@gmail.com>",
+  "license": "MIT"
+}
