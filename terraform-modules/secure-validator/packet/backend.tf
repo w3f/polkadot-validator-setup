@@ -1,6 +1,5 @@
 provider "google" {
   project     = "polkadot-benchmarks"
-  credentials = ""
 }
 
 terraform {
