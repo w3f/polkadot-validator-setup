@@ -1,8 +1,25 @@
 {
   "name": "secure-validator",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "src/index.js",
   "repository": "git@34.65.147.28:kusama/secure-validator.git",
-  "author": "Federico Gimenez <federico.gimenez@gmail.com>",
-  "license": "MIT"
+  "author": "Federico Gimenez <federico@web3.foundation>",
+  "license": "GPL-3.0",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha --reporter spec --recursive",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "fs-extra": "^8.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.0.1",
+    "mocha": "^6.2.0",
+    "tmp": "^0.1.0"
+  }
 }
