@@ -1,6 +1,9 @@
 stages:
   - validate
 
+before_script:
+- yarn
+
 test:
   image: node:12.6.0-slim
   stage: validate
