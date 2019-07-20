@@ -5,4 +5,5 @@ resource "packet_device" "validator" {
   operating_system = var.operating_system
   billing_cycle    = "hourly"
   project_id       = var.project_id
+  ip_address_types = ["private_ipv4"]
 }
