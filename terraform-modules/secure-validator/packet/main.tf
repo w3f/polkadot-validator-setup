@@ -1,3 +1,8 @@
+resource "packet_ssh_key" "key1" {
+  name       = "terraform-1"
+  public_key = var.public_key
+}
+
 resource "packet_device" "validator" {
   hostname         = "validator"
   plan             = var.machine_type
@@ -6,4 +11,5 @@ resource "packet_device" "validator" {
   billing_cycle    = "hourly"
   project_id       = var.project_id
   ip_address_types = ["private_ipv4"]
+  depends_on       = ["packet_ssh_key.key1"]
 }
