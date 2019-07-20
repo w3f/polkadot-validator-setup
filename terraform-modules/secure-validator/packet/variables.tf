@@ -9,7 +9,7 @@ variable "machine_type" {
 }
 
 variable "operating_system" {
-  default = "ubuntu_16_04"
+  default = "ubuntu_18_04"
 }
 
 variable "project_id" {
