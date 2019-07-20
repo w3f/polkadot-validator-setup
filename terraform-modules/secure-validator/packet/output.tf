@@ -1,3 +1,3 @@
-output "ssh_ids" {
-  value = "${packet_device.validator.ssh_key_ids}"
+output "ip_address" {
+  value = "${packet_device.validator.network.0.address}"
 }

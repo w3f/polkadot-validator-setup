@@ -5,7 +5,7 @@ variable "location" {
 }
 
 variable "machine_type" {
-  default = "c1.small.x86"
+  default = "t1.small.x86"
 }
 
 variable "operating_system" {
