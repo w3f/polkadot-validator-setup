@@ -1,4 +1,4 @@
-variable "auth_token" {}
+variable "packet_auth_token" {}
 
 variable "location" {
   default = "ewr1"
