@@ -15,6 +15,7 @@ integration_test:
   - docker:dind
   variables:
     DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/secure-validator
   - molecule --debug create
