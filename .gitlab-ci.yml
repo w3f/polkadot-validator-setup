@@ -1,13 +1,12 @@
 stages:
   - validate
 
-before_script:
-- yarn
-
 unit_test:
   image: node:12.6.0-slim
   stage: validate
   script:
+  before_script:
+  - yarn
   - yarn test
 
 integration_test:
