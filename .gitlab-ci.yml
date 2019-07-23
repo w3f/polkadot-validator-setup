@@ -4,8 +4,21 @@ stages:
 before_script:
 - yarn
 
-test:
+unit_test:
   image: node:12.6.0-slim
   stage: validate
   script:
   - yarn test
+
+integration_test:
+  image: web3f/secure-validator-ci:v0.1.0
+  stage: validate
+  services:
+  - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay
+    DOCKER_HOST: tcp://localhost:2375
+  script:
+  - cd ansible-roles/secure-validator
+  - molecule create
+  - molecule converge
