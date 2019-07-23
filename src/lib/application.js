@@ -1,4 +1,4 @@
-const ansible = require('./clients/ansible');
+const { Ansible } = require('./clients/ansible');
 
 
 class Application {

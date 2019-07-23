@@ -7,7 +7,7 @@ class Terraform {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    const terraformFilesPath = path.join(__dirname, '..', '..', 'terraform-modules', 'secure-validator', 'packet');
+    const terraformFilesPath = path.join(__dirname, '..', '..', '..', 'terraform-modules', 'secure-validator', 'packet');
     this.options = {
       cwd: terraformFilesPath,
       verbose: cfg.verbose
@@ -15,17 +15,11 @@ class Terraform {
   }
 
   async sync() {
-    /*
-    try {
-
-    } catch(e) {
-
-    }
-    */
+    return this._cmd(`apply -auto-approve`);
   }
 
   async clean() {
-
+    return this._cmd(`destroy -auto-approve`);
   }
 
   async _cmd(command, options = {}) {
