@@ -1,0 +1,9 @@
+---
+- name: add wireguard ppa
+  apt_repository:
+    repo: ppa:wireguard/wireguard
+
+- name: install wireguard
+  apt:
+    name: wireguard
+    update_cache: yes
