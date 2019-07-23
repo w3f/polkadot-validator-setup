@@ -11,6 +11,10 @@ class Platform {
   async sync() {
     return this.tf.sync();
   }
+
+  async clean() {
+    return this.tf.clean();
+  }
 }
 
 module.exports = {

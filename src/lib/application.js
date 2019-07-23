@@ -11,6 +11,10 @@ class Application {
   async sync() {
 
   }
+
+  async clean() {
+
+  }
 }
 
 module.exports = {
