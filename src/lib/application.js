@@ -7,13 +7,12 @@ class Application {
     this.config = JSON.parse(JSON.stringify(cfg));
 
     this.ansible = new Ansible(this.config.ansible);
-    this.wg = new WireGuard(this.config.wireguard);
     this.helm = new Helm(this.config.helm);
   }
 
   async sync() {
     const promises = [];
-    promises.push(this.ansible.sync({ keys }));
+    promises.push(this.ansible.sync());
     promises.push(this.helm.sync());
     return Promise.all(promises);
   }
