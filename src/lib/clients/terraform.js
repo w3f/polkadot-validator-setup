@@ -10,7 +10,7 @@ class Terraform {
     const terraformFilesPath = path.join(__dirname, '..', '..', '..', 'terraform-modules', 'secure-validator', 'packet');
     this.options = {
       cwd: terraformFilesPath,
-      verbose: cfg.verbose
+      verbose: true
     };
   }
 
