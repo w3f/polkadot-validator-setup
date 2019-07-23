@@ -2,3 +2,4 @@ node_modules
 terraform-modules/**/.terraform/
 terraform-modules/**/*.tfstate
 ansible/inventory.yml
+ansible/**/__pycache__
