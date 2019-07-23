@@ -1,4 +1,8 @@
 {
-  "terraform": {},
-  "ansible": {}
+  "platform": {
+    "terraform": {}
+  },
+  "application": {
+    "ansible": {}
+  }
 }
