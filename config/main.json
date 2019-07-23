@@ -3,6 +3,7 @@
     "terraform": {}
   },
   "application": {
-    "ansible": {}
+    "ansible": {},
+    "helm": {}
   }
 }

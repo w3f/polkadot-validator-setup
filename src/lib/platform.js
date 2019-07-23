@@ -9,7 +9,7 @@ class Platform {
   }
 
   async sync() {
-    return this.tf.sync();
+    await this.tf.sync();
   }
 
   async clean() {
