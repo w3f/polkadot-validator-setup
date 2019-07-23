@@ -6,6 +6,11 @@ class Helm {
   async sync() {
 
   }
+
+  async clean() {
+
+  }
+
 }
 
 module.exports = {
