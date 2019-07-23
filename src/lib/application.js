@@ -1,5 +1,4 @@
-
-class Terraform {
+class Application {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
   }
@@ -7,13 +6,8 @@ class Terraform {
   async sync() {
 
   }
-
-  async clean() {
-
-  }
 }
 
-
 module.exports = {
-  Terraform
+  Application
 }
