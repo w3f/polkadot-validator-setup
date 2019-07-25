@@ -9,7 +9,7 @@
     url: https://repo.ddswd.de/deb/public.key
     state: present
 
-- name: add vpncloudd repo
+- name: add vpncloud repo
   apt_repository:
     repo: deb https://repo.ddswd.de/deb stable main
     state: present
@@ -18,3 +18,17 @@
   apt:
     name: vpncloud
     update_cache: yes
+
+- name: Create VPN configuration file
+  template:
+    src: vpncloud.default.net.j2
+    dest: /etc/vpncloud/default.net
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Start and enable vpncloud service
+  systemd:
+    name: vpncloud@default
+    state: started
+    enabled: yes

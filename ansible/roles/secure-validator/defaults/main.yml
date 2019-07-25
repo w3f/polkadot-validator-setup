@@ -1,2 +1,3 @@
 ---
 # defaults file for secure-validator
+vpncloud_secret: "vpnsecret"
