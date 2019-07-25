@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.mark.parametrize("name,version", [
-    ("wireguard", "0.0.20"),
+    ("vpncloud", "1.0.0"),
 ])
 def test_packages(host, name, version):
     pkg = host.package(name)

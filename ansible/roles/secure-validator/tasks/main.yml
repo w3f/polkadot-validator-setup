@@ -1,9 +1,20 @@
 ---
-- name: add wireguard ppa
-  apt_repository:
-    repo: ppa:wireguard/wireguard
-
-- name: install wireguard
+- name: install gpg
   apt:
-    name: wireguard
+    name: gpg
+    state: present
+
+- name: add vpncloud apt-key
+  apt_key:
+    url: https://repo.ddswd.de/deb/public.key
+    state: present
+
+- name: add vpncloudd repo
+  apt_repository:
+    repo: deb https://repo.ddswd.de/deb stable main
+    state: present
+
+- name: install vpncloud
+  apt:
+    name: vpncloud
     update_cache: yes
