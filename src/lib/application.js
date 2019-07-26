@@ -3,10 +3,11 @@ const { Helm } = require('./clients/helm');
 
 
 class Application {
-  constructor(cfg) {
+  constructor(cfg, platformResult={}) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    this.ansible = new Ansible(this.config.ansible);
+    const ansibleCfg = Object.assign({}, this.config.ansible, platformResult);
+    this.ansible = new Ansible(ansibleCfg);
     this.helm = new Helm(this.config.helm);
   }
 

@@ -10,6 +10,10 @@ class Ansible {
   async clean() {
 
   }
+
+  async _cmd(command) {
+
+  }
 }
 
 

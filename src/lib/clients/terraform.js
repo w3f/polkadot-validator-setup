@@ -22,6 +22,10 @@ class Terraform {
     return this._cmd(`destroy -auto-approve`);
   }
 
+  async output(field) {
+    return this._cmd(`output ${field}`);
+  }
+
   async _cmd(command, options = {}) {
     const actualOptions = Object.assign({}, this.options, options);
     return cmd.exec(`terraform ${command}`, actualOptions);
