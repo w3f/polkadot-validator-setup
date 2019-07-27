@@ -12,9 +12,9 @@ integration_test:
   image: web3f/secure-validator-ci:v0.1.0
   stage: validate
   services:
-  - docker:dind
+  - docker:18.09-dind
   variables:
-    DOCKER_HOST: tcp://localhost:2376
+    DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/secure-validator
   - molecule --debug create
