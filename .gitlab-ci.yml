@@ -17,5 +17,5 @@ integration_test:
     DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/secure-validator
-  - molecule --debug create
+  - molecule create
   - molecule converge
