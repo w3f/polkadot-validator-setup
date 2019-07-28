@@ -34,7 +34,7 @@ passed in as parameters) is always nice for users too:
 
     - hosts: servers
       roles:
-         - { role: secure-validator, x: 42 }
+         - { role: vpnpeer, x: 42 }
 
 License
 -------

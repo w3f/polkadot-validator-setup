@@ -1,0 +1,3 @@
+---
+# defaults file for vpnpeer
+vpncloud_secret: "vpnsecret"

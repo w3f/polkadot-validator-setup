@@ -2,4 +2,4 @@
   vars:
     ansible_ssh_user: root
   roles:
-  - secure-validator
+  - vpnpeer
