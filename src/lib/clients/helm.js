@@ -11,6 +11,10 @@ class Helm {
 
   }
 
+  async _cmd(command, options = {}) {
+    const actualOptions = Object.assign({}, this.options, options);
+    return cmd.exec(`helm ${command}`, actualOptions);
+  }
 }
 
 module.exports = {
