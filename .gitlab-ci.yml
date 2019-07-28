@@ -9,7 +9,7 @@ unit_test:
   - yarn test
 
 integration_test:
-  image: web3f/secure-validator-ci:v0.1.0
+  image: web3f/secure-validator-ci:v0.2.0
   stage: validate
   services:
   - docker:18.09-dind
