@@ -19,7 +19,7 @@
     name: vpncloud
     update_cache: yes
 
-- name: Create VPN configuration file
+- name: create VPN configuration file
   template:
     src: vpncloud.default.net.j2
     dest: /etc/vpncloud/default.net
@@ -27,8 +27,8 @@
     group: root
     mode: 0600
 
-- name: Start and enable vpncloud service
+- name: start vpncloud service
   systemd:
     name: vpncloud@default
     state: started
-    enabled: yes
+  notify: enable vpncloud service

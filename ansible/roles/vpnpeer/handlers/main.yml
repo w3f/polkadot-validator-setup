@@ -1,0 +1,5 @@
+---
+- name: enable vpncloud service
+  systemd:
+    name: vpncloud@default
+    enabled: yes
