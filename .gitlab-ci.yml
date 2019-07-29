@@ -1,21 +1,34 @@
 stages:
-  - validate
+  - unit_tests
+  - integration_tests
 
 unit_test:
   image: node:12.6.0-slim
-  stage: validate
+  stage: unit_tests
   script:
   - yarn
   - yarn test
 
-integration_test:
+vpnpeer_integration_test:
   image: web3f/secure-validator-ci:v0.2.0
-  stage: validate
+  stage: integration_tests
   services:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
   script:
-  - cd ansible/roles/secure-validator
+  - cd ansible/roles/vpnpeer
+  - molecule create
+  - molecule converge
+
+polkadot_integration_test:
+  image: web3f/secure-validator-ci:v0.2.0
+  stage: integration_tests
+  services:
+  - docker:18.09-dind
+  variables:
+    DOCKER_HOST: tcp://localhost:2375
+  script:
+  - cd ansible/roles/polkadot
   - molecule create
   - molecule converge
