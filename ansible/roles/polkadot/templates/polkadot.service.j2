@@ -1,0 +1,18 @@
+[Unit]
+Description=Polkadot Validator
+
+[Service]
+ExecStart=/usr/local/bin/polkadot \
+         --validator \
+         --name w3f-sv-private \
+         --node-key={{ node_key }} \
+         --listen-addr={{ listen_addr }} \
+         {% for reserved_node in reserved_nodes %}
+         --reserved-nodes {{ reserved_node }} \
+         {% endfor %}
+         --chain={{ chain }}
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

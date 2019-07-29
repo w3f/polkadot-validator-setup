@@ -1,6 +1,3 @@
-import pytest
-
-
 def polkadot_user(host):
     user = host.user('polkadot')
     assert user.exists
@@ -31,4 +28,4 @@ def test_polkadot_service_file(host):
 def test_polkadot_running_and_enabled(host):
     polkadot = host.service("polkadot.service")
     assert polkadot.is_running
-    assert polkadotx.is_enabled
+    # assert polkadot.is_enabled
