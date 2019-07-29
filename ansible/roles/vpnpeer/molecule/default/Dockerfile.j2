@@ -16,4 +16,5 @@ RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y pyth
 RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py && \
   chmod a+x ./systemctl.py && \
   mv ./systemctl.py /usr/bin/systemctl && \
-  test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl
+  test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl && \
+  rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
