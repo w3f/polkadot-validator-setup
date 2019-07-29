@@ -19,7 +19,7 @@ vpnpeer_integration_test:
   script:
   - cd ansible/roles/vpnpeer
   - molecule create
-  - molecule converge
+  - molecule test
 
 polkadot_integration_test:
   image: web3f/secure-validator-ci:v0.2.0
@@ -31,4 +31,4 @@ polkadot_integration_test:
   script:
   - cd ansible/roles/polkadot
   - molecule create
-  - molecule converge
+  - molecule test
