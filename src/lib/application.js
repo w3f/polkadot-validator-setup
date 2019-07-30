@@ -10,7 +10,7 @@ class Application {
   }
 
   async sync() {
-    return this.ansible.sync());
+    return this.ansible.sync();
   }
 
   async clean() {
