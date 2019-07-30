@@ -1,5 +1,4 @@
 const { Ansible } = require('./clients/ansible');
-const { Helm } = require('./clients/helm');
 
 
 class Application {
@@ -8,21 +7,14 @@ class Application {
 
     const ansibleCfg = Object.assign({}, this.config.ansible, platformResult);
     this.ansible = new Ansible(ansibleCfg);
-    this.helm = new Helm(this.config.helm);
   }
 
   async sync() {
-    const promises = [];
-    promises.push(this.ansible.sync());
-    promises.push(this.helm.sync());
-    return Promise.all(promises);
+    return this.ansible.sync());
   }
 
   async clean() {
-    const promises = [];
-    promises.push(this.ansible.clean());
-    promises.push(this.helm.clean());
-    return Promise.all(promises);
+    return this.ansible.clean();
   }
 }
 
