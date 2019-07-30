@@ -8,10 +8,6 @@ lint:
 platforms:
   - name: instance
     image: ubuntu:bionic
-    volumes:
-      - /dev/net/tun:/dev/net/tun
-    capabilities:
-      - NET_ADMIN
 provisioner:
   name: ansible
   lint:
