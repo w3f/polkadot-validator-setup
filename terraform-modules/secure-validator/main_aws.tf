@@ -23,10 +23,54 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+resource "aws_vpc" "main" {
+  cidr_block = "172.26.0.0/16"
+
+  enable_dns_hostnames = true
+
+  enable_dns_support = true
+
+  tags = {
+    Name = var.public1_prefix
+  }
+}
+
+resource "aws_subnet" "main" {
+  cidr_block = "${cidrsubnet(aws_vpc.main.cidr_block, 3, 1)}"
+
+  vpc_id = "${aws_vpc.main.id}"
+
+  availability_zone = var.aws_region
+}
+
+resource "aws_security_group" "externalssh" {
+  name = "externalssh"
+  vpc_id = "${aws_vpc.main.id}"
+
+  ingress {
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+  }
+  // Terraform removes the default rule
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_instance" "public1" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = var.aws_machine_type
   key_name      = var.public1_prefix
+
+  security_groups = ["${aws_security_group.externalssh.id}"]
+
   tags = {
     Name = var.public1_prefix
   }
