@@ -36,6 +36,9 @@ class Ansible {
     const inventoryContents = `[validator]
 ${this.config.validatorIpAddress}
 
+[validator:vars]
+ansible_user=root
+
 [public1]
 ${this.config.public1IpAddress}
 
