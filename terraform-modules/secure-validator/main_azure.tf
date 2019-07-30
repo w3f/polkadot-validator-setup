@@ -69,11 +69,16 @@ resource "azurerm_virtual_machine" "main" {
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
+  os_profile {
+    computer_name = var.public2_prefix
+    admin_username = "w3fadmin"
+  }
+
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
       key_data = var.public2_public_key
-      path     = "/root/.ssh/authorized_keys"
+      path     = "/home/w3fadmin/.ssh/authorized_keys"
     }
   }
   tags = {

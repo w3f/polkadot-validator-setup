@@ -18,12 +18,12 @@ resource "google_compute_firewall" "externalssh" {
 resource "google_compute_instance" "main" {
   name         = var.public3_prefix
   machine_type = var.gcp_machine_type
-  zone         = var.gcp_region
+  zone         = var.gcp_zone
   tags         = ["externalssh"]
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-cloud/ubuntu-18.04"
+      image = var.gcp_operating_system
     }
   }
 
@@ -42,6 +42,6 @@ resource "google_compute_instance" "main" {
   }
 
   metadata = {
-    ssh-keys = "USERNAME:${var.public3_public_key}"
+    ssh-keys = "w3fadmin:${var.public3_public_key}"
   }
 }

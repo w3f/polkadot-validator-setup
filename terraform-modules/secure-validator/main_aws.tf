@@ -40,7 +40,7 @@ resource "aws_subnet" "main" {
 
   vpc_id = "${aws_vpc.main.id}"
 
-  availability_zone = var.aws_region
+  availability_zone = var.aws_az
 }
 
 resource "aws_security_group" "externalssh" {
@@ -69,7 +69,8 @@ resource "aws_instance" "public1" {
   instance_type = var.aws_machine_type
   key_name      = var.public1_prefix
 
-  security_groups = ["${aws_security_group.externalssh.id}"]
+  subnet_id              = "${aws_subnet.main.id}"
+  vpc_security_group_ids = ["${aws_security_group.externalssh.id}"]
 
   tags = {
     Name = var.public1_prefix
