@@ -1,2 +1,6 @@
 ---
 # tasks file for common
+- name: install ufw
+  apt:
+    name: ufw
+    state: present
