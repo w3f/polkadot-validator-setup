@@ -1,11 +1,8 @@
 {
   "platform": {
-    "terraform": {
-      "provider": "packet"
-    }
+    "terraform": {}
   },
   "application": {
-    "ansible": {},
-    "helm": {}
+    "ansible": {}
   }
 }

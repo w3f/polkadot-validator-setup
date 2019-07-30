@@ -7,7 +7,7 @@ class Terraform {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    const terraformFilesPath = path.join(__dirname, '..', '..', '..', 'terraform-modules', 'secure-validator', this.config.provider);
+    const terraformFilesPath = path.join(__dirname, '..', '..', '..', 'terraform-modules', 'secure-validator');
     this.options = {
       cwd: terraformFilesPath,
       verbose: true
