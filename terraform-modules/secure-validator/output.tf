@@ -3,7 +3,7 @@ output "validator_ip_address" {
 }
 
 output "public1_ip_address" {
-  value = "${aws_instance.public1.public_ip}"
+  value = "${aws_instance.main.public_ip}"
 }
 
 output "public2_ip_address" {

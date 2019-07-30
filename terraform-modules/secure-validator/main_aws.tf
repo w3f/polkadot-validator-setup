@@ -41,6 +41,8 @@ resource "aws_subnet" "main" {
   vpc_id = "${aws_vpc.main.id}"
 
   availability_zone = var.aws_az
+
+  map_public_ip_on_launch = true
 }
 
 resource "aws_security_group" "externalssh" {
@@ -64,7 +66,7 @@ resource "aws_security_group" "externalssh" {
   }
 }
 
-resource "aws_instance" "public1" {
+resource "aws_instance" "main" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = var.aws_machine_type
   key_name      = var.public1_prefix
