@@ -11,7 +11,7 @@ module.exports = {
     const cfg = config.read();
 
     console.log(chalk.yellow('Syncing platform...'));
-    const platform = new Platform(cfg.platform);
+    const platform = new Platform(cfg);
     let platformResult;
     try {
       platformResult = await platform.sync();
@@ -22,7 +22,7 @@ module.exports = {
     console.log(chalk.green('Done'));
 
     console.log(chalk.yellow('Syncing application...'));
-    const app = new Application(cfg.application, platformResult);
+    const app = new Application(cfg, platformResult);
     try {
       await app.sync();
     } catch (e) {

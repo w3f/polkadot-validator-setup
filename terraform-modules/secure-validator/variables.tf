@@ -74,3 +74,7 @@ variable "public2_public_key" {
 variable "public3_public_key" {
   default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC56fogtPVNDf83R6S4ED2qoK9MzithDo93rGMO4kdsb40x154Y7eklRZ600DWX+ObKh4EgEyIG8eiHpXyN0+MryGTy7gw6/DHQBFxHrKMDYLUps6KdlvTDQYJ0DA5zB0oD2UlqeEerwjapvuVKZS/+u0DsTSCZl4SdWMK/ZMVeGQl5/8c2Tx8UcdDCU4kH0JMcpFFYYa0ytyBH6+VZ1m5USsnJF9WsNIBz3CNbrAziSK1vEMktxDeoaXUg1Cf+C1ixNg7WyooBesA6TIcStmVSrZQ1kCB9QtNkm5T+FA0dVXB7D4L7OblZYI1BDpeBOgGP6ExGtxqx0dI51ZHFKF0B devops@web3.foundation"
 }
+
+variable "ssh_user" {
+  default = "admin"
+}

@@ -11,7 +11,7 @@ module.exports = {
     const cfg = config.read();
 
     console.log(chalk.yellow('Cleaning application...'));
-    const app = new Application(cfg.application);
+    const app = new Application(cfg);
     try {
       await app.clean();
     } catch (e) {
@@ -21,7 +21,7 @@ module.exports = {
     console.log(chalk.green('Done'));
 
     console.log(chalk.yellow('Cleaning platform...'));
-    const platform = new Platform(cfg.platform);
+    const platform = new Platform(cfg);
     try {
       await platform.clean();
     } catch (e) {

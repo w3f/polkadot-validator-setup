@@ -42,6 +42,6 @@ resource "google_compute_instance" "main" {
   }
 
   metadata = {
-    ssh-keys = "w3fadmin:${var.public3_public_key}"
+    ssh-keys = "${var.ssh_user}:${var.public3_public_key}"
   }
 }

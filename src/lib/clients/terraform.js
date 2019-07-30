@@ -15,7 +15,7 @@ class Terraform {
   }
 
   async sync() {
-    return this._cmd(`apply -auto-approve`);
+    return this._cmd(`apply -set ssh_user=${this.config.defaultUser} -auto-approve`);
   }
 
   async clean() {

@@ -2,7 +2,6 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const cmd = require('../cmd');
-const secrets = require('../secrets');
 
 const inventoryFileName = 'inventory'
 
@@ -16,8 +15,6 @@ class Ansible {
       cwd: this.ansiblePath,
       verbose: true
     };
-
-    this.vpnSecret = secrets.vpnSecret();
   }
 
   async sync() {
@@ -37,8 +34,31 @@ class Ansible {
   _writeInventory() {
     const inventoryPath = path.join(this.ansiblePath, inventoryFileName);
     const inventoryContents = `
-${this.config.ipAddress}
-${this.vpnSecret}
+[validator]
+${this.config.validatorIpAddress}
+
+[public1]
+${this.config.public1IpAddress}
+
+[public1:vars]
+ansible_user=ubuntu
+
+[public2]
+${this.config.public2IpAddress}
+
+[public2:vars]
+ansible_user={this.config.defaultUser}
+
+[public3]
+${this.config.public3IpAddress}
+
+[public3:vars]
+ansible_user={this.config.defaultUser}
+
+[public:children]
+public1
+public2
+public3
 `;
     fs.writeFileSync(inventoryPath, inventoryContents);
   }
