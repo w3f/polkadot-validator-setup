@@ -5,7 +5,7 @@ class Platform {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    this.tf = new Terraform(this.config.terraform);
+    this.tf = new Terraform(this.config);
   }
 
   async sync() {
