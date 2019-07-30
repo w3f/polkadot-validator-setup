@@ -11,10 +11,10 @@ class Platform {
   async sync() {
     await this.tf.sync();
 
-    const validatorIpAddress = await this.tf.output('validator_ip_address');
-    const public1IpAddress = await this.tf.output('public1_ip_address');
-    const public2IpAddress = await this.tf.output('public2_ip_address');
-    const public3IpAddress = await this.tf.output('public3_ip_address');
+    const validatorIpAddress = (await this.tf.output('validator_ip_address')).toString();
+    const public1IpAddress = (await this.tf.output('public1_ip_address')).toString();
+    const public2IpAddress = (await this.tf.output('public2_ip_address')).toString();
+    const public3IpAddress = (await this.tf.output('public3_ip_address')).toString();
 
     return { validatorIpAddress, public1IpAddress, public2IpAddress, public3IpAddress };
   }

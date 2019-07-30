@@ -19,7 +19,7 @@ class Ansible {
 
   async sync() {
     this._writeInventory();
-    return this._cmd(`main.yaml -i ${inventoryFileName}`);
+    return this._cmd(`main.yml -i ${inventoryFileName}`);
   }
 
   async clean() {
@@ -33,8 +33,7 @@ class Ansible {
 
   _writeInventory() {
     const inventoryPath = path.join(this.ansiblePath, inventoryFileName);
-    const inventoryContents = `
-[validator]
+    const inventoryContents = `[validator]
 ${this.config.validatorIpAddress}
 
 [public1]
@@ -47,13 +46,13 @@ ansible_user=ubuntu
 ${this.config.public2IpAddress}
 
 [public2:vars]
-ansible_user={this.config.defaultUser}
+ansible_user=${this.config.defaultUser}
 
 [public3]
 ${this.config.public3IpAddress}
 
 [public3:vars]
-ansible_user={this.config.defaultUser}
+ansible_user=${this.config.defaultUser}
 
 [public:children]
 public1

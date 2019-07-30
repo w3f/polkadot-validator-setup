@@ -5,7 +5,7 @@ class Application {
   constructor(cfg, platformResult={}) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    const ansibleCfg = Object.assign({}, this.config.ansible, platformResult);
+    const ansibleCfg = Object.assign({}, this.config, platformResult);
     this.ansible = new Ansible(ansibleCfg);
   }
 
