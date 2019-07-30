@@ -1,3 +1,21 @@
+def polkadot_user(host):
+    user = host.user('polkadot')
+    assert user.exists
+
+    group = host.group('polkadot')
+    assert group.exists
+
+    assert user.group() == group
+
+
+def test_polkadot_binary(host):
+    binary = host.file('/usr/local/bin/polkadot')
+    assert binary.exists
+    assert binary.user == 'polkadot'
+    assert binary.group == 'polkadot'
+    assert binary.mode == 0o700
+
+
 def test_polkadot_service_file(host):
     svc = host.file('/etc/systemd/system/polkadot.service')
     assert svc.exists
@@ -8,6 +26,6 @@ def test_polkadot_service_file(host):
 
 
 def test_polkadot_running_and_enabled(host):
-    polkadot = host.service("polkadot.service")
+    polkadot = host.service("polkadot")
     assert polkadot.is_running
     # assert polkadot.is_enabled

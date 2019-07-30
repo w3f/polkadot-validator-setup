@@ -1,2 +1,5 @@
 ---
 # defaults file for polkadot-public
+node_key: "0000000000000000000000000000000000000000000000000000000000000001"
+chain: kusama
+index: "0"
