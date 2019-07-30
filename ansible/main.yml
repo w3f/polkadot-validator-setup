@@ -1,6 +1,12 @@
 - hosts: all
-  vars:
-    ansible_ssh_user: root
   roles:
+  - vpnsetup
   - vpnpeer
-  - polkadot
+
+- hosts: validator
+  roles:
+  - polkadot-validator
+
+- hosts: public
+  roles:
+  - polkadot-public
