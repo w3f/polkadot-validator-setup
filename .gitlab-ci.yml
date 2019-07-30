@@ -18,7 +18,6 @@ vpnpeer_integration_test:
     DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/vpnpeer
-  - molecule create
   - molecule test
 
 polkadot_validator_integration_test:
@@ -30,7 +29,6 @@ polkadot_validator_integration_test:
     DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/polkadot-validator
-  - molecule create
   - molecule test
 
 polkadot_public_integration_test:
@@ -42,7 +40,6 @@ polkadot_public_integration_test:
     DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/polkadot-public
-  - molecule create
   - molecule test
 
 common_integration_test:
@@ -54,5 +51,4 @@ common_integration_test:
     DOCKER_HOST: tcp://localhost:2375
   script:
   - cd ansible/roles/common
-  - molecule create
   - molecule test
