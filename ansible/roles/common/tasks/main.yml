@@ -4,3 +4,24 @@
   apt:
     name: ufw
     state: present
+
+- name: ufw already enabled
+  command: ufw status verbose
+  register: ufw_status_result
+  changed_when: False
+
+- name: enable firewall
+  command: ufw enable
+  when: ufw_status_result.stdout is not match("Status.* active")
+
+- name: open ssh port
+  command: ufw allow ssh
+  when: ufw_status_result.stdout is not match("22/tcp.*ALLOW IN.*Anywhere")
+
+- name: open vpn port
+  command: ufw allow {{ vpn_port }}/udp
+  when: ufw_status_result.stdout is not match(vpn_port ~ "/tcp.*ALLOW IN.*Anywhere")
+
+- name: open p2p port
+  command: ufw allow {{ p2p_port }}/tcp
+  when: ufw_status_result.stdout is not match(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")

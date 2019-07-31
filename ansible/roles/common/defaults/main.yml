@@ -1,2 +1,4 @@
 ---
 # defaults file for common
+vpn_port: 51820
+p2p_port: 30333
