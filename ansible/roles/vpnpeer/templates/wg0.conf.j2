@@ -1,0 +1,12 @@
+[Interface]
+PrivateKey = {{ private_key }}
+ListenPort = {{ vpn_port }}
+SaveConfig = true
+Address = {{ vpnpeer_cidr }}
+
+{% for peer in vpnpeers %}
+[Peer]
+PublicKey = {{ peer.public_key }}
+AllowedIPs = {{ peer.vpn_ip_address }}/32
+Endpoint = {{ peer.ip_address }}:{{ vpn_port }}
+{% end %}
