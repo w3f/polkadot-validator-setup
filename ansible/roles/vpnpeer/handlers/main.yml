@@ -1,5 +1,5 @@
 ---
-- name: enable vpncloud service
+- name: enable VPN service
   systemd:
-    name: vpncloud@default
+    name: wg-quick@wg0
     enabled: yes
