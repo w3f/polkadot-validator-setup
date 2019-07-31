@@ -1,12 +1,14 @@
 [Interface]
-PrivateKey = {{ private_key }}
+PrivateKey = {{ private_key.stdout }}
 ListenPort = {{ vpn_port }}
 SaveConfig = true
-Address = {{ vpnpeer_cidr }}
+Address = {{ vpnpeer_address }}/{{ vpnpeer_cidr_suffix }}
 
-{% for peer in vpnpeers %}
+{% if inventory_hostname in groups['validator'] %}
+{% for peer in groups['public'] %}
 [Peer]
-PublicKey = {{ peer.public_key }}
-AllowedIPs = {{ peer.vpn_ip_address }}/32
-Endpoint = {{ peer.ip_address }}:{{ vpn_port }}
-{% end %}
+PublicKey = {{ hostvars[peer].vpn_public_key }}
+AllowedIPs = {{ hostvars[peer].vpnpeer_address }}/32
+Endpoint = {{ peer }}:{{ vpn_port }}
+{% endfor %}
+{% endif %}
