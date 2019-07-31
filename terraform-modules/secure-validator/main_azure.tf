@@ -15,7 +15,7 @@ resource "azurerm_virtual_network" "main" {
 }
 
 resource "azurerm_subnet" "internal" {
-  name                 = "internal"
+  name                 = var.public2_prefix
   resource_group_name  = "${azurerm_resource_group.main.name}"
   virtual_network_name = "${azurerm_virtual_network.main.name}"
   address_prefix       = "10.0.2.0/24"
@@ -38,7 +38,8 @@ resource "azurerm_public_ip" "main" {
   name                    = "${var.public2_prefix}-ip"
   location                = "${azurerm_resource_group.main.location}"
   resource_group_name     = "${azurerm_resource_group.main.name}"
-  allocation_method       = "Dynamic"
+  allocation_method       = "Static"
+  sku                     = "Standard"
   idle_timeout_in_minutes = 30
 
   tags = {
@@ -87,47 +88,72 @@ resource "azurerm_virtual_machine" "main" {
 }
 
 data "azurerm_public_ip" "main" {
-  name                = var.public2_prefix
-  resource_group_name = "${azurerm_virtual_machine.main.resource_group_name}"
+  name                = "${azurerm_public_ip.main.name}"
+  resource_group_name = "${azurerm_resource_group.main.name}"
 }
 
-resource "azurerm_firewall" "main" {
+resource "azurerm_network_security_group" "main" {
   name                = var.public2_prefix
   location            = "${azurerm_resource_group.main.location}"
   resource_group_name = "${azurerm_resource_group.main.name}"
 
-  ip_configuration {
-    name                 = "configuration"
-    subnet_id            = "${azurerm_subnet.main.id}"
-    public_ip_address_id = "${azurerm_public_ip.main.id}"
+  tags = {
+    name = var.public2_prefix
   }
 }
 
-resource "azurerm_firewall_network_rule_collection" "main" {
-  name                = var.public2_prefix
-  azure_firewall_name = "${azurerm_firewall.main.name}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
-  priority            = 100
-  action              = "Allow"
+resource "azurerm_network_security_rule" "outbound" {
+  name                        = "ssh"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.main.name}"
+  network_security_group_name = "${azurerm_network_security_group.main.name}"
+}
 
-  rule {
-    name = "externalaccess"
+resource "azurerm_network_security_rule" "sshIn" {
+  name                        = "sshIn"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.main.name}"
+  network_security_group_name = "${azurerm_network_security_group.main.name}"
+}
 
-    source_addresses = [
-      "0.0.0.0/0",
-    ]
+resource "azurerm_network_security_rule" "p2pIn" {
+  name                        = "p2pIn"
+  priority                    = 101
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "30333"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.main.name}"
+  network_security_group_name = "${azurerm_network_security_group.main.name}"
+}
 
-    destination_ports = [
-      "22", "30333","51820"
-    ]
-
-    destination_addresses = [
-      "0.0.0.0/0",
-    ]
-
-    protocols = [
-      "TCP",
-      "UDP",
-    ]
-  }
+resource "azurerm_network_security_rule" "vpnIn" {
+  name                        = "vpnIn"
+  priority                    = 102
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "51820"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.main.name}"
+  network_security_group_name = "${azurerm_network_security_group.main.name}"
 }
