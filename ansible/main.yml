@@ -1,12 +1,16 @@
 - hosts: all
+  become: yes
   roles:
   - common
+  - vpnpeer-setup
   - vpnpeer
 
 - hosts: validator
+  become: yes
   roles:
   - polkadot-validator
 
 - hosts: public
+  become: yes
   roles:
   - polkadot-public
