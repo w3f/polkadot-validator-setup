@@ -1,0 +1,21 @@
+---
+# tasks file for vpnpeer-setup
+- name: add wireguard repo
+  apt_repository:
+    repo: ppa:wireguard/wireguard
+    state: present
+
+- name: install wireguard
+  apt:
+    name: wireguard
+    update_cache: yes
+
+- name: generate wireguard private key
+  command: wg genkey
+  register: private_key
+
+- name: generate wireguard public key
+  command: wg pubkey
+  args:
+    stdin: {{ private_key }}
+  register: public_key
