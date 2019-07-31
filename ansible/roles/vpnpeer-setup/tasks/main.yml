@@ -17,5 +17,9 @@
 - name: generate wireguard public key
   command: wg pubkey
   args:
-    stdin: {{ private_key }}
+    stdin: "{{ private_key.stdout }}"
   register: public_key
+
+- name: save public_key as host fact
+  set_fact:
+    vpn_public_key: "{{ public_key.stdout }}"
