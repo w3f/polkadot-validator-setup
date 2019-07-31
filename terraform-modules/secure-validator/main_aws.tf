@@ -96,6 +96,16 @@ resource "aws_security_group_rule" "p2p" {
   security_group_id = "${aws_security_group.main.id}"
 }
 
+resource "aws_security_group_rule" "vpn" {
+  type            = "ingress"
+  from_port       = 51820
+  to_port         = 51820
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main.id}"
+}
+
 resource "aws_security_group_rule" "allow_all" {
   type            = "egress"
   from_port       = 0

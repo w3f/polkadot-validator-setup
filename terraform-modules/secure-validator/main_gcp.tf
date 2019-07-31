@@ -8,7 +8,7 @@ resource "google_compute_firewall" "externalaccess" {
 
   allow {
     protocol = "tcp"
-    ports    = ["22", "30333"]
+    ports    = ["22", "30333", "51820"]
   }
 
   source_ranges = ["0.0.0.0/0"]
