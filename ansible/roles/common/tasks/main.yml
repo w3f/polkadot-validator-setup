@@ -4,15 +4,12 @@
   apt:
     name: ufw
     state: present
+    update_cache: yes
 
 - name: ufw already enabled
   command: ufw status verbose
   register: ufw_status_result
   changed_when: False
-
-- name: enable firewall
-  command: ufw enable
-  when: ufw_status_result.stdout is not match("Status.* active")
 
 - name: open ssh port
   command: ufw allow ssh
@@ -25,3 +22,7 @@
 - name: open p2p port
   command: ufw allow {{ p2p_port }}/tcp
   when: ufw_status_result.stdout is not match(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
+
+- name: enable firewall
+  shell: echo "y" | ufw enable
+  when: ufw_status_result.stdout is not match("Status.* active")
