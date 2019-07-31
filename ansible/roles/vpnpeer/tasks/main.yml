@@ -1,34 +1,14 @@
 ---
-- name: install gpg
-  apt:
-    name: gpg
-    state: present
-
-- name: add vpncloud apt-key
-  apt_key:
-    url: https://repo.ddswd.de/deb/public.key
-    state: present
-
-- name: add vpncloud repo
-  apt_repository:
-    repo: deb https://repo.ddswd.de/deb stable main
-    state: present
-
-- name: install vpncloud
-  apt:
-    name: vpncloud
-    update_cache: yes
-
 - name: create VPN configuration file
   template:
-    src: vpncloud.default.net.j2
-    dest: /etc/vpncloud/default.net
+    src: wg0.conf.j2
+    dest: /etc/wireguard/wg0.conf
     owner: root
     group: root
     mode: 0600
 
-- name: start vpncloud service
+- name: start VPN service
   systemd:
-    name: vpncloud@default
+    name: wg-quick@wg0
     state: started
-  notify: enable vpncloud service
+  notify: enable VPN service
