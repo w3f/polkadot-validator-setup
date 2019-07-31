@@ -87,6 +87,47 @@ resource "azurerm_virtual_machine" "main" {
 }
 
 data "azurerm_public_ip" "main" {
-  name                = "${azurerm_public_ip.main.name}"
+  name                = var.public2_prefix
   resource_group_name = "${azurerm_virtual_machine.main.resource_group_name}"
+}
+
+resource "azurerm_firewall" "main" {
+  name                = var.public2_prefix
+  location            = "${azurerm_resource_group.main.location}"
+  resource_group_name = "${azurerm_resource_group.main.name}"
+
+  ip_configuration {
+    name                 = "configuration"
+    subnet_id            = "${azurerm_subnet.main.id}"
+    public_ip_address_id = "${azurerm_public_ip.main.id}"
+  }
+}
+
+resource "azurerm_firewall_network_rule_collection" "main" {
+  name                = var.public2_prefix
+  azure_firewall_name = "${azurerm_firewall.main.name}"
+  resource_group_name = "${azurerm_resource_group.main.name}"
+  priority            = 100
+  action              = "Allow"
+
+  rule {
+    name = "externalaccess"
+
+    source_addresses = [
+      "0.0.0.0/0",
+    ]
+
+    destination_ports = [
+      "22", "30333","51820"
+    ]
+
+    destination_addresses = [
+      "0.0.0.0/0",
+    ]
+
+    protocols = [
+      "TCP",
+      "UDP",
+    ]
+  }
 }
