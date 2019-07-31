@@ -71,25 +71,39 @@ resource "aws_route_table_association" "main" {
   route_table_id = "${aws_route_table.main.id}"
 }
 
-resource "aws_security_group" "externalssh" {
+resource "aws_security_group" "main" {
   name = "externalssh"
   vpc_id = "${aws_vpc.main.id}"
+}
 
-  ingress {
-    cidr_blocks = [
-      "0.0.0.0/0"
-    ]
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-  }
-  // Terraform removes the default rule
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_security_group_rule" "externalssh" {
+  type            = "ingress"
+  from_port       = 22
+  to_port         = 22
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main.id}"
+}
+
+resource "aws_security_group_rule" "p2p" {
+  type            = "ingress"
+  from_port       = 30333
+  to_port         = 30333
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main.id}"
+}
+
+resource "aws_security_group_rule" "allow_all" {
+  type            = "egress"
+  from_port       = 0
+  to_port         = 0
+  protocol        = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main.id}"
 }
 
 resource "aws_instance" "main" {
@@ -98,7 +112,7 @@ resource "aws_instance" "main" {
   key_name      = var.public1_prefix
 
   subnet_id              = "${aws_subnet.main.id}"
-  vpc_security_group_ids = ["${aws_security_group.externalssh.id}"]
+  vpc_security_group_ids = ["${aws_security_group.main.id}"]
 
   tags = {
     Name = var.public1_prefix
