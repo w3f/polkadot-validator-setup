@@ -19,6 +19,7 @@ class Ansible {
 
   async sync() {
     this._writeInventory();
+    //return cmd.exec(`ansible all -b -m ping -i ${inventoryFileName}`, this.options);
     return this._cmd(`main.yml -i ${inventoryFileName}`);
   }
 
