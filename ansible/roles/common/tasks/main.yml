@@ -13,16 +13,16 @@
 
 - name: open ssh port
   command: ufw allow ssh
-  when: not ufw_status_result.stdout is match("22/tcp.*ALLOW IN.*Anywhere")
+  when: not ufw_status_result.stdout is search("22/tcp.*ALLOW IN.*Anywhere")
 
 - name: open vpn port
   command: ufw allow {{ vpn_port }}/udp
-  when: not ufw_status_result.stdout is match(vpn_port ~ "/tcp.*ALLOW IN.*Anywhere")
+  when: not ufw_status_result.stdout is search(vpn_port ~ "/udp.*ALLOW IN.*Anywhere")
 
 - name: open p2p port
   command: ufw allow {{ p2p_port }}/tcp
-  when: not ufw_status_result.stdout is match(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
+  when: not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
 
 - name: enable firewall
   shell: echo "y" | ufw enable
-  when: not ufw_status_result.stdout is match("Status.* active")
+  when: not ufw_status_result.stdout is search("Status.* active")
