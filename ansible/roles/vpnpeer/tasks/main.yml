@@ -1,4 +1,9 @@
 ---
+- name: check if config already exists
+  stat:
+    path: /etc/wireguard/wg0.conf
+  register: vpn_cfg
+
 - name: create VPN configuration file
   template:
     src: wg0.conf.j2
@@ -6,6 +11,7 @@
     owner: root
     group: root
     mode: 0600
+  when: not vpn_cfg.stat.exists
 
 - name: start VPN service
   systemd:

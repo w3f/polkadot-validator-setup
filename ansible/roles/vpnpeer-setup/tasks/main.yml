@@ -18,16 +18,24 @@
   apt:
     name: wireguard
 
+- name: check if config already exists
+  stat:
+    path: /etc/wireguard/wg0.conf
+  register: vpn_cfg
+
 - name: generate wireguard private key
   command: wg genkey
   register: private_key
+  when: not vpn_cfg.stat.exists
 
 - name: generate wireguard public key
   command: wg pubkey
   args:
     stdin: "{{ private_key.stdout }}"
   register: public_key
+  when: not vpn_cfg.stat.exists
 
 - name: save public_key as host fact
   set_fact:
     vpn_public_key: "{{ public_key.stdout }}"
+  when: not vpn_cfg.stat.exists
