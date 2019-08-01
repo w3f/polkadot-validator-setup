@@ -18,17 +18,3 @@
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'
-
-- name: create polkadot service file
-  template:
-    src: polkadot.service.j2
-    dest: /etc/systemd/system/polkadot.service
-    owner: root
-    group: root
-    mode: 0600
-
-- name: start polkadot service
-  systemd:
-    name: polkadot.service
-    state: started
-  notify: enable polkadot service
