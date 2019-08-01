@@ -5,10 +5,15 @@ SaveConfig = true
 Address = {{ vpnpeer_address }}/{{ vpnpeer_cidr_suffix }}
 
 {% if inventory_hostname in groups['validator'] %}
-{% for peer in groups['public'] %}
+{%- set peers = groups['public'] -%}
+{%- else -%}
+{%- set peers = groups['validator'] -%}
+{% endif %}
+
+{% for peer in peers %}
+
 [Peer]
 PublicKey = {{ hostvars[peer].vpn_public_key }}
 AllowedIPs = {{ hostvars[peer].vpnpeer_address }}/32
 Endpoint = {{ peer }}:{{ vpn_port }}
 {% endfor %}
-{% endif %}
