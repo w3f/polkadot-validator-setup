@@ -150,7 +150,7 @@ resource "azurerm_network_security_rule" "vpnIn" {
   priority                    = 102
   direction                   = "Inbound"
   access                      = "Allow"
-  protocol                    = "Tcp"
+  protocol                    = "Udp"
   source_port_range           = "*"
   destination_port_range      = "51820"
   source_address_prefix       = "*"

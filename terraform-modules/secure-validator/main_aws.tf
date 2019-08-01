@@ -100,7 +100,7 @@ resource "aws_security_group_rule" "vpn" {
   type            = "ingress"
   from_port       = 51820
   to_port         = 51820
-  protocol        = "tcp"
+  protocol        = "udp"
   cidr_blocks = ["0.0.0.0/0"]
 
   security_group_id = "${aws_security_group.main.id}"
