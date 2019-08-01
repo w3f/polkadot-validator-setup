@@ -1,0 +1,26 @@
+---
+# tasks file for polkadot-public
+- name: create polkadot service file
+  template:
+    src: polkadot.service.j2
+    dest: /etc/systemd/system/polkadot.service
+    owner: root
+    group: root
+    mode: 0600
+
+- name: start polkadot service
+  systemd:
+    name: polkadot.service
+    state: started
+  notify: enable polkadot service
+
+- name: save log with peer id
+  command: journalctl -u polkadot --no-pager
+  register: polkadot_log
+  until: polkadot_log.stdout is search("Local node identity is.*")
+
+- name: set peer id as fact
+  set_fact:
+    p2p_peer_id: "{{ polkadot_log.stdout | regex_search(regexp,'\\1') | first }}"
+  vars:
+    regexp: 'Local node identity is: ([\w]+)'

@@ -1,0 +1,12 @@
+[Unit]
+Description=Polkadot Node
+
+[Service]
+ExecStart=/usr/local/bin/polkadot \
+         --name w3f-sv-public-{{ groups['public'].index(inventory_hostname) }}
+         --chain={{ chain }}
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
