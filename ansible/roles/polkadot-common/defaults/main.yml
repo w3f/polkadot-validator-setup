@@ -1,9 +1,2 @@
 ---
 # defaults file for polkadot
-node_key: "0000000000000000000000000000000000000000000000000000000000000001"
-chain: kusama
-listen_addr: "/ip4/10.0.0.1/tcp/30333/p2p/QmRpheLN4JWdAnY7HGJfWFNbfkQCb6tFf4vvA6hgjMZKrR"
-reserved_nodes:
-  - "/ip4/10.0.0.2/tcp/30333/p2p/QmSVnNf9HwVMT1Y4cK1P6aoJcEZjmoTXpjKBmAABLMnZEk"
-  - "/ip4/10.0.0.3/tcp/30333/p2p/QmV7EhW6J6KgmNdr558RH1mPx2xGGznW7At4BhXzntRFsi"
-  - "/ip4/10.0.0.4/tcp/30333/p2p/QmZT1VPZwqWx3J7kPUgfMvuQtDJpPsC5pjpH1EcZycXYwH"
