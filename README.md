@@ -8,12 +8,13 @@ some types of potential attacks.
 This repo has code for creating a complete implementaion of the approach
 described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, included
 both layers described in [Workflow](#workflow). This can be done on a host with
-node and git installed with:
+node, yarn and git installed with:
 
 ```
 $ git clone https://github.com/w3f/secure-validator
 $ cd secure-validator
-$ node . sync
+$ yarn
+$ yarn sync
 ```
 You will need credentials as environment variables for all the infrastructure provider
 used in the platform creation phase (AWS, Azure, GCP and packet).
