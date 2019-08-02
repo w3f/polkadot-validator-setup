@@ -18,6 +18,7 @@
   command: journalctl -u polkadot --no-pager
   register: polkadot_log
   until: polkadot_log.stdout is search("Local node identity is.*")
+  changed_when: False
 
 - name: set peer id as fact
   set_fact:

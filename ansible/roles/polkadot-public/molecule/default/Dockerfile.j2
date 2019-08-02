@@ -6,9 +6,19 @@ FROM {{ item.registry.url }}/{{ item.image }}
 FROM {{ item.image }}
 {% endif %}
 
-RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y python sudo bash ca-certificates && apt-get clean; \
+RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y python sudo bash ca-certificates wget && apt-get clean; \
     elif [ $(command -v dnf) ]; then dnf makecache && dnf --assumeyes install python sudo python-devel python*-dnf bash && dnf clean all; \
     elif [ $(command -v yum) ]; then yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all; \
     elif [ $(command -v zypper) ]; then zypper refresh && zypper install -y python sudo bash python-xml && zypper clean -a; \
     elif [ $(command -v apk) ]; then apk update && apk add --no-cache python sudo bash ca-certificates; \
     elif [ $(command -v xbps-install) ]; then xbps-install -Syu && xbps-install -y python sudo bash ca-certificates && xbps-remove -O; fi
+
+RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -O /usr/bin/systemctl && \
+  chmod a+x /usr/bin/systemctl && \
+  test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl && \
+  rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
+
+RUN echo "#!/bin/sh\nsleep 1000000000" > /usr/local/bin/polkadot && \
+  chmod a+x /usr/local/bin/polkadot && \
+  echo "#!/bin/sh\necho Local node identity is: peerid" > /bin/journalctl && \
+  chmod a+x /bin/journalctl
