@@ -1,9 +1,9 @@
-# Polkadot Secure validator setup
+# Polkadot Secure Validator Setup
 
 This repo describes a potential setup for a polkadot validator that aims to prevent
 some types of potential attacks.
 
-# How to use
+## How to use
 
 This repo has code for creating a complete implementaion of the approach
 described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, included
@@ -22,7 +22,7 @@ You can also just provision a set of previously created machines with the ansibl
 [here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
 that you can customize.
 
-# Structure
+## Structure
 
 The secure validator setup is composed of a bare-metal machine that runs the
 actual validator and a set of cloud nodes connected to it. The validator is
@@ -36,12 +36,12 @@ the validator node is configured to only listen on the VPN-attached interface,
 and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
 also proteccted by a firewall that only allows connections on the VPN port.
 
-# Workflow
+## Workflow
 
 The secure validator setup is structured in two layers, an underlaying platform
 and the applications that run on top of it.
 
-## Platform creation
+### Platform creation
 
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
@@ -54,7 +54,7 @@ resiliency, and the bare-metal machine on packet.com. As part of the creation
 process of the cloud instnaces we define hardware firewall to only allow access
 on the VPN and p2p ports.
 
-## Application creation
+### Application creation
 
 This is done through the ansible playbook and roles located at [ansible](/ansible), the
 configuration applied depend on the type of node:
