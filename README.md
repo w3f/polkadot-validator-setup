@@ -1,3 +1,27 @@
+# Polkadot Secure validator setup
+
+This repo describes a potential setup for a polkadot validator that aims to prevent
+some types of potential attacks.
+
+# How to use
+
+This repo has code for creating a complete implementaion of the approach
+described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, included
+both layers described in [Workflow](#workflow). This can be done on a host with
+node and git installed with:
+
+```
+$ git clone https://github.com/w3f/secure-validator
+$ cd secure-validator
+$ node . sync
+```
+You will need credentials as environment variables for all the infrastructure provider
+used in the platform creation phase (AWS, Azure, GCP and packet).
+
+You can also just provision a set of previously created machines with the ansible code
+[here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
+that you can customize.
+
 # Structure
 
 The secure validator setup is composed of a bare-metal machine that runs the
