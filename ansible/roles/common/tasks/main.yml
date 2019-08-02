@@ -12,7 +12,7 @@
   changed_when: False
 
 - name: open ssh port
-  command: ufw allow ssh
+  command: ufw allow 22/tcp
   when: not ufw_status_result.stdout is search("22/tcp.*ALLOW IN.*Anywhere")
 
 - name: open vpn port
@@ -24,5 +24,9 @@
   when: not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
 
 - name: enable firewall
-  shell: echo "y" | ufw enable
+  shell: |
+    set -o pipefail
+    echo "y" | ufw enable
+  args:
+    executable: /bin/bash
   when: not ufw_status_result.stdout is search("Status.* active")

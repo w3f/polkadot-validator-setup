@@ -8,6 +8,9 @@ lint:
 platforms:
   - name: instance
     image: ubuntu:bionic
+    capabilities:
+      - NET_ADMIN
+      - NET_RAW
 provisioner:
   name: ansible
   lint:
