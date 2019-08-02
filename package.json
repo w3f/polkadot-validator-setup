@@ -11,11 +11,14 @@
     "test": "mocha --reporter spec --recursive",
     "start": "node index.js"
   },
+  "scripts": {
+    "sync": "node . sync",
+    "clean": "node . clean"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
-    "fs-extra": "^8.1.0",
-    "polkadot-deployer": "^0.12.23"
+    "fs-extra": "^8.1.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
