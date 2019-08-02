@@ -9,7 +9,7 @@ the rest of the polkadot network.
 The connection between the validator node and the cloud nodes is performed
 defining a VPN to which all these nodes belong. The polkadot instance running in
 the validator node is configured to only listen on the VPN-attached interface,
-and uses the cloud node's VPN address in the `--external-nodes` parameter. It is
+and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
 also proteccted by a firewall that only allows connections on the VPN port.
 
 # Workflow
@@ -22,21 +22,96 @@ and the applications that run on top of it.
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
 However, we use terraform for creating both. The code for setting up the bare-
-metal machine is in this repo (`terraform-modules` dir) and we rely on polkadot-
-deployer for creating the required cloud resources for the public nodes.
+metal machine is in this repothey up is in [terraform-modules](/terraform-modules)
+dir.
+
+The cloud instances are created on 3 different cloud providers for increased
+resiliency, and the bare-metal machine on packet.com. As part of the creation
+process of the cloud instnaces we define hardware firewall to only allow access
+on the VPN and p2p ports.
 
 ## Application creation
 
-This will be different depending on the role of the instances:
+This is done through the ansible playbook and roles located at [ansible](/ansible), the
+configuration applied depend on the type of node:
 
-* Validator: we provision the server machine using ansible in 3 phases:
+* Common:
 
-    - creation of VPN public and private keys.
+    * Software firewall setup, for the validator we only allow the VPN and SSH
+    ports, for the public nodes VPN SSH and p2p ports.
 
-    - retrieval of public VPN keys from cloud nodes.
+    * VPN setup: for the VPN solution we are using [WireGuard](https://github.com/WireGuard/WireGuard),
+    at this stage we create the private and public keys on each node, making the
+    public keys available to ansible.
 
-    - final setup: VPN configuration, polkadot configuration and service
-    creation, firewall configuration, root password setup, SSH server removal.
+    * VPN install: we install and configure WireGuard on each host using the public
+    keys from the previous stage. The configuration for the validator looks like:
 
-* Public nodes: once the kubernetes clusters are created we deploy the polkadot
-nodes using a Helm chart, first we need to know the validator VPN public key and IP.
+    ```
+    [Interface]
+    PrivateKey = <...>
+    ListenPort = 51820
+    SaveConfig = true
+    Address = 10.0.0.1/24
+
+    [Peer]
+    PublicKey = 8R7PTv1CdNLHRsDvrvE58Ac0Inc9vOLY2vFMWIFV/W4=
+    AllowedIPs = 10.0.0.2/32
+    Endpoint = 64.93.77.93:51820
+
+    [Peer]
+    PublicKey = ZZW6Wuk+YjJToeLHIUrp0HAqfNozgQfUMo2owC2Imzg=
+    AllowedIPs = 10.0.0.3/32
+    Endpoint = 50.81.184.50:51820
+
+    [Peer]
+    PublicKey = LZHKtuGCxz9iCoNNDmQzzNe9eF9aLXj/4yJRkFjCWzM=
+    AllowedIPs = 10.0.0.4/32
+    Endpoint = 45.243.244.130:51820
+    ```
+
+    * Polkadot setup: create a polkadot user and group and download the binary.
+
+* Public nodes:
+
+    * Start Polkadot service: the public nodes are started and we make the libp2p peer
+    id of the node available to ansible. The generated systemd unit looks like:
+
+    ```
+    [Unit]
+    Description=Polkadot Node
+
+    [Service]
+    ExecStart=/usr/local/bin/polkadot \
+            --name sv-public-0
+
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+* Private node:
+
+    * Start Polkadot service: the private node is started with the node's VPN address as part
+    of the listen multiaddr and the multiaddr of the public nodes (with the peer id
+    from the previous stage and the VPN addresses) as `reserved-nodes`. It looks like:
+
+    ```
+    [Unit]
+    Description=Polkadot Node
+
+    [Service]
+    ExecStart=/usr/local/bin/polkadot \
+            --name -sv-private \
+            --validator \
+            --listen-addr=/ip4/10.0.0.1/tcp/30333 \
+            --reserved-nodes /ip4/10.0.0.2/tcp/30333/p2p/QmNpQbu2nKfHQMySnCue3XC9mAjBfzi8DQ9KvNwUM8jZdx \
+            --reserved-nodes /ip4/10.0.0.3/tcp/30333/p2p/QmY81TLZKeNj4mGDAhFQE6RrHEJPidAkccgUTsJo7ifNFJ \
+            --reserved-nodes /ip4/10.0.0.4/tcp/30333/p2p/QmTwMDJDnPyHUHV2fZFcVbNpYzp6Fu7LP6VhhK3Ei13iXr \
+
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
