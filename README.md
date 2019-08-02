@@ -16,7 +16,7 @@ $ cd secure-validator
 $ yarn
 $ yarn sync
 ```
-You will need credentials as environment variables for all the infrastructure provider
+You will need credentials as environment variables for all the infrastructure providers
 used in the platform creation phase (AWS, Azure, GCP and packet).
 
 You can also just provision a set of previously created machines with the ansible code
@@ -72,28 +72,28 @@ configuration applied depend on the type of node:
     * VPN install: we install and configure WireGuard on each host using the public
     keys from the previous stage. The configuration for the validator looks like:
 
-    ```
-    [Interface]
-    PrivateKey = <...>
-    ListenPort = 51820
-    SaveConfig = true
-    Address = 10.0.0.1/24
+        ```
+        [Interface]
+        PrivateKey = <...>
+        ListenPort = 51820
+        SaveConfig = true
+        Address = 10.0.0.1/24
 
-    [Peer]
-    PublicKey = 8R7PTv1CdNLHRsDvrvE58Ac0Inc9vOLY2vFMWIFV/W4=
-    AllowedIPs = 10.0.0.2/32
-    Endpoint = 64.93.77.93:51820
+        [Peer]
+        PublicKey = 8R7PTv1CdNLHRsDvrvE58Ac0Inc9vOLY2vFMWIFV/W4=
+        AllowedIPs = 10.0.0.2/32
+        Endpoint = 64.93.77.93:51820
 
-    [Peer]
-    PublicKey = ZZW6Wuk+YjJToeLHIUrp0HAqfNozgQfUMo2owC2Imzg=
-    AllowedIPs = 10.0.0.3/32
-    Endpoint = 50.81.184.50:51820
+        [Peer]
+        PublicKey = ZZW6Wuk+YjJToeLHIUrp0HAqfNozgQfUMo2owC2Imzg=
+        AllowedIPs = 10.0.0.3/32
+        Endpoint = 50.81.184.50:51820
 
-    [Peer]
-    PublicKey = LZHKtuGCxz9iCoNNDmQzzNe9eF9aLXj/4yJRkFjCWzM=
-    AllowedIPs = 10.0.0.4/32
-    Endpoint = 45.243.244.130:51820
-    ```
+        [Peer]
+        PublicKey = LZHKtuGCxz9iCoNNDmQzzNe9eF9aLXj/4yJRkFjCWzM=
+        AllowedIPs = 10.0.0.4/32
+        Endpoint = 45.243.244.130:51820
+        ```
 
     * Polkadot setup: create a polkadot user and group and download the binary.
 
