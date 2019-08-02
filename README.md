@@ -108,7 +108,7 @@ configuration applied depend on the type of node:
             --listen-addr=/ip4/10.0.0.1/tcp/30333 \
             --reserved-nodes /ip4/10.0.0.2/tcp/30333/p2p/QmNpQbu2nKfHQMySnCue3XC9mAjBfzi8DQ9KvNwUM8jZdx \
             --reserved-nodes /ip4/10.0.0.3/tcp/30333/p2p/QmY81TLZKeNj4mGDAhFQE6RrHEJPidAkccgUTsJo7ifNFJ \
-            --reserved-nodes /ip4/10.0.0.4/tcp/30333/p2p/QmTwMDJDnPyHUHV2fZFcVbNpYzp6Fu7LP6VhhK3Ei13iXr \
+            --reserved-nodes /ip4/10.0.0.4/tcp/30333/p2p/QmTwMDJDnPyHUHV2fZFcVbNpYzp6Fu7LP6VhhK3Ei13iXr
 
     Restart=always
 
