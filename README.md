@@ -37,6 +37,10 @@ the validator node is configured to only listen on the VPN-attached interface,
 and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
 also proteccted by a firewall that only allows connections on the VPN port.
 
+This way, the only nodes allowed to connect to the validator are the public nodes,
+the rest only know the VPN multiaddr of the validator, and can't route messages
+to it without being part of the VPN.
+
 ## Workflow
 
 The secure validator setup is structured in two layers, an underlaying platform
