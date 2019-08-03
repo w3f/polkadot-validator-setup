@@ -186,7 +186,6 @@ It can only reach and be reached by its public nodes, from the
           "secs": 0
         },
         "open": true,
-        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
       },
 
       [ ........ ]
@@ -262,7 +261,6 @@ nodes:
           "secs": 0
         },
         "open": true,
-        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
       },
       "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
         "enabled": true,
@@ -283,7 +281,6 @@ nodes:
           "secs": 0
         },
         "open": true,
-        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
       },
 
       [ ........ ]
@@ -303,7 +300,6 @@ nodes:
           "nanos": 571989635,
           "secs": 0
         },
-        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
       },
 
       [ ........ ]
@@ -311,7 +307,7 @@ nodes:
     },
     "peerset": {
 
-      [ all known nodes shown here, only reported connected to validator's public nodes ]
+      [ all known nodes reported as connected here ]
 
       "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
         "connected": true,
@@ -365,7 +361,6 @@ nodes, the don't have access to the validator.
           "secs": 0
         },
         "open": true,
-        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
       },
       "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
         "enabled": true,
@@ -407,7 +402,6 @@ nodes, the don't have access to the validator.
           "nanos": 375552762,
           "secs": 0
         },
-        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
       }
 
       [ ........ ]
