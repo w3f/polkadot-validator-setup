@@ -1,2 +1,3 @@
 ---
 # defaults file for vpnpeer
+vpn_port: 51820
