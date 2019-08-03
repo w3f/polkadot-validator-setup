@@ -30,12 +30,12 @@ provisioner:
     host_vars:
       validator:
         vpnpeer_address: 10.0.0.1
-        private_key: vpn_secret1
+        vpn_private_key: vpn_secret1
         vpnpeer_cidr_suffix: 24
         vpn_public_key: vpn_public1
       public:
         vpnpeer_address: 10.0.0.2
-        private_key: vpn_secret2
+        vpn_private_key: vpn_secret2
         vpnpeer_cidr_suffix: 24
         vpn_public_key: vpn_public2
 verifier:
