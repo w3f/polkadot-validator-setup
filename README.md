@@ -143,3 +143,297 @@ configuration applied depend on the type of node:
         [Install]
         WantedBy=multi-user.target
         ```
+
+## Scopes
+
+This setup partitions the network in 3 separate kind of nodes: secure validator,
+its public node and the regular network nodes, haveing each group a different
+vision and accessiblity to the rest of the network. To verify this, we'll execute
+the `system_networkState` RPC call on nodes of each partition:
+
+```
+curl -H "Content-Type: application/json" --data '{ "jsonrpc":"2.0", "method":"system_networkState", "params":[],"id":1 }' localhost:9933
+```
+
+### Validator
+
+It can only reach and be reached by its public nodes, from the
+`system_networkState` RPC call:
+```
+{
+
+  [ ........ ]
+
+  "result": {
+    "connectedPeers": {
+
+      [ only validator's public nodes shown here]
+
+      "QmPjNcWNZjNrjVFzkNYR6jH7HLqyU7j9piczUyNoxce1fD": {
+        "enabled": true,
+        "endpoint": {
+          "dialing": "/ip4/10.0.0.2/tcp/30333"
+        },
+        "knownAddresses": [
+          "/ip6/::1/tcp/30333",
+          "/ip4/10.0.0.2/tcp/30333",
+          "/ip4/127.0.0.1/tcp/30333",
+          "/ip4/172.26.59.86/tcp/30333",
+          "/ip4/18.197.157.119/tcp/30333"
+        ],
+        "latestPingTime": {
+          "nanos": 256512049,
+          "secs": 0
+        },
+        "open": true,
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      },
+
+      [ ........ ]
+
+    },
+    "notConnectedPeers": {
+
+      [ always known regular nodes: boot nodes, other validators, etc ]
+
+      "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
+        "knownAddresses": [
+          "/dns4/p2p.testnet-4.kusama.network/tcp/30100"
+        ],
+        "latestPingTime": null,
+        "versionString": null
+      },
+
+      [ ........ ]
+
+    },
+    "peerset": {
+
+      [ all known nodes shown here, only reported connected to validator's public nodes ]
+
+      "QmPjNcWNZjNrjVFzkNYR6jH7HLqyU7j9piczUyNoxce1fD": {
+        "connected": true,
+        "reputation": 1114
+      },
+      "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
+        "connected": false,
+        "reputation": 0
+      },
+
+      [ ........ ]
+
+      "reserved_only": true
+    }
+  }
+}
+
+```
+
+### Validator's public nodes
+
+They can reach and be reached both by the validator and by the network regular
+nodes:
+```
+{
+
+  [ ........ ]
+
+  "result": {
+    "connectedPeers": {
+
+      [ secure validator, other secure validator's public nodes and regular nodes]
+
+      "QmZSocEssLWHYCY6mqR99DcSFEpMb95fVeMsScrY8jqBm8": {
+        "enabled": true,
+        "endpoint": {
+          "listening": {
+            "listen_addr": "/ip4/10.0.0.2/tcp/30333",
+            "send_back_addr": "/ip4/10.0.0.1/tcp/54932"
+          }
+        },
+        "knownAddresses": [
+          "/ip4/10.0.0.1/tcp/30333",
+          "/ip4/10.0.1.18/tcp/30333",
+          "/ip4/147.75.199.231/tcp/30333",
+          "/ip4/10.0.1.152/tcp/30333"
+        ],
+        "latestPingTime": {
+          "nanos": 335876602,
+          "secs": 0
+        },
+        "open": true,
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      },
+      "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
+        "enabled": true,
+        "endpoint": {
+          "listening": {
+            "listen_addr": "/ip4/172.26.59.86/tcp/30333",
+            "send_back_addr": "/ip4/191.232.49.216/tcp/3008"
+          }
+        },
+        "knownAddresses": [
+          "/dns4/p2p.testnet-4.kusama.network/tcp/30100",
+          "/ip4/127.0.0.1/tcp/30100",
+          "/ip4/10.244.0.10/tcp/30100",
+          "/ip4/191.232.49.216/tcp/30100"
+        ],
+        "latestPingTime": {
+          "nanos": 603313251,
+          "secs": 0
+        },
+        "open": true,
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      },
+
+      [ ........ ]
+
+    },
+    "notConnectedPeers": {
+
+      [ regular nodes ]
+
+      "QmW45D6YLfctkSnsjyoqcSxw9qoiXUmAFGn5ea99L6SC7X": {
+        "knownAddresses": [
+          "/ip4/10.8.2.14/tcp/30101",
+          "/ip4/127.0.0.1/tcp/30101",
+          "/ip4/34.80.190.48/tcp/30101"
+        ],
+        "latestPingTime": {
+          "nanos": 571989635,
+          "secs": 0
+        },
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      },
+
+      [ ........ ]
+
+    },
+    "peerset": {
+
+      [ all known nodes shown here, only reported connected to validator's public nodes ]
+
+      "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
+        "connected": true,
+        "reputation": 1277
+      },
+      "QmZSocEssLWHYCY6mqR99DcSFEpMb95fVeMsScrY8jqBm8": {
+        "connected": true,
+        "reputation": -571
+      },
+
+      [ ........ ]
+
+      "reserved_only": false
+    }
+  }
+}
+```
+
+### Network regular nodes
+
+They can reach and be reached by the validator's public nodes and by other regular
+nodes, the don't have access to the validator.
+```
+{
+
+  [ ........ ]
+
+  "result": {
+    "connectedPeers": {
+
+      [ secure validator's public nodes and regular nodes ]
+
+      "QmPjNcWNZjNrjVFzkNYR6jH7HLqyU7j9piczUyNoxce1fD": {
+        "enabled": true,
+        "endpoint": {
+          "listening": {
+            "listen_addr": "/ip4/10.44.1.11/tcp/30101",
+            "send_back_addr": "/ip4/18.197.157.119/tcp/42962"
+          }
+        },
+        "knownAddresses": [
+          "/ip4/172.26.59.86/tcp/30333",
+          "/ip4/127.0.0.1/tcp/30333",
+          "/ip6/::1/tcp/30333",
+          "/ip4/18.197.157.119/tcp/30333",
+          "/ip4/10.0.0.2/tcp/30333",
+          "/ip4/10.0.1.18/tcp/30333"
+        ],
+        "latestPingTime": {
+          "nanos": 108101687,
+          "secs": 0
+        },
+        "open": true,
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      },
+      "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
+        "enabled": true,
+        "endpoint": {
+          "listening": {
+            "listen_addr": "/ip4/10.44.1.11/tcp/30101",
+            "send_back_addr": "/ip4/191.232.49.216/tcp/3010"
+          }
+        },
+        "knownAddresses": [
+          "/dns4/p2p.testnet-4.kusama.network/tcp/30100",
+          "/ip4/127.0.0.1/tcp/30100",
+          "/ip4/191.232.49.216/tcp/30100",
+          "/ip4/10.244.0.10/tcp/30100"
+        ],
+        "latestPingTime": {
+          "nanos": 717286051,
+          "secs": 0
+        },
+        "open": true,
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      },
+
+      [ ........ ]
+
+    },
+    "notConnectedPeers": {
+
+      [ secure validator ]
+
+      "QmZSocEssLWHYCY6mqR99DcSFEpMb95fVeMsScrY8jqBm8": {
+        "knownAddresses": [
+          "/ip4/10.0.0.1/tcp/30333",
+          "/ip4/10.0.1.18/tcp/30333",
+          "/ip4/10.0.1.152/tcp/30333",
+          "/ip4/147.75.199.231/tcp/30333"
+        ],
+        "latestPingTime": {
+          "nanos": 375552762,
+          "secs": 0
+        },
+        "versionString": "parity-polkadot/v0.5.0-4e53ad1-x86_64-linux-gnu (unknown)"
+      }
+
+      [ ........ ]
+
+    },
+    "peerset": {
+
+      [ all known nodes shown here, reported connected to all, secure validator with 0 reputation ]
+
+      "QmP3zYRhAxxw4fDf6Vq5agM8AZt1m2nKpPAEDmyEHPK5go": {
+        "connected": true,
+        "reputation": 1115
+      },
+      "QmPjNcWNZjNrjVFzkNYR6jH7HLqyU7j9piczUyNoxce1fD": {
+        "connected": true,
+        "reputation": 3500
+      },
+      "QmZSocEssLWHYCY6mqR99DcSFEpMb95fVeMsScrY8jqBm8": {
+        "connected": true,
+        "reputation": 0
+      },
+
+      [ ........ ]
+
+      "reserved_only": false
+    }
+  }
+}
+```
