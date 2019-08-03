@@ -1,5 +1,5 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: validator
   roles:
     - role: polkadot-validator

@@ -6,12 +6,25 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
-    image: centos:7
+  - name: validator
+    image: ubuntu:bionic
+    groups:
+      - validator
+  - name: public
+    image: ubuntu:bionic
+    groups:
+      - public
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      validator:
+        vpnpeer_address: 10.0.0.1
+      public:
+        vpnpeer_address: 10.0.0.2
+        p2p_peer_id: peerid
 verifier:
   name: testinfra
   lint:
