@@ -21,7 +21,8 @@
 
 - name: open p2p port
   command: ufw allow {{ p2p_port }}/tcp
-  when: not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
+  when: not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere") and
+        inventory_hostname in groups['public']
 
 - name: enable firewall
   shell: |
