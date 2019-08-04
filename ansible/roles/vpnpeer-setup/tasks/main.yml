@@ -3,6 +3,7 @@
 - name: get linux version
   command: uname -r
   register: uname
+  changed_when: False
 
 - name: install linux-headers
   apt:
@@ -18,24 +19,41 @@
   apt:
     name: wireguard
 
-- name: check if config already exists
+- name: check if privatekey already exists
   stat:
-    path: /etc/wireguard/wg0.conf
-  register: vpn_cfg
+    path: /etc/wireguard/privatekey
+  register: privatekey_file
 
 - name: generate wireguard private key
-  command: wg genkey
-  register: private_key
-  when: not vpn_cfg.stat.exists
+  shell: |
+    set -o pipefail
+    wg genkey | tee /etc/wireguard/privatekey
+    chmod 600 /etc/wireguard/privatekey
+  args:
+    executable: /bin/bash
+  register: private_key_result
+  changed_when: not privatekey_file.stat.exists
+
+- name: check if publickey already exists
+  stat:
+    path: /etc/wireguard/publickey
+  register: publickey_file
 
 - name: generate wireguard public key
-  command: wg pubkey
+  shell: |
+    set -o pipefail
+    wg pubkey | tee /etc/wireguard/publickey
+    chmod 600 /etc/wireguard/publickey
   args:
-    stdin: "{{ private_key.stdout }}"
+    executable: /bin/bash
+    stdin: "{{ private_key_result.stdout }}"
   register: public_key
-  when: not vpn_cfg.stat.exists
+  changed_when: not publickey_file.stat.exists
+
+- name: save private_key as host fact
+  set_fact:
+    vpn_private_key: "{{ private_key_result.stdout }}"
 
 - name: save public_key as host fact
   set_fact:
     vpn_public_key: "{{ public_key.stdout }}"
-  when: not vpn_cfg.stat.exists
