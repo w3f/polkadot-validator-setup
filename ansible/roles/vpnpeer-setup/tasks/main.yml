@@ -1,7 +1,11 @@
 ---
 # tasks file for vpnpeer-setup
 - name: get linux version
-  shell: uname -r | tr -d '+'
+  shell: |
+    set -o pipefail
+    uname -r | tr -d '+'
+  args:
+    executable: /bin/bash
   register: uname
   changed_when: False
 
