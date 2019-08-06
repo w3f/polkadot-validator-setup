@@ -1,11 +1,7 @@
 ---
 # tasks file for vpnpeer-setup
 - name: get linux version
-  shell: |
-    set -o pipefail
-    uname -r | tr -d '+'
-  args:
-    executable: /bin/bash
+  command: uname -r
   register: uname
   changed_when: False
 
@@ -13,6 +9,7 @@
   apt:
     name: linux-headers-{{ uname.stdout }}
     update_cache: yes
+  when: not "+" in uname.stdout
 
 - name: add wireguard repo
   apt_repository:
