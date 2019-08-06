@@ -12,6 +12,7 @@
     "start": "node index.js"
   },
   "scripts": {
+    "test": "mocha --reporter spec --recursive",
     "sync": "node . sync",
     "clean": "node . clean"
   },
