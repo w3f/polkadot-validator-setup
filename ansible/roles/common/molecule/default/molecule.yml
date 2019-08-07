@@ -8,16 +8,10 @@ lint:
 platforms:
   - name: validator-node
     image: ubuntu:bionic
-    capabilities:
-      - NET_ADMIN
-      - NET_RAW
     groups:
       - validator
   - name: public-node
     image: ubuntu:bionic
-    capabilities:
-      - NET_ADMIN
-      - NET_RAW
     groups:
       - public
 provisioner:

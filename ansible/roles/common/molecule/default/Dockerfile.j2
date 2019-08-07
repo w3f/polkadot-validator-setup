@@ -18,6 +18,12 @@ RUN echo "#!/bin/sh\nsleep 1" > /bin/modprobe && \
   rm -f /sbin/sysctl && \
   echo "#!/bin/sh\nsleep 1" > /sbin/sysctl && \
   chmod a+x /sbin/sysctl && \
+  rm -f /sbin/iptables && \
+  echo "#!/bin/sh\nsleep 1 && echo iptables v1.6.1" > /sbin/iptables && \
+  chmod a+x /sbin/iptables && \
+  rm -f /sbin/ip6tables && \
+  echo "#!/bin/sh\nsleep 1 && echo ip6tables v1.6.1" > /sbin/ip6tables && \
+  chmod a+x /sbin/ip6tables && \
   rm -f /sbin/ip6tables-restore && \
   echo "#!/bin/sh\nsleep 1" > /sbin/ip6tables-restore && \
   chmod a+x /sbin/ip6tables-restore
