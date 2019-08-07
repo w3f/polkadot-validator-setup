@@ -15,9 +15,9 @@ RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y pyth
 
 RUN echo "#!/bin/sh\nsleep 1" > /bin/modprobe && \
   chmod a+x /bin/modprobe && \
-  rm /sbin/sysctl && \
+  rm -f /sbin/sysctl && \
   echo "#!/bin/sh\nsleep 1" > /sbin/sysctl && \
   chmod a+x /sbin/sysctl && \
-  rm /sbin/ip6tables-restore && \
-  echo "#!/bin/sh\nsleep 1" > /sbin/ip6tables-restore && \
-  chmod a+x /sbin/ip6tables-restore
+  rm -f /bin/ip6tables-restore && \
+  echo "#!/bin/sh\nsleep 1" > /bin/ip6tables-restore && \
+  chmod a+x /bin/ip6tables-restore
