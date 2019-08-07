@@ -6,11 +6,11 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: validator
+  - name: validator-node
     image: ubuntu:bionic
     groups:
       - validator
-  - name: public
+  - name: public-node
     image: ubuntu:bionic
     groups:
       - public
@@ -20,9 +20,9 @@ provisioner:
     name: ansible-lint
   inventory:
     host_vars:
-      validator:
+      validator-node:
         vpnpeer_address: 10.0.0.1
-      public:
+      public-node:
         vpnpeer_address: 10.0.0.2
         p2p_peer_id: peerid
 verifier:
