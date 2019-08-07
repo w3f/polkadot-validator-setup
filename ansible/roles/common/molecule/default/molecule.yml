@@ -11,12 +11,10 @@ platforms:
     capabilities:
       - NET_ADMIN
       - NET_RAW
-    privileged: true
     groups:
       - validator
   - name: public
     image: ubuntu:bionic
-    privileged: true
     capabilities:
       - NET_ADMIN
       - NET_RAW
