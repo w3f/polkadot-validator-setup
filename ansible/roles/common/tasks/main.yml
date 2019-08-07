@@ -21,10 +21,10 @@
 
 - debug:
     msg:
-      - "ufw_status_result.stdout: {{ufw_status_result.stdout}}"
-      - "p2p_port: {{p2p_port}}"
-      - "inventory_hostname: {{inventory_hostname}}"
-      - "groups['public']: {{groups['public']}}"
+      - "ufw_status_result.stdout: {{ ufw_status_result.stdout }}"
+      - "p2p_port: {{ p2p_port }}"
+      - "inventory_hostname: {{ inventory_hostname }}"
+      - "groups['public']: {{ groups['public'] }}"
 
 - name: open p2p port
   command: ufw allow {{ p2p_port }}/tcp
