@@ -6,11 +6,20 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
+  - name: validator
     image: ubuntu:bionic
     capabilities:
       - NET_ADMIN
       - NET_RAW
+    groups:
+      - validator
+  - name: public
+    image: ubuntu:bionic
+    capabilities:
+      - NET_ADMIN
+      - NET_RAW
+    groups:
+      - public
 provisioner:
   name: ansible
   lint:
