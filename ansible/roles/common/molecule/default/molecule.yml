@@ -6,14 +6,14 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: validator
+  - name: validator-node
     image: ubuntu:bionic
     capabilities:
       - NET_ADMIN
       - NET_RAW
     groups:
       - validator
-  - name: public
+  - name: public-node
     image: ubuntu:bionic
     capabilities:
       - NET_ADMIN
