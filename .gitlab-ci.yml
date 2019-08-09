@@ -1,6 +1,7 @@
 stages:
   - unit_tests
   - integration_tests
+  - deployment
 
 unit_test:
   image: node:12.6.0-slim
@@ -75,3 +76,12 @@ vpnpeer_setup_integration_test:
   script:
   - cd ansible/roles/vpnpeer-setup
   - molecule test
+
+deploy:
+  image: web3f/secure-validator-ci:v0.2.0
+  stage: deployment
+  only:
+  - /v[0-9]+(\.[0-9]+)*/
+  script:
+  - yarn
+  - yarn sync
