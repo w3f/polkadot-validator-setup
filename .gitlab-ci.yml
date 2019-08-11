@@ -83,5 +83,4 @@ deploy:
   only:
   - /v[0-9]+(\.[0-9]+)*/
   script:
-  - yarn
-  - yarn sync
+  - scripts/deploy.sh
