@@ -35,7 +35,7 @@ The connection between the validator node and the cloud nodes is performed
 defining a VPN to which all these nodes belong. The polkadot instance running in
 the validator node is configured to only listen on the VPN-attached interface,
 and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
-also proteccted by a firewall that only allows connections on the VPN port.
+also protected by a firewall that only allows connections on the VPN port.
 
 This way, the only nodes allowed to connect to the validator are the public nodes,
 the rest only know the VPN multiaddr of the validator, and can't route messages
@@ -56,7 +56,7 @@ dir.
 
 The cloud instances are created on 3 different cloud providers for increased
 resiliency, and the bare-metal machine on packet.com. As part of the creation
-process of the cloud instnaces we define hardware firewall to only allow access
+process of the cloud instances we define a hardware firewall to only allow access
 on the VPN and p2p ports.
 
 ### Application creation
