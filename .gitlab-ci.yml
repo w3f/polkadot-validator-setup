@@ -13,7 +13,7 @@ unit_test:
   - pushes
 
 common_integration_test:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: integration_tests
   services:
   - docker:18.09-dind
@@ -26,7 +26,7 @@ common_integration_test:
   - pushes
 
 polkadot_common_integration_test:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: integration_tests
   services:
   - docker:18.09-dind
@@ -39,7 +39,7 @@ polkadot_common_integration_test:
   - pushes
 
 polkadot_public_integration_test:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: integration_tests
   services:
   - docker:18.09-dind
@@ -52,7 +52,7 @@ polkadot_public_integration_test:
   - pushes
 
 polkadot_validator_integration_test:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: integration_tests
   services:
   - docker:18.09-dind
@@ -65,7 +65,7 @@ polkadot_validator_integration_test:
   - pushes
 
 vpnpeer_integration_test:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: integration_tests
   services:
   - docker:18.09-dind
@@ -78,7 +78,7 @@ vpnpeer_integration_test:
   - pushes
 
 vpnpeer_setup_integration_test:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: integration_tests
   services:
   - docker:18.09-dind
@@ -91,7 +91,7 @@ vpnpeer_setup_integration_test:
   - pushes
 
 deploy:
-  image: web3f/secure-validator-ci:v0.3.0
+  image: web3f/secure-validator-ci:v0.3.1
   stage: deployment
   script:
   - scripts/deploy.sh
