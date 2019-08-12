@@ -15,10 +15,12 @@ class Terraform {
   }
 
   async sync() {
+    await this._cmd(`init`);
     return this._cmd(`apply -var ssh_user=${this.config.defaultUser} -auto-approve`);
   }
 
   async clean() {
+    await this._cmd(`init`);
     return this._cmd(`destroy -auto-approve`);
   }
 
