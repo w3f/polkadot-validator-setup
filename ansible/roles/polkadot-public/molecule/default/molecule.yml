@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
+  - name: polkadot-public-instance
     image: ubuntu:bionic
     groups:
       - public

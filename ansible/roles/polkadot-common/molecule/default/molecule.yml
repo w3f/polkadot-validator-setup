@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
+  - name: polkadot-common-instance
     image: ubuntu:bionic
 provisioner:
   name: ansible

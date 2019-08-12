@@ -6,11 +6,11 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: validator-node
+  - name: common-validator-node
     image: ubuntu:bionic
     groups:
       - validator
-  - name: public-node
+  - name: common-public-node
     image: ubuntu:bionic
     groups:
       - public

@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: validator-node
+  - name: vpnpeer-validator-node
     image: ubuntu:bionic
     volumes:
       - /dev/net/tun:/dev/net/tun
@@ -14,7 +14,7 @@ platforms:
       - NET_ADMIN
     groups:
       - validator
-  - name: public-node
+  - name: vpnpeer-public-node
     image: ubuntu:bionic
     volumes:
       - /dev/net/tun:/dev/net/tun
@@ -28,12 +28,12 @@ provisioner:
     name: ansible-lint
   inventory:
     host_vars:
-      validator-node:
+      vpnpeer-validator-node:
         vpnpeer_address: 10.0.0.1
         vpn_private_key: vpn_secret1
         vpnpeer_cidr_suffix: 24
         vpn_public_key: vpn_public1
-      public-node:
+      vpnpeer-public-node:
         vpnpeer_address: 10.0.0.2
         vpn_private_key: vpn_secret2
         vpnpeer_cidr_suffix: 24

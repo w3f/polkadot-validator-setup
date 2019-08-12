@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: instance
+  - name: vpnpeer-setup-instance
     image: ubuntu:bionic
 provisioner:
   name: ansible
