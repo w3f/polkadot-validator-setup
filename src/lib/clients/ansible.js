@@ -70,6 +70,9 @@ vpnpeer_cidr_suffix=24
 public1
 public2
 public3
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 `;
     fs.writeFileSync(inventoryPath, inventoryContents);
   }
