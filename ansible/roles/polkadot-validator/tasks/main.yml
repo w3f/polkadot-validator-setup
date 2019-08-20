@@ -13,3 +13,32 @@
     name: polkadot.service
     state: started
   notify: enable polkadot service
+
+- name: check if keys already exist
+  shell: |
+    set -o pipefail
+    if [ -d /home/polkadot/.local/share/polkadot/chains/ksma/keystore ]; then
+      ls /home/polkadot/.local/share/polkadot/chains/ksma/keystore -1U | wc -l
+    else
+      mkdir -p /home/polkadot/.local/share/polkadot/chains/ksma/
+      chown -R polkadot:polkadot /home/polkadot/.local/share/polkadot
+      echo 0
+    fi
+  args:
+    executable: /bin/bash
+  register: keystore_files
+  changed_when: False
+
+- name: initialize server keys
+  uri:
+    url: localhost:9933
+    body_format: json
+    body: |
+      { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
+  when: keystore_files == 0
+
+- name: restart server to pick grandpa keys
+  systemd:
+    name: polkadot.service
+    state: restarted
+  when: keystore_files == 0
