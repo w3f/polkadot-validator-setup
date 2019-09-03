@@ -1,6 +1,3 @@
-variables:
-  GIT_SSL_NO_VERIFY: "1"
-
 stages:
   - unit_tests
   - integration_tests
@@ -9,6 +6,8 @@ stages:
 unit_test:
   image: node:12.6.0-slim
   stage: unit_tests
+  variables:
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - yarn
   - yarn test
@@ -22,6 +21,7 @@ common_integration_test:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - cd ansible/roles/common
   - molecule test
@@ -35,6 +35,7 @@ polkadot_common_integration_test:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - cd ansible/roles/polkadot-common
   - molecule test
@@ -48,6 +49,7 @@ polkadot_public_integration_test:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - cd ansible/roles/polkadot-public
   - molecule test
@@ -61,6 +63,7 @@ polkadot_validator_integration_test:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - cd ansible/roles/polkadot-validator
   - molecule test
@@ -74,6 +77,7 @@ vpnpeer_integration_test:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - cd ansible/roles/vpnpeer
   - molecule test
@@ -87,6 +91,7 @@ vpnpeer_setup_integration_test:
   - docker:18.09-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - cd ansible/roles/vpnpeer-setup
   - molecule test
@@ -96,6 +101,8 @@ vpnpeer_setup_integration_test:
 deploy:
   image: web3f/secure-validator-ci:v0.3.1
   stage: deployment
+  variables:
+    GIT_SSL_NO_VERIFY: "1"
   script:
   - scripts/deploy.sh
   only:
