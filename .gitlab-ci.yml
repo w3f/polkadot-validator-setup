@@ -6,8 +6,6 @@ stages:
 unit_test:
   image: node:12.6.0-slim
   stage: unit_tests
-  variables:
-    GIT_SSL_NO_VERIFY: "1"
   script:
   - yarn
   - yarn test
