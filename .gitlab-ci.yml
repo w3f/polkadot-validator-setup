@@ -1,3 +1,6 @@
+variables:
+  GIT_SSL_NO_VERIFY: "1"
+
 stages:
   - unit_tests
   - integration_tests
