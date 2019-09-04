@@ -119,9 +119,9 @@ configuration applied depend on the type of node:
         WantedBy=multi-user.target
         ```
 
-* Private node:
+* Private (validator) node:
 
-    * Start Polkadot service: the private node is started with the node's VPN address as part
+    * Start Polkadot service: the private (validator) node is started with the node's VPN address as part
     of the listen multiaddr and the multiaddr of the public nodes (with the peer id
     from the previous stage and the VPN addresses) as `reserved-nodes`. It looks like:
 
