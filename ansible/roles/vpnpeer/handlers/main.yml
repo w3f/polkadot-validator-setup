@@ -1,5 +1,5 @@
 ---
-- name: enable VPN service
+- name: enable VPN setup service
   systemd:
     name: wg-quick@wg0
     enabled: yes

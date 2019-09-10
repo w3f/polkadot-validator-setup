@@ -13,8 +13,8 @@
     mode: 0600
   when: not vpn_cfg.stat.exists
 
-- name: start VPN service
+- name: start VPN setup service
   systemd:
     name: wg-quick@wg0
     state: started
-  notify: enable VPN service
+  notify: enable VPN setup service
