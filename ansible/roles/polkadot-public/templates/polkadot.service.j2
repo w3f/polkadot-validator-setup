@@ -4,7 +4,8 @@ Description=Polkadot Node
 [Service]
 ExecStart=/usr/local/bin/polkadot \
          --name w3f-sv-public-{{ groups['public'].index(inventory_hostname) }} \
-         --chain={{ chain }}
+         --chain={{ chain }} \
+         --no-telemetry
 
 Restart=always
 
