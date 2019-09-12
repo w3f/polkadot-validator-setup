@@ -41,6 +41,18 @@ This way, the only nodes allowed to connect to the validator are the public node
 the rest only know the VPN multiaddr of the validator, and can't route messages
 to it without being part of the VPN.
 
+*WARNING*
+
+If you use this tool to create and/or configure your validator setup or
+implement your setup based on this approach take into account that if you add
+public telemetry endpoints to your nodes (either the validator or the public
+nodes) then the IP address of the validator will be publicly available too,
+given that the contents of the network state RPC call are sent to telemetry.
+
+Even though the secure validator in this setup only has the VPN port open and
+Wireguard has a reasonable [approach to mitigate DoS attacks](https://www.wireguard.com/protocol/#dos-mitigation),
+we recommend to not send this information to endpoints publicly accessible.
+
 ## Workflow
 
 The secure validator setup is structured in two layers, an underlaying platform
