@@ -14,11 +14,13 @@ program
 program
   .command('sync')
   .description('Synchronizes the infrastructure.')
+  .option('-c, --config [path]', 'Path to config file.', '../../config/main.json');
   .action(sync.do);
 
 program
   .command('clean')
   .description('Removes all the resources.')
+  .option('-c, --config [path]', 'Path to config file.', '../../config/main.json');
   .action(clean.do);
 
 

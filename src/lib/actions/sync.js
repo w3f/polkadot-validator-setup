@@ -7,8 +7,8 @@ const { Application } = require('../application.js');
 
 
 module.exports = {
-  do: async () => {
-    const cfg = config.read();
+  do: async (cmd) => {
+    const cfg = config.read(cmd.config);
 
     console.log(chalk.yellow('Syncing platform...'));
     const platform = new Platform(cfg);
