@@ -5,7 +5,9 @@ const files = require('./files');
 
 module.exports = {
   read: (rawCfgPath) => {
-    const cfgPath = path.resolve(__dirname, rawCfgPath);
+    const base = path.resolve(__dirname, '..', '..');
+
+    const cfgPath = path.resolve(base, rawCfgPath);
     return files.readJSON(cfgPath);
   }
 }
