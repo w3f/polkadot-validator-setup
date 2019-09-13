@@ -1,4 +1,5 @@
 {
+  "project": "w3f",
   "defaultUser": "w3fadmin",
   "validators": {
     "telemetryUrl": "wss://telemetry.polkadot.io/submit/"
