@@ -34,9 +34,6 @@ class Terraform {
     const validatorSshPublicKey = ssh.publicKeyFromPrivateKeyPath(validatorSshPrivateKeyPath);
     const publicNodeSshPublicKey = ssh.publicKeyFromPrivateKeyPath(publicNodeSshPrivateKeyPath);
 
-    console.log(`validatorSshPublicKey: ${validatorSshPublicKey}, publicNodeSshPublicKey: ${publicNodeSshPublicKey}`);
-    process.exit(0);
-
     return this._cmd(`apply -var ssh_user=${this.config.defaultUser} -var validator_public_key=${validatorSshPublicKey} -var public_node_public_key=${publicNodeSshPublicKey} -auto-approve`);
   }
 
