@@ -1,6 +1,7 @@
 {
   "project": "w3f",
   "defaultUser": "w3fadmin",
+  "polkadotBinaryUrl": "https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot",
   "validators": {
     "telemetryUrl": "wss://telemetry.polkadot.io/submit/"
   },

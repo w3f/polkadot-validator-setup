@@ -39,6 +39,8 @@ class Ansible {
     const data = {
       project: this.config.project,
 
+      polkadotBinaryUrl: this.config.polkadotBinaryUrl,
+
       validatorIpAddress: this.config.validatorIpAddress,
       public1IpAddress: this.config.public1IpAddress,
       public2IpAddress: this.config.public2IpAddress,

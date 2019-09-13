@@ -12,6 +12,10 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      polkadot-common-instance:
+        polkadot_binary_url: 'https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot'
 verifier:
   name: testinfra
   lint:

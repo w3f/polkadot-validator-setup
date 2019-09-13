@@ -13,7 +13,7 @@
 
 - name: download polkadot binary
   get_url:
-    url: https://github.com/w3f/polkadot-deployer/releases/download/k4a/polkadot
+    url: '{{ polkadot_binary_url | quote }}'
     dest: /usr/local/bin/polkadot
     mode: '0700'
     owner: 'polkadot'

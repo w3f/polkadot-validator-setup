@@ -42,3 +42,4 @@ public3
 [all:vars]
 project={{ project }}
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=10'
+polkadot_binary_url={{if polkadotBinaryUrl}}{{polkadotBinaryUrl}}{{else}}https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot{{/if}}
