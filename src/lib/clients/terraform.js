@@ -16,7 +16,7 @@ class Terraform {
 
   async sync() {
     await this._cmd(`init`);
-    return this._cmd(`apply -var ssh_user=${this.config.defaultUser} -auto-approve`);
+    return this._cmd(`apply -var ssh_user=${this.config.defaultUser} -var validator_public_key=${this.config.validators.sshPublicKey} -var public_node_public_key=${this.config.publicNodes.sshPublicKey} -auto-approve`);
   }
 
   async clean() {
