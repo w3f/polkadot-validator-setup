@@ -4,7 +4,7 @@ variable "public1_prefix" {
 
 resource "aws_key_pair" "public1" {
   key_name   = var.public1_prefix
-  public_key = var.public1_public_key
+  public_key = var.public_node_public_key
 }
 
 data "aws_ami" "ubuntu" {
