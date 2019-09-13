@@ -8,4 +8,8 @@ done
 
 yarn
 
-yarn sync
+if [ ! -z "${CONFIG_FILE}" ]; then
+    yarn sync -c "${CONFIG_FILE}"
+else
+    yarn sync
+fi
