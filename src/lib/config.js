@@ -4,8 +4,10 @@ const files = require('./files');
 
 
 module.exports = {
-  read: () => {
-    const cfgPath = path.join(__dirname, '..', '..', 'config', 'main.json');
+  read: (rawCfgPath) => {
+    const base = path.resolve(__dirname, '..', '..');
+
+    const cfgPath = path.resolve(base, rawCfgPath);
     return files.readJSON(cfgPath);
   }
 }

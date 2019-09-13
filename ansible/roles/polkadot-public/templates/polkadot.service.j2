@@ -3,9 +3,13 @@ Description=Polkadot Node
 
 [Service]
 ExecStart=/usr/local/bin/polkadot \
-         --name w3f-sv-public-{{ groups['public'].index(inventory_hostname) }} \
+         --name {{ project }}-sv-public-{{ groups['public'].index(inventory_hostname) }} \
          --chain={{ chain }} \
+         {% if hostvars[inventory_hostname].telemetryUrl %}
+         --telemetry-url {{ hostvars[inventory_hostname].telemetryUrl }}
+         {% else %}
          --no-telemetry
+         {% endif %}
 
 Restart=always
 

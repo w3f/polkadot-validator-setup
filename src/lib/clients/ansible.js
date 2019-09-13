@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const cmd = require('../cmd');
+const tpl = require('../tpl');
 
 const inventoryFileName = 'inventory'
 
@@ -33,51 +34,25 @@ class Ansible {
   }
 
   _writeInventory() {
-    const inventoryPath = path.join(this.ansiblePath, inventoryFileName);
-    const inventoryContents = `[validator]
-${this.config.validatorIpAddress}
+    const origin = path.resolve(__dirname, '..', '..', '..', 'tpl', 'ansible_inventory');
+    const target = path.join(this.ansiblePath, inventoryFileName);
+    const data = {
+      project: this.config.project,
 
-[validator:vars]
-ansible_user=root
-vpnpeer_address=10.0.0.1
-vpnpeer_cidr_suffix=24
+      validatorIpAddress: this.config.validatorIpAddress,
+      public1IpAddress: this.config.public1IpAddress,
+      public2IpAddress: this.config.public2IpAddress,
+      public3IpAddress: this.config.public3IpAddress,
 
-[public1]
-${this.config.public1IpAddress}
+      validatorTelemetryUrl: this.config.validators.telemetryUrl,
+      publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
 
-[public1:vars]
-ansible_user=ubuntu
-vpnpeer_address=10.0.0.2
-vpnpeer_cidr_suffix=24
+      defaultUser: this.config.defaultUser
+    };
 
-[public2]
-${this.config.public2IpAddress}
-
-[public2:vars]
-ansible_user=${this.config.defaultUser}
-vpnpeer_address=10.0.0.3
-vpnpeer_cidr_suffix=24
-
-[public3]
-${this.config.public3IpAddress}
-
-[public3:vars]
-ansible_user=${this.config.defaultUser}
-vpnpeer_address=10.0.0.4
-vpnpeer_cidr_suffix=24
-
-[public:children]
-public1
-public2
-public3
-
-[all:vars]
-ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-`;
-    fs.writeFileSync(inventoryPath, inventoryContents);
+    tpl.create(origin, target, data);
   }
 }
-
 
 module.exports = {
   Ansible

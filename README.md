@@ -14,6 +14,7 @@ node, yarn and git installed with:
 $ git clone https://github.com/w3f/secure-validator
 $ cd secure-validator
 $ yarn
+$ cp config/main.sample.json config/main.json
 $ yarn sync
 ```
 You will need credentials as environment variables for all the infrastructure providers
@@ -37,9 +38,10 @@ the validator node is configured to only listen on the VPN-attached interface,
 and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
 also protected by a firewall that only allows connections on the VPN port.
 
-This way, the only nodes allowed to connect to the validator are the public nodes,
-the rest only know the VPN multiaddr of the validator, and can't route messages
-to it without being part of the VPN.
+This way, the only nodes allowed to connect to the validator are the public nodes
+through the VPN. Messages sent by other validators can still reach it through
+gossiping, and these validators can know the IP address of the secure validator
+because of this, but can't directly connect to it without being part of the VPN.
 
 ## Workflow
 

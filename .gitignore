@@ -3,3 +3,4 @@ terraform-modules/**/.terraform/
 terraform-modules/**/*.tfstate
 ansible/inventory
 ansible/**/__pycache__
+config/main.json
