@@ -37,6 +37,8 @@ class Ansible {
     const origin = path.resolve(__dirname, '..', '..', '..', 'tpl', 'ansible_inventory');
     const target = path.join(this.ansiblePath, inventoryFileName);
     const data = {
+      project: this.config.project,
+
       validatorIpAddress: this.config.validatorIpAddress,
       public1IpAddress: this.config.public1IpAddress,
       public2IpAddress: this.config.public2IpAddress,
