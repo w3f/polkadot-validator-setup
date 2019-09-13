@@ -12,7 +12,11 @@ ExecStart=/usr/local/bin/polkadot \
          --reserved-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
          {% endfor %}
          --chain={{ chain }} \
+         {% if hostvars[inventory_hostname].telemetryUrl %}
+         --telemetry-url {{ hostvars[inventory_hostname].telemetryUrl }}
+         {% else %}
          --no-telemetry
+         {% endif %}
 
 Restart=always
 

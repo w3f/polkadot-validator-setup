@@ -6,12 +6,6 @@
   "author": "Federico Gimenez <federico@web3.foundation>",
   "license": "GPL-3.0",
   "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run lint",
-    "test": "mocha --reporter spec --recursive",
-    "start": "node index.js"
-  },
-  "scripts": {
     "test": "mocha --reporter spec --recursive",
     "sync": "node . sync",
     "clean": "node . clean"
@@ -19,7 +13,8 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "handlebars": "^4.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

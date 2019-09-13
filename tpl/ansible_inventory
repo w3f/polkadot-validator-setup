@@ -1,0 +1,43 @@
+[validator]
+{{ validatorIpAddress }}
+
+[validator:vars]
+ansible_user=root
+vpnpeer_address=10.0.0.1
+vpnpeer_cidr_suffix=24
+telemetryUrl={{ validatorTelemetryUrl }}
+
+[public1]
+{{ public1IpAddress }}
+
+[public1:vars]
+ansible_user=ubuntu
+vpnpeer_address=10.0.0.2
+vpnpeer_cidr_suffix=24
+telemetryUrl={{ publicTelemetryUrl }}
+
+[public2]
+{{ public2IpAddress }}
+
+[public2:vars]
+ansible_user={{ defaultUser }}
+vpnpeer_address=10.0.0.3
+vpnpeer_cidr_suffix=24
+telemetryUrl={{ publicTelemetryUrl }}
+
+[public3]
+{{ public3IpAddress }}
+
+[public3:vars]
+ansible_user={{ defaultUser }}
+vpnpeer_address=10.0.0.4
+vpnpeer_cidr_suffix=24
+telemetryUrl={{ publicTelemetryUrl }}
+
+[public:children]
+public1
+public2
+public3
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
