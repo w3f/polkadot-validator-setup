@@ -30,13 +30,13 @@ resource "google_compute_firewall" "vpn" {
 
 resource "google_compute_instance" "main" {
   name         = var.public3_prefix
-  machine_type = var.gcp_machine_type
-  zone         = var.gcp_zone
+  machine_type = var.machine_type
+  zone         = var.zone
   tags         = ["externalaccess"]
 
   boot_disk {
     initialize_params {
-      image = var.gcp_operating_system
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
     }
   }
 
@@ -55,6 +55,6 @@ resource "google_compute_instance" "main" {
   }
 
   metadata = {
-    ssh-keys = "${var.ssh_user}:${var.public_node_public_key}"
+    ssh-keys = "${var.ssh_user}:${var.public_key}"
   }
 }

@@ -1,5 +1,5 @@
 provider "google" {
-  project     = "polkadot-benchmarks"
+  project     = var.state_project
 }
 
 resource "google_storage_bucket" "imagestore" {

@@ -20,7 +20,8 @@ module.exports = {
       process.exit(-1);
     }
     console.log(chalk.green('Done'));
-
+    console.log(`platformResult: ${JSON.stringify(platformResult)}`)
+    /*
     console.log(chalk.yellow('Syncing application...'));
     const app = new Application(cfg, platformResult);
     try {
@@ -30,5 +31,6 @@ module.exports = {
       process.exit(-1);
     }
     console.log(chalk.green('Done'));
+    */
   }
 }

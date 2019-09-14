@@ -11,16 +11,25 @@ class Platform {
   async sync() {
     await this.tf.sync();
 
-    const validatorIpAddress = (await this.tf.output('validator_ip_address')).toString();
-    const public1IpAddress = (await this.tf.output('public1_ip_address')).toString();
-    const public2IpAddress = (await this.tf.output('public2_ip_address')).toString();
-    const public3IpAddress = (await this.tf.output('public3_ip_address')).toString();
+    const validatorIpAddresses = this._extractOutput(this.config.validators);
+    const publicNodesIpAddresses = this._extractOutput(this.config.publicNodes);
 
-    return { validatorIpAddress, public1IpAddress, public2IpAddress, public3IpAddress };
+    return { validatorIpAddresses, publicNodesIpAddresses };
   }
 
   async clean() {
     return this.tf.clean();
+  }
+
+  _extractOutput(nodeSet) {
+    const output = [];
+    nodeSet.nodes.forEach(async (node) => {
+      const ipAddress = (await this.tf.nodeOutput(node.provider, 'ip_address')).toString();
+
+      output.push(ipAddress);
+    });
+
+    return output;
   }
 }
 

@@ -4,7 +4,7 @@ variable "public2_prefix" {
 
 resource "azurerm_resource_group" "main" {
   name     = "${var.public2_prefix}-resources"
-  location = var.azure_region
+  location = var.location
 }
 
 resource "azurerm_virtual_network" "main" {
@@ -78,7 +78,7 @@ resource "azurerm_virtual_machine" "main" {
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
-      key_data = var.public_node_public_key
+      key_data = var.public_key
       path     = "/home/${var.ssh_user}/.ssh/authorized_keys"
     }
   }

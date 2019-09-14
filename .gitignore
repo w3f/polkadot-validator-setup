@@ -4,3 +4,4 @@ terraform-modules/**/*.tfstate
 ansible/inventory
 ansible/**/__pycache__
 config/main.json
+yarn-error.log

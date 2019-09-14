@@ -1,11 +1,49 @@
 {
   "project": "w3f",
-  "defaultUser": "w3fadmin",
   "polkadotBinaryUrl": "https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot",
+  "state": {
+    "project": "my_gcp_state_project"
+  },
   "validators": {
-    "telemetryUrl": "wss://telemetry.polkadot.io/submit/"
+    "telemetryUrl": "wss://telemetry.polkadot.io/submit/",
+    "nodes": [
+      {
+        "provider": "packet",
+        "machineType": "c1.small.x86",
+        "amount": 1,
+        "location": "ewr1",
+        "projectId": "my_packet_project",
+        "sshUser": "root"
+      }
+    ]
   },
   "publicNodes": {
-    "telemetryUrl": "wss://telemetry.polkadot.io/submit/"
+    "telemetryUrl": "wss://telemetry.polkadot.io/submit/",
+    "nodes": [
+      {
+        "provider": "aws",
+        "machineType": "m4.large",
+        "amount": 1,
+        "location": "eu-central-1",
+        "zone": "eu-central-1a",
+        "sshUser": "ubuntu"
+      },
+      {
+        "provider": "azure",
+        "machineType": "Standard_D2s_v3",
+        "amount": 1,
+        "location": "japanwest",
+        "sshUser": "w3fadmin"
+      },
+      {
+        "provider": "gcp",
+        "machineType": "n1-standard-2",
+        "amount": 1,
+        "location": "us-east1",
+        "zone": "us-east1-b",
+        "projectId": "my_gcp_project",
+        "sshUser": "w3fadmin"
+      }
+    ]
   }
 }

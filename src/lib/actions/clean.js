@@ -10,16 +10,6 @@ module.exports = {
   do: async (cmd) => {
     const cfg = config.read(cmd.config);
 
-    console.log(chalk.yellow('Cleaning application...'));
-    const app = new Application(cfg);
-    try {
-      await app.clean();
-    } catch (e) {
-      console.log(chalk.red(`Could not clean application: ${e.message}`));
-      process.exit(-1);
-    }
-    console.log(chalk.green('Done'));
-
     console.log(chalk.yellow('Cleaning platform...'));
     const platform = new Platform(cfg);
     try {

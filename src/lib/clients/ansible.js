@@ -41,15 +41,11 @@ class Ansible {
 
       polkadotBinaryUrl: this.config.polkadotBinaryUrl,
 
-      validatorIpAddress: this.config.validatorIpAddress,
-      public1IpAddress: this.config.public1IpAddress,
-      public2IpAddress: this.config.public2IpAddress,
-      public3IpAddress: this.config.public3IpAddress,
+      validators: this.config.validators,
+      publicNodes: this.config.publicNodes,
 
       validatorTelemetryUrl: this.config.validators.telemetryUrl,
       publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
-
-      defaultUser: this.config.defaultUser
     };
 
     tpl.create(origin, target, data);
