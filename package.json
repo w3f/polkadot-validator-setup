@@ -8,7 +8,9 @@
   "scripts": {
     "test": "mocha --reporter spec --recursive",
     "sync": "node . sync",
-    "clean": "node . clean"
+    "clean": "node . clean",
+    "lint": "eslint .",
+    "pretest": "yarn lint"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -19,7 +21,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^6.0.1",
+    "eslint": "^6.4.0",
     "mocha": "^6.2.0",
     "tmp": "^0.1.0"
   }
