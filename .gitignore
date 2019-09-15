@@ -1,6 +1,6 @@
 node_modules
-terraform-modules/**/.terraform/
-terraform-modules/**/*.tfstate
+terraform/**/.terraform/
+terraform/**/*.tfstate
 ansible/inventory
 ansible/**/__pycache__
 config/main.json
