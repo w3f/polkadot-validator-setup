@@ -1,47 +1,35 @@
 {{#each validators.nodes }}
-{{#each this.ipAdresses
-[validator-{{@../index}}-{{@index}}]
-{{ this }}
+[validator-{{@index}}]
+{{ this.ipAddress }}
 
-[validator-{{@../index}}-{{@index}}:vars]
-ansible_user=root
-vpnpeer_address=10.0.0.1
+[validator-{{@index}}:vars]
+ansible_user={{ this.sshUser }}
+vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
 telemetryUrl={{ validatorTelemetryUrl }}
 {{/each}}
+
+[validator:children]
+{{#each validators.nodes }}
+[validator-{{@index}}]
 {{/each}}
 
-[public1]
-{{ public1IpAddress }}
 
-[public1:vars]
-ansible_user=ubuntu
-vpnpeer_address=10.0.0.2
+{{#each publicNodes.nodes }}
+[public-{{@index}}]
+{{ this.ipAddress }}
+
+[public-{{@index}}:vars]
+ansible_user={{ this.sshUser }}
+vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
 telemetryUrl={{ publicTelemetryUrl }}
-
-[public2]
-{{ public2IpAddress }}
-
-[public2:vars]
-ansible_user={{ defaultUser }}
-vpnpeer_address=10.0.0.3
-vpnpeer_cidr_suffix=24
-telemetryUrl={{ publicTelemetryUrl }}
-
-[public3]
-{{ public3IpAddress }}
-
-[public3:vars]
-ansible_user={{ defaultUser }}
-vpnpeer_address=10.0.0.4
-vpnpeer_cidr_suffix=24
-telemetryUrl={{ publicTelemetryUrl }}
+{{/each}}
 
 [public:children]
-public1
-public2
-public3
+{{#each publicNodes.nodes }}
+[public-{{@index}}]
+{{/each}}
 
 [all:vars]
 project={{ project }}
