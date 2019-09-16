@@ -1,6 +1,9 @@
 node_modules
-terraform-modules/**/.terraform/
-terraform-modules/**/*.tfstate
+terraform/**/.terraform/
+terraform/**/*.tfstate
+terraform/**/*.tfstate.backup
+terraform/**/terraform.tfvars
 ansible/inventory
 ansible/**/__pycache__
 config/main.json
+yarn-error.log

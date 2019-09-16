@@ -4,7 +4,7 @@ variable "public1_prefix" {
 
 resource "aws_key_pair" "public1" {
   key_name   = var.public1_prefix
-  public_key = var.public_node_public_key
+  public_key = var.public_key
 }
 
 data "aws_ami" "ubuntu" {
@@ -40,7 +40,7 @@ resource "aws_subnet" "main" {
 
   vpc_id = "${aws_vpc.main.id}"
 
-  availability_zone = var.aws_az
+  availability_zone = var.zone
 
   map_public_ip_on_launch = true
 }
@@ -118,7 +118,7 @@ resource "aws_security_group_rule" "allow_all" {
 
 resource "aws_instance" "main" {
   ami           = "${data.aws_ami.ubuntu.id}"
-  instance_type = var.aws_machine_type
+  instance_type = var.machine_type
   key_name      = var.public1_prefix
 
   subnet_id              = "${aws_subnet.main.id}"

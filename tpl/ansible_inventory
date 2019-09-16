@@ -1,45 +1,39 @@
-[validator]
-{{ validatorIpAddress }}
+{{#each validators }}
+[validator-{{@index}}]
+{{ this.ipAddress }}
 
-[validator:vars]
-ansible_user=root
-vpnpeer_address=10.0.0.1
+[validator-{{@index}}:vars]
+ansible_user={{ this.sshUser }}
+vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
-telemetryUrl={{ validatorTelemetryUrl }}
+telemetryUrl={{ ../validatorTelemetryUrl }}
 
-[public1]
-{{ public1IpAddress }}
+{{/each}}
 
-[public1:vars]
-ansible_user=ubuntu
-vpnpeer_address=10.0.0.2
+[validator:children]
+{{#each validators }}
+validator-{{@index}}
+{{/each}}
+
+
+{{#each publicNodes }}
+[public-{{@index}}]
+{{ this.ipAddress }}
+
+[public-{{@index}}:vars]
+ansible_user={{ this.sshUser }}
+vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
-telemetryUrl={{ publicTelemetryUrl }}
+telemetryUrl={{ ../publicTelemetryUrl }}
 
-[public2]
-{{ public2IpAddress }}
-
-[public2:vars]
-ansible_user={{ defaultUser }}
-vpnpeer_address=10.0.0.3
-vpnpeer_cidr_suffix=24
-telemetryUrl={{ publicTelemetryUrl }}
-
-[public3]
-{{ public3IpAddress }}
-
-[public3:vars]
-ansible_user={{ defaultUser }}
-vpnpeer_address=10.0.0.4
-vpnpeer_cidr_suffix=24
-telemetryUrl={{ publicTelemetryUrl }}
+{{/each}}
 
 [public:children]
-public1
-public2
-public3
+{{#each publicNodes }}
+public-{{@index}}
+{{/each}}
 
 [all:vars]
 project={{ project }}
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=10'
-polkadot_binary_url={{if polkadotBinaryUrl}}{{polkadotBinaryUrl}}{{else}}https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot{{/if}}
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
+polkadot_binary_url={{ polkadotBinaryUrl }}

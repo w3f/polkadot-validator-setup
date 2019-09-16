@@ -1,4 +1,3 @@
-const fs = require('fs-extra');
 const path = require('path');
 
 const cmd = require('../cmd');
@@ -20,7 +19,7 @@ class Ansible {
 
   async sync() {
     this._writeInventory();
-    //return cmd.exec(`ansible all -b -m ping -i ${inventoryFileName}`, this.options);
+    //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
     return this._cmd(`main.yml -i ${inventoryFileName}`);
   }
 
@@ -41,18 +40,33 @@ class Ansible {
 
       polkadotBinaryUrl: this.config.polkadotBinaryUrl,
 
-      validatorIpAddress: this.config.validatorIpAddress,
-      public1IpAddress: this.config.public1IpAddress,
-      public2IpAddress: this.config.public2IpAddress,
-      public3IpAddress: this.config.public3IpAddress,
+      validators: this._genTplNodes(this.config.validators),
+      publicNodes: this._genTplNodes(this.config.publicNodes, this.config.validators.nodes.length),
 
       validatorTelemetryUrl: this.config.validators.telemetryUrl,
       publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
-
-      defaultUser: this.config.defaultUser
     };
 
     tpl.create(origin, target, data);
+  }
+
+  _genTplNodes(nodeSet, offset=0) {
+    const output = [];
+    const vpnAddressBase = '10.0.0';
+    let counter = offset;
+
+    nodeSet.nodes.forEach((node) => {
+      node.ipAddresses.forEach((ipAddress) => {
+        counter++;
+        const item = {
+          ipAddress,
+          sshUser: node.sshUser,
+          vpnAddress: `${vpnAddressBase}.${counter}`
+        };
+        output.push(item);
+      });
+    });
+    return output;
   }
 }
 

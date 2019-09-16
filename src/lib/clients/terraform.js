@@ -1,16 +1,15 @@
-const chalk = require('chalk');
 const path = require('path');
-const process = require('process');
 
 const cmd = require('../cmd');
 const ssh = require('../ssh');
+const tpl = require('../tpl');
 
 
 class Terraform {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    const terraformFilesPath = path.join(__dirname, '..', '..', '..', 'terraform-modules', 'secure-validator');
+    const terraformFilesPath = path.join(__dirname, '..', '..', '..', 'terraform');
     this.options = {
       cwd: terraformFilesPath,
       verbose: true
@@ -18,40 +17,105 @@ class Terraform {
   }
 
   async sync() {
-    await this._cmd(`init`);
+    await this._initState();
 
-    const validatorSshPrivateKeyPath = process.env['SSH_ID_RSA_VALIDATOR'];
-    if(!validatorSshPrivateKeyPath) {
-      console.log(chalk.red('Please, export the path of the file with the private SSH key you want to use on validators as the environment variable SSH_ID_RSA_VALIDATOR'));
-      process.exit(-1);
-    }
-    const publicNodeSshPrivateKeyPath = process.env['SSH_ID_RSA_PUBLIC'];
-    if(!publicNodeSshPrivateKeyPath) {
-      console.log(chalk.red('Please, export the path of the file with the private SSH key you want to use on public nodes as the environment variable SSH_ID_RSA_PUBLIC'));
-      process.exit(-1);
-    }
+    const sshKeys = ssh.keys();
 
-    const validatorSshPublicKey = ssh.publicKeyFromPrivateKeyPath(validatorSshPrivateKeyPath);
-    const publicNodeSshPublicKey = ssh.publicKeyFromPrivateKeyPath(publicNodeSshPrivateKeyPath);
+    const syncPromises = [
+      this._create(sshKeys.validatorPublicKey, this.config.validators.nodes),
+      this._create(sshKeys.publicNodePublicKey, this.config.publicNodes.nodes)
+    ];
 
-    return this._cmd(`apply -var ssh_user=${this.config.defaultUser} -var validator_public_key=${validatorSshPublicKey} -var public_node_public_key=${publicNodeSshPublicKey} -auto-approve`);
+    return Promise.all(syncPromises);
   }
 
   async clean() {
-    await this._cmd(`init`);
-    return this._cmd(`destroy -auto-approve`);
+    const cleanPromises = [
+      this._destroy(this.config.validators.nodes),
+      this._destroy(this.config.publicNodes.nodes)
+    ];
+
+    return Promise.all(cleanPromises);
   }
 
-  async output(field) {
-    return this._cmd(`output ${field}`);
+  nodeOutput(provider, outputField) {
+    const options = {
+      cwd: path.join(this.options.cwd, provider)
+    };
+
+    return this._cmd(`output ${outputField}`, options);
+  }
+
+  async _create(sshKey, nodes) {
+    const createPromises = [];
+
+    for (let counter = 0; counter < nodes.length; counter++) {
+      createPromises.push(this._createPromise(sshKey, nodes[counter]));
+    }
+    return Promise.all(createPromises);
+  }
+
+  async _createPromise(sshKey, node) {
+    const options = {
+      cwd: path.join(this.options.cwd, node.provider)
+    };
+    await this._cmd(`init -var state_project=${this.config.state.project}`, options);
+
+    this._createVarsFile(options.cwd, node, sshKey);
+
+    return this._cmd(`apply -auto-approve`, options);
+  }
+
+  async _destroy(nodes) {
+    const destroyPromises = [];
+
+    for (let counter = 0; counter < nodes.length; counter++) {
+      destroyPromises.push(this._destroyPromise(nodes[counter].provider));
+    }
+    return Promise.all(destroyPromises);
+  }
+
+  async _destroyPromise(provider) {
+    const options = {
+      cwd: path.join(this.options.cwd, provider)
+    };
+    await this._cmd(`init -var state_project=${this.config.state.project}`, options);
+
+    return this._cmd('destroy -auto-approve', options);
   }
 
   async _cmd(command, options = {}) {
     const actualOptions = Object.assign({}, this.options, options);
     return cmd.exec(`terraform ${command}`, actualOptions);
   }
-}
 
+  async _initState(){
+    const statePath = path.join(this.options.cwd, 'remote-state');
+    const options = {
+      cwd: statePath
+    }
+
+    await this._cmd(`init -var state_project=${this.config.state.project}`, options);
+    return this._cmd(`apply -var state_project=${this.config.state.project} -auto-approve`, options);
+  }
+
+  _createVarsFile(cwd, node, sshKey) {
+    const data = {
+      stateProject: this.config.state.project,
+      publicKey: sshKey,
+      sshUser: node.sshUser,
+      machineType: node.machineType,
+      location: node.location,
+      zone: node.zone,
+      projectId: node.projectId
+    }
+
+    const source = path.join(__dirname, '..', '..', '..', 'tpl', 'tfvars');
+    const target = path.join(cwd, 'terraform.tfvars');
+
+    tpl.create(source, target, data);
+  }
+}
 
 module.exports = {
   Terraform
