@@ -1,3 +1,4 @@
+const asyncUtils = require('./async.js');
 const { Terraform } = require('./clients/terraform');
 
 
@@ -11,8 +12,8 @@ class Platform {
   async sync() {
     await this.tf.sync();
 
-    const validatorIpAddresses = await this._extractOutput(this.config.validators);
-    const publicNodesIpAddresses = await this._extractOutput(this.config.publicNodes);
+    const validatorIpAddresses = await this._extractOutput(this.config.validators.nodes);
+    const publicNodesIpAddresses = await this._extractOutput(this.config.publicNodes.nodes);
 
     return { validatorIpAddresses, publicNodesIpAddresses };
   }
@@ -23,11 +24,10 @@ class Platform {
 
   async _extractOutput(nodeSet) {
     const output = [];
-    for (let counter = 0; counter < nodeSet.length; counter++) {
-      const ipAddress = (await this.tf.nodeOutput(nodeSet[counter].provider, 'ip_address')).toString();
-
-      output.push(ipAddress);
-    }
+    await asyncUtils.forEach(nodeSet, async (node) => {
+      const ipAddress = await this.tf.nodeOutput(node.provider, 'ip_address');
+      output.push(ipAddress.toString().trim());
+    });
     return output;
   }
 }

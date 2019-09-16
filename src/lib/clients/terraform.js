@@ -38,7 +38,7 @@ class Terraform {
     return Promise.all(cleanPromises);
   }
 
-  async nodeOutput(provider, outputField) {
+  nodeOutput(provider, outputField) {
     const options = {
       cwd: path.join(this.options.cwd, provider)
     };
