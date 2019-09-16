@@ -40,7 +40,7 @@ class Terraform {
 
   async nodeOutput(provider, outputField) {
     const options = {
-      cwd: path.join(this.options.cwd, provider);
+      cwd: path.join(this.options.cwd, provider)
     };
 
     return this._cmd(`output ${outputField}`, options);
@@ -50,38 +50,38 @@ class Terraform {
     const createPromises = [];
 
     for (let counter = 0; counter < nodes.length; counter++) {
-      createPromises.push(async (resolve) => {
-        const options = {
-          cwd: path.join(this.options.cwd, nodes[counter].provider)
-        };
-        await this._cmd(`init -var state_project=${this.config.state.project}`, options);
-
-        this._createVarsFile(options.cwd, nodes[counter], sshKey);
-
-        await this._cmd(`apply -auto-approve`, options);
-
-        resolve(true);
-      });
+      createPromises.push(this._createPromise(sshKey, nodes[counter]));
     }
     return Promise.all(createPromises);
+  }
+
+  async _createPromise(sshKey, node) {
+    const options = {
+      cwd: path.join(this.options.cwd, node.provider)
+    };
+    await this._cmd(`init -var state_project=${this.config.state.project}`, options);
+
+    this._createVarsFile(options.cwd, node, sshKey);
+
+    return this._cmd(`apply -auto-approve`, options);
   }
 
   async _destroy(nodes) {
     const destroyPromises = [];
 
     for (let counter = 0; counter < nodes.length; counter++) {
-      destroyPromises.push(async (resolve) => {
-        const options = {
-          cwd: path.join(this.options.cwd, nodes[counter].provider)
-        };
-        await this._cmd(`init -var state_project=${this.config.state.project}`, options);
-
-        await this._cmd('destroy -auto-approve', options);
-
-        resolve(true);
-      });
+      destroyPromises.push(this._destroyPromise(nodes[counter].provider));
     }
     return Promise.all(destroyPromises);
+  }
+
+  async _destroyPromise(provider) {
+    const options = {
+      cwd: path.join(this.options.cwd, provider)
+    };
+    await this._cmd(`init -var state_project=${this.config.state.project}`, options);
+
+    return this._cmd('destroy -auto-approve', options);
   }
 
   async _cmd(command, options = {}) {

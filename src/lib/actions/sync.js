@@ -3,7 +3,7 @@ const process = require('process');
 
 const config = require('../config.js');
 const { Platform } = require('../platform.js');
-const { Application } = require('../application.js');
+//const { Application } = require('../application.js');
 
 
 module.exports = {
