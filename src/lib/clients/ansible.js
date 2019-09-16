@@ -19,7 +19,7 @@ class Ansible {
 
   async sync() {
     this._writeInventory();
-    //return cmd.exec(`ansible all -b -m ping -i ${inventoryFileName}`, this.options);
+    //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
     return this._cmd(`main.yml -i ${inventoryFileName}`);
   }
 
@@ -40,14 +40,33 @@ class Ansible {
 
       polkadotBinaryUrl: this.config.polkadotBinaryUrl,
 
-      validators: this.config.validators,
-      publicNodes: this.config.publicNodes,
+      validators: this._genTplNodes(this.config.validators),
+      publicNodes: this._genTplNodes(this.config.publicNodes, this.config.validators.nodes.length),
 
       validatorTelemetryUrl: this.config.validators.telemetryUrl,
       publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
     };
 
     tpl.create(origin, target, data);
+  }
+
+  _genTplNodes(nodeSet, offset=0) {
+    const output = [];
+    const vpnAddressBase = '10.0.0';
+    let counter = offset;
+
+    nodeSet.nodes.forEach((node) => {
+      node.ipAddresses.forEach((ipAddress) => {
+        counter++;
+        const item = {
+          ipAddress,
+          sshUser: node.sshUser,
+          vpnAddress: `${vpnAddressBase}.${counter}`
+        };
+        output.push(item);
+      });
+    });
+    return output;
   }
 }
 
