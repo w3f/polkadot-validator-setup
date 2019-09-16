@@ -26,7 +26,7 @@ class Platform {
     const output = [];
     await asyncUtils.forEach(nodeSet, async (node) => {
       const ipAddress = await this.tf.nodeOutput(node.provider, 'ip_address');
-      output.push(ipAddress.toString().trim());
+      output.push([ipAddress.toString().trim()]);
     });
     return output;
   }
