@@ -1,4 +1,4 @@
-{{#each validators.nodes }}
+{{#each validators }}
 [validator-{{@index}}]
 {{ this.ipAddress }}
 
@@ -6,16 +6,17 @@
 ansible_user={{ this.sshUser }}
 vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
-telemetryUrl={{ validatorTelemetryUrl }}
+telemetryUrl={{ ../validatorTelemetryUrl }}
+
 {{/each}}
 
 [validator:children]
-{{#each validators.nodes }}
-[validator-{{@index}}]
+{{#each validators }}
+validator-{{@index}}
 {{/each}}
 
 
-{{#each publicNodes.nodes }}
+{{#each publicNodes }}
 [public-{{@index}}]
 {{ this.ipAddress }}
 
@@ -23,15 +24,16 @@ telemetryUrl={{ validatorTelemetryUrl }}
 ansible_user={{ this.sshUser }}
 vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
-telemetryUrl={{ publicTelemetryUrl }}
+telemetryUrl={{ ../publicTelemetryUrl }}
+
 {{/each}}
 
 [public:children]
-{{#each publicNodes.nodes }}
-[public-{{@index}}]
+{{#each publicNodes }}
+public-{{@index}}
 {{/each}}
 
 [all:vars]
 project={{ project }}
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=10'
-polkadot_binary_url={{if polkadotBinaryUrl}}{{polkadotBinaryUrl}}{{else}}https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot{{/if}}
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
+polkadot_binary_url={{ polkadotBinaryUrl }}
