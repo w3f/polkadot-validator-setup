@@ -1,6 +1,4 @@
-const chalk = require('chalk');
 const path = require('path');
-const process = require('process');
 
 const cmd = require('../cmd');
 const ssh = require('../ssh');
@@ -19,12 +17,7 @@ class Terraform {
   }
 
   async sync() {
-    try {
-      await this._initState();
-    } catch(e) {
-      // allow errors bc of state store already created.
-      console.log(`Error initializing state: ${e.message}`);
-    }
+    await this._initState();
 
     const sshKeys = ssh.keys();
 
@@ -45,37 +38,49 @@ class Terraform {
     return Promise.all(cleanPromises);
   }
 
+  async nodeOutput(provider, outputField) {
+    const options = {
+      cwd: path.join(this.options.cwd, provider);
+    };
+
+    return this._cmd(`output ${outputField}`, options);
+  }
+
   async _create(sshKey, nodes) {
     const createPromises = [];
 
-    nodes.forEach((node) => {
-      createPromises.push(new Promise(async (resolve) => {
+    for (let counter = 0; counter < nodes.length; counter++) {
+      createPromises.push(async (resolve) => {
         const options = {
-          cwd: path.join(this.options.cwd, node.provider)
+          cwd: path.join(this.options.cwd, nodes[counter].provider)
         };
         await this._cmd(`init -var state_project=${this.config.state.project}`, options);
 
-        this._createVarsFile(options.cwd, node, sshKey);
+        this._createVarsFile(options.cwd, nodes[counter], sshKey);
 
         await this._cmd(`apply -auto-approve`, options);
-      }));
-    });
+
+        resolve(true);
+      });
+    }
     return Promise.all(createPromises);
   }
 
   async _destroy(nodes) {
     const destroyPromises = [];
 
-    nodes.forEach((node) => {
-      destroyPromises.push(new Promise(async (resolve) => {
+    for (let counter = 0; counter < nodes.length; counter++) {
+      destroyPromises.push(async (resolve) => {
         const options = {
-          cwd: path.join(this.options.cwd, node.provider)
+          cwd: path.join(this.options.cwd, nodes[counter].provider)
         };
         await this._cmd(`init -var state_project=${this.config.state.project}`, options);
 
         await this._cmd('destroy -auto-approve', options);
-      }));
-    });
+
+        resolve(true);
+      });
+    }
     return Promise.all(destroyPromises);
   }
 
