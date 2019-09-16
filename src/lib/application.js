@@ -5,11 +5,11 @@ class Application {
   constructor(cfg, platformResult={}) {
     const ansibleCfg = JSON.parse(JSON.stringify(cfg));
 
-    for (let counter = 0; counter < this.config.validators.nodes.length; counter++) {
+    for (let counter = 0; counter < ansibleCfg.validators.nodes.length; counter++) {
       ansibleCfg.validators.nodes[counter].ipAddresses = platformResult.validatorIpAddresses[counter];
     }
 
-    for (let counter = 0; counter < this.config.publicNodes.nodes.length; counter++) {
+    for (let counter = 0; counter < ansibleCfg.publicNodes.nodes.length; counter++) {
       ansibleCfg.publicNodes.nodes[counter].ipAddresses = platformResult.publicNodesIpAddresses[counter];
     }
 
