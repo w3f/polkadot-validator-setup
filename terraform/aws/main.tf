@@ -120,6 +120,7 @@ resource "aws_instance" "main" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = var.machine_type
   key_name      = var.public1_prefix
+  count         = var.node_count
 
   subnet_id              = "${aws_subnet.main.id}"
   vpc_security_group_ids = ["${aws_security_group.main.id}"]

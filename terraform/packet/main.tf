@@ -11,4 +11,5 @@ resource "packet_device" "validator" {
   billing_cycle    = "hourly"
   project_id       = var.project_id
   depends_on       = ["packet_ssh_key.key1"]
+  count            = var.node_count
 }

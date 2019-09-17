@@ -33,6 +33,7 @@ resource "google_compute_instance" "main" {
   machine_type = var.machine_type
   zone         = var.zone
   tags         = ["externalaccess"]
+  count        = var.node_count
 
   boot_disk {
     initialize_params {

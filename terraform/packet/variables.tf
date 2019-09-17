@@ -27,3 +27,7 @@ variable "public_key" {
 variable "ssh_user" {
   default = ""
 }
+
+variable "node_count" {
+  default = 1
+}
