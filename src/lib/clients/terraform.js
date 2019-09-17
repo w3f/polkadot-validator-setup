@@ -43,7 +43,7 @@ class Terraform {
       cwd: path.join(this.options.cwd, provider)
     };
 
-    return this._cmd(`output ${outputField}`, options);
+    return this._cmd(`output -json ${outputField}`, options);
   }
 
   async _create(sshKey, nodes) {
