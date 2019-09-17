@@ -10,7 +10,7 @@
       {
         "provider": "packet",
         "machineType": "c1.small.x86",
-        "amount": 1,
+        "count": 1,
         "location": "ewr1",
         "projectId": "my_packet_project",
         "sshUser": "root"
@@ -23,7 +23,7 @@
       {
         "provider": "aws",
         "machineType": "m4.large",
-        "amount": 1,
+        "count": 1,
         "location": "eu-central-1",
         "zone": "eu-central-1a",
         "sshUser": "ubuntu"
@@ -31,14 +31,14 @@
       {
         "provider": "azure",
         "machineType": "Standard_D2s_v3",
-        "amount": 1,
+        "count": 1,
         "location": "japanwest",
         "sshUser": "w3fadmin"
       },
       {
         "provider": "gcp",
         "machineType": "n1-standard-2",
-        "amount": 1,
+        "count": 1,
         "location": "us-east1",
         "zone": "us-east1-b",
         "projectId": "my_gcp_project",
