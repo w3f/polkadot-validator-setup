@@ -22,25 +22,27 @@ resource "azurerm_subnet" "internal" {
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = "${var.public2_prefix}-nic"
+  name                = "${var.public2_prefix}-nic-${count.index}"
   location            = "${azurerm_resource_group.main.location}"
   resource_group_name = "${azurerm_resource_group.main.name}"
+  count               = var.node_count
 
   ip_configuration {
     name                          = "testconfiguration1"
     subnet_id                     = "${azurerm_subnet.internal.id}"
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = "${azurerm_public_ip.main.id}"
+    public_ip_address_id          = "${azurerm_public_ip.main[count.index].id}"
   }
 }
 
 resource "azurerm_public_ip" "main" {
-  name                    = "${var.public2_prefix}-ip"
+  name                    = "${var.public2_prefix}-ip-${count.index}"
   location                = "${azurerm_resource_group.main.location}"
   resource_group_name     = "${azurerm_resource_group.main.name}"
   allocation_method       = "Static"
   sku                     = "Standard"
   idle_timeout_in_minutes = 30
+  count                   = var.node_count
 
   tags = {
     name = var.public2_prefix
@@ -51,7 +53,7 @@ resource "azurerm_virtual_machine" "main" {
   name                  = "${var.public2_prefix}-vm-${count.index}"
   location              = "${azurerm_resource_group.main.location}"
   resource_group_name   = "${azurerm_resource_group.main.name}"
-  network_interface_ids = ["${azurerm_network_interface.main.id}"]
+  network_interface_ids = ["${azurerm_network_interface.main[count.index].id}"]
   vm_size               = "Standard_DS1_v2"
   count                 = var.node_count
 
@@ -89,8 +91,9 @@ resource "azurerm_virtual_machine" "main" {
 }
 
 data "azurerm_public_ip" "main" {
-  name                = "${azurerm_public_ip.main.name}"
+  name                = "${azurerm_public_ip.main[count.index].name}"
   resource_group_name = "${azurerm_resource_group.main.name}"
+  count               = var.node_count
 }
 
 resource "azurerm_network_security_group" "main" {
