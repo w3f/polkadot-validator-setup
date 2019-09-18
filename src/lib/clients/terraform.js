@@ -108,7 +108,7 @@ class Terraform {
       location: node.location,
       zone: node.zone,
       projectId: node.projectId,
-      count: node.count || 1
+      nodeCount: node.count || 1
     }
 
     const source = path.join(__dirname, '..', '..', '..', 'tpl', 'tfvars');
