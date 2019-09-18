@@ -79,12 +79,12 @@ resource "azurerm_virtual_machine" "main" {
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
-      key_data = "${var.public2_prefix}-vm-${count.index}"
+      key_data = var.public_key
       path     = "/home/${var.ssh_user}/.ssh/authorized_keys"
     }
   }
   tags = {
-    name = var.public2_prefix
+    name = "${var.public2_prefix}-${count.index}"
   }
 }
 
