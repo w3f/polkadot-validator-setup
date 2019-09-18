@@ -5,7 +5,7 @@ Description=Polkadot Node
 User=polkadot
 Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
-         --name {{ project|default('project') }}-sv-private \
+         --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
          --validator \
          --listen-addr=/ip4/{{ hostvars[inventory_hostname].vpnpeer_address }}/tcp/30333 \
          {% for reserved_node in groups['public'] %}
