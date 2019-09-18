@@ -32,6 +32,7 @@
 - name: initialize server keys
   uri:
     url: http://localhost:9933
+    method: "POST"
     body_format: json
     body: |
       { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
