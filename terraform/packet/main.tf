@@ -4,7 +4,7 @@ resource "packet_ssh_key" "key1" {
 }
 
 resource "packet_device" "validator" {
-  hostname         = "validator"
+  hostname         = "validator-${count.index}"
   plan             = var.machine_type
   facilities       = [var.location]
   operating_system = "ubuntu_18_04"

@@ -48,7 +48,7 @@ resource "azurerm_public_ip" "main" {
 }
 
 resource "azurerm_virtual_machine" "main" {
-  name                  = "${var.public2_prefix}-vm"
+  name                  = "${var.public2_prefix}-vm-${count.index}"
   location              = "${azurerm_resource_group.main.location}"
   resource_group_name   = "${azurerm_resource_group.main.name}"
   network_interface_ids = ["${azurerm_network_interface.main.id}"]
@@ -66,7 +66,7 @@ resource "azurerm_virtual_machine" "main" {
     version   = "latest"
   }
   storage_os_disk {
-    name              = "myosdisk1"
+    name              = "myosdisk-${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -79,7 +79,7 @@ resource "azurerm_virtual_machine" "main" {
   os_profile_linux_config {
     disable_password_authentication = true
     ssh_keys {
-      key_data = var.public_key
+      key_data = "${var.public2_prefix}-vm-${count.index}"
       path     = "/home/${var.ssh_user}/.ssh/authorized_keys"
     }
   }

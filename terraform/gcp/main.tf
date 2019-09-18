@@ -29,7 +29,7 @@ resource "google_compute_firewall" "vpn" {
 }
 
 resource "google_compute_instance" "main" {
-  name         = var.public3_prefix
+  name         = "${var.public3_prefix}-${count.index}"
   machine_type = var.machine_type
   zone         = var.zone
   tags         = ["externalaccess"]
