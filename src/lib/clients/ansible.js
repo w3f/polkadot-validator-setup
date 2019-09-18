@@ -35,13 +35,15 @@ class Ansible {
   _writeInventory() {
     const origin = path.resolve(__dirname, '..', '..', '..', 'tpl', 'ansible_inventory');
     const target = path.join(this.ansiblePath, inventoryFileName);
+    const validators = this._genTplNodes(this.config.validators);
+    const publicNodes = this._genTplNodes(this.config.publicNodes, validators.length);
     const data = {
       project: this.config.project,
 
       polkadotBinaryUrl: this.config.polkadotBinaryUrl,
 
-      validators: this._genTplNodes(this.config.validators),
-      publicNodes: this._genTplNodes(this.config.publicNodes, this.config.validators.nodes.length),
+      validators,
+      publicNodes,
 
       validatorTelemetryUrl: this.config.validators.telemetryUrl,
       publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
