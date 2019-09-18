@@ -31,14 +31,14 @@
 
 - name: initialize server keys
   uri:
-    url: localhost:9933
+    url: http://localhost:9933
     body_format: json
     body: |
       { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
-  when: keystore_files == 0
+  when: keystore_files.stdout == "0"
 
 - name: restart server to pick grandpa keys
   systemd:
     name: polkadot.service
     state: restarted
-  when: keystore_files == 0
+  when: keystore_files.stdout == "0"
