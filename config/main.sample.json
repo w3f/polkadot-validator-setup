@@ -32,7 +32,7 @@
         "provider": "azure",
         "machineType": "Standard_D2s_v3",
         "count": 1,
-        "location": "japanwest",
+        "location": "brazilsouth",
         "sshUser": "w3fadmin"
       },
       {
