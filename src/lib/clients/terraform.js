@@ -81,7 +81,7 @@ class Terraform {
     };
     await this._cmd(`init -var state_project=${this.config.state.project}`, options);
 
-    return this._cmd('destroy -auto-approve', options);
+    return this._cmd('destroy -lock=false -auto-approve', options);
   }
 
   async _cmd(command, options = {}) {
