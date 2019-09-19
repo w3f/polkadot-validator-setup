@@ -45,7 +45,7 @@
 
 - name: save rotateKeys output
   copy:
-    content: "{{ rotate_keys.stdout }}"
+    content: "{{ rotate_keys.json }}"
     dest: /home/polkadot/rotate_keys.log
 
 - name: restart server to pick grandpa keys
