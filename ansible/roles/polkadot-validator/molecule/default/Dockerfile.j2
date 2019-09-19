@@ -6,7 +6,7 @@ FROM {{ item.registry.url }}/{{ item.image }}
 FROM {{ item.image }}
 {% endif %}
 
-RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y python sudo bash ca-certificates wget netcat-openbsd && apt-get clean; \
+RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y python sudo bash ca-certificates wget && apt-get clean; \
     elif [ $(command -v dnf) ]; then dnf makecache && dnf --assumeyes install python sudo python-devel python*-dnf bash && dnf clean all; \
     elif [ $(command -v yum) ]; then yum makecache fast && yum install -y python sudo yum-plugin-ovl bash && sed -i 's/plugins=0/plugins=1/g' /etc/yum.conf && yum clean all; \
     elif [ $(command -v zypper) ]; then zypper refresh && zypper install -y python sudo bash python-xml && zypper clean -a; \
@@ -18,7 +18,6 @@ RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
   test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl && \
   rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
 
-RUN echo "#!/bin/sh\nnc -l localhost 9933" > /usr/local/bin/polkadot && \
-  chmod a+x /usr/local/bin/polkadot
+RUN echo IyEvdXNyL2Jpbi9lbnYgcHl0aG9uCmZyb20gQmFzZUhUVFBTZXJ2ZXIgaW1wb3J0IEJhc2VIVFRQUmVxdWVzdEhhbmRsZXIsIEhUVFBTZXJ2ZXIKaW1wb3J0IG9zCgpLRVlfUEFUSCA9ICIvaG9tZS9wb2xrYWRvdC8ubG9jYWwvc2hhcmUvcG9sa2Fkb3QvY2hhaW5zL2tzbWEva2V5c3RvcmUva2V5IgoKCmNsYXNzIFMoQmFzZUhUVFBSZXF1ZXN0SGFuZGxlcik6CiAgICBkZWYgX3NldF9oZWFkZXJzKHNlbGYpOgogICAgICAgIHNlbGYuc2VuZF9yZXNwb25zZSgyMDApCiAgICAgICAgc2VsZi5zZW5kX2hlYWRlcigiQ29udGVudC10eXBlIiwgImFwcGxpY2F0dGlvbi9qc29uIikKICAgICAgICBzZWxmLmVuZF9oZWFkZXJzKCkKCiAgICBkZWYgZG9fUE9TVChzZWxmKToKICAgICAgICBzZWxmLl9zZXRfaGVhZGVycygpCgogICAgICAgIGJhc2VkaXIgPSBvcy5wYXRoLmRpcm5hbWUoS0VZX1BBVEgpCiAgICAgICAgaWYgbm90IG9zLnBhdGguZXhpc3RzKGJhc2VkaXIpOgogICAgICAgICAgICBvcy5tYWtlZGlycyhiYXNlZGlyKQogICAgICAgIHdpdGggb3BlbihLRVlfUEFUSCwgImEiKToKICAgICAgICAgICAgb3MudXRpbWUoS0VZX1BBVEgsIE5vbmUpCgogICAgICAgIHNlbGYud2ZpbGUud3JpdGUoInt9IikKCgpkZWYgcnVuKHNlcnZlcl9jbGFzcz1IVFRQU2VydmVyLCBoYW5kbGVyX2NsYXNzPVMsIHBvcnQ9OTkzMyk6CiAgICBzZXJ2ZXJfYWRkcmVzcyA9ICgiIiwgcG9ydCkKICAgIGh0dHBkID0gc2VydmVyX2NsYXNzKHNlcnZlcl9hZGRyZXNzLCBoYW5kbGVyX2NsYXNzKQogICAgaHR0cGQuc2VydmVfZm9yZXZlcigpCgoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIHJ1bigpCg== | base64 -d > /usr/local/bin/polkadot && chmod a+x /usr/local/bin/polkadot
 
 RUN useradd -m -u 1000 -U -s /bin/sh polkadot
