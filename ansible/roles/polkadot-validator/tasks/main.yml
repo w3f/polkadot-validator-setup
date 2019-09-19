@@ -37,6 +37,16 @@
     body: |
       { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
   when: keystore_files.stdout == "0"
+  register: rotate_keys
+
+- name: show rotateKeys output
+  debug:
+    var: rotate_keys
+
+- name: save rotateKeys output
+  copy:
+    content: "{{ rotate_keys.stdout }}"
+    dest: /home/polkadot/rotate_keys.log
 
 - name: restart server to pick grandpa keys
   systemd:
