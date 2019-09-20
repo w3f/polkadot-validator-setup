@@ -42,11 +42,13 @@
 - name: show rotateKeys output
   debug:
     var: rotate_keys
+  when: keystore_files.stdout == "0"
 
 - name: save rotateKeys output
   copy:
     content: "{{ rotate_keys.json }}"
     dest: /home/polkadot/rotate_keys.log
+  when: keystore_files.stdout == "0"
 
 - name: restart server to pick grandpa keys
   systemd:
