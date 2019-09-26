@@ -49,9 +49,3 @@
     content: "{{ rotate_keys.json }}"
     dest: /home/polkadot/rotate_keys.log
   when: keystore_files.stdout == "0"
-
-- name: restart server to pick grandpa keys
-  systemd:
-    name: polkadot.service
-    state: restarted
-  when: keystore_files.stdout == "0"
