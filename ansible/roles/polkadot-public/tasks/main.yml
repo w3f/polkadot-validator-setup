@@ -14,14 +14,15 @@
     state: started
   notify: enable polkadot service
 
-- name: save log with peer id
-  command: journalctl -u polkadot --no-pager
-  register: polkadot_log
-  until: polkadot_log.stdout is search("Local node identity is.*")
-  changed_when: False
+- name: save networkState
+  uri:
+    url: http://localhost:9933
+    method: "POST"
+    body_format: json
+    body: |
+      { "jsonrpc":"2.0", "method":"system_networkState", "params":[], "id":1 }
+  register: network_state
 
 - name: set peer id as fact
   set_fact:
-    p2p_peer_id: "{{ polkadot_log.stdout | regex_search(regexp,'\\1') | first }}"
-  vars:
-    regexp: 'Local node identity is: ([\w]+)'
+    p2p_peer_id: "{{ network_state.json.result.peerId }}"
