@@ -18,7 +18,32 @@ $ cp config/main.sample.json config/main.json
 $ yarn sync
 ```
 You will need credentials as environment variables for all the infrastructure providers
-used in the platform creation phase (AWS, Azure, GCP and packet).
+used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
+these are the required variables:
+
+* AWS: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+* Azure: `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_SUBSCRIPTION_ID`,
+`ARM_TENANT_ID`, `TF_VAR_client_id` (same as `ARM_CLIENT_ID`),
+`TF_VAR_client_secret` (same as `ARM_CLIENT_SECRET`).
+* GCP: `GOOGLE_APPLICATION_CREDENTIALS` (path to json file with credentials of
+the service account you want to use)
+* PACKET: `TF_VAR_auth_token`
+
+The allows you to specify which providers to use, so you don't need to have
+accounts in all of them, see [here](https://github.com/w3f/polkadot-secure-validator/blob/master/config/main.sample.json)
+for an example of how to define the providers. Yyou could use, for instance,
+packet for the validators and GCP for the public nodes. Keep in mind that, the
+more distributed your public nodes, the fewer opportunities to be affected by
+potential incidents in the respective cloud providers.
+
+You need two additional environment variables to allow ansible to connect to the
+created machines:
+
+* `SSH_ID_RSA_PUBLIC`: path to private SSH key you want to use for the public
+nodes.
+
+* `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
+validators.
 
 You can also just provision a set of previously created machines with the ansible code
 [here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
