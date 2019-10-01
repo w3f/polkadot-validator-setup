@@ -15,6 +15,7 @@ $ git clone https://github.com/w3f/secure-validator
 $ cd secure-validator
 $ yarn
 $ cp config/main.sample.json config/main.json
+# now you should customize config/main.json
 $ yarn sync
 ```
 You will need credentials as environment variables for all the infrastructure providers
