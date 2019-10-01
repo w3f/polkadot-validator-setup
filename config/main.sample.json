@@ -5,7 +5,7 @@
     "project": "my_gcp_state_project"
   },
   "validators": {
-    "telemetryUrl": "wss://telemetry.polkadot.io/submit/",
+    "telemetryUrl": "wss://my.private.telemetry.endpoint",
     "nodes": [
       {
         "provider": "packet",
@@ -18,7 +18,7 @@
     ]
   },
   "publicNodes": {
-    "telemetryUrl": "wss://telemetry.polkadot.io/submit/",
+    "telemetryUrl": "wss://my.private.telemetry.endpoint",
     "nodes": [
       {
         "provider": "aws",
