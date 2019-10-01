@@ -12,8 +12,8 @@ class Platform {
   async sync() {
     await this.tf.sync();
 
-    const validatorIpAddresses = await this._extractOutput(this.config.validators.nodes);
-    const publicNodesIpAddresses = await this._extractOutput(this.config.publicNodes.nodes);
+    const validatorIpAddresses = await this._extractOutput('validator', this.config.validators.nodes);
+    const publicNodesIpAddresses = await this._extractOutput('publicNode', this.config.publicNodes.nodes);
 
     return { validatorIpAddresses, publicNodesIpAddresses };
   }
@@ -22,10 +22,10 @@ class Platform {
     return this.tf.clean();
   }
 
-  async _extractOutput(nodeSet) {
+  async _extractOutput(type, nodeSet) {
     const output = [];
-    await asyncUtils.forEach(nodeSet, async (node) => {
-      const ipAddress = await this.tf.nodeOutput(node.provider, 'ip_address');
+    await asyncUtils.forEach(nodeSet, async (node, index) => {
+      const ipAddress = await this.tf.nodeOutput(type, index, 'ip_address');
       output.push(JSON.parse(ipAddress.toString()));
     });
     return output;
