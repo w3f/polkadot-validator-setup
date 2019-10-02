@@ -1,5 +1,5 @@
 {
-  "name": "secure-validator",
+  "name": "polkadot-secure-validator",
   "version": "0.1.0",
   "main": "src/index.js",
   "repository": "https://github.com/w3f/polkadot-secure-validator",
