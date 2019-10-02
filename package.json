@@ -12,6 +12,12 @@
     "lint": "eslint .",
     "pretest": "yarn lint"
   },
+  "files": [
+    "/ansible",
+    "/src",
+    "/terraform",
+    "/tpl"
+  ],
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
