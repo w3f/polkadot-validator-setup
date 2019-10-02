@@ -24,7 +24,9 @@ class Terraform {
     this._initializeTerraform();
     try {
       await this._initState();
-    } catch(e) {}
+    } catch(e) {
+      console.log(`Allowed error creating state backend: ${e.message}`);
+    }
 
     const sshKeys = ssh.keys();
 
