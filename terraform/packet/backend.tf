@@ -5,7 +5,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket  = "sv-tf-state"
+    bucket  = "${var.name}-sv-tf-state"
     prefix  = "packet"
   }
 }

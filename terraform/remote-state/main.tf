@@ -4,6 +4,6 @@ provider "google" {
 }
 
 resource "google_storage_bucket" "imagestore" {
-  name          = "sv-tf-state"
+  name          = "${var.name}-sv-tf-state"
   force_destroy = true
 }

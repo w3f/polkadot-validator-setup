@@ -29,3 +29,7 @@ variable "ssh_user" {
 variable "node_count" {
   default = 1
 }
+
+variable "name" {
+  default = "w3f"
+}
