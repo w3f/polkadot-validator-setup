@@ -1,6 +1,7 @@
 const path = require('path');
 
 const cmd = require('../cmd');
+const { Project } = require('../project');
 const tpl = require('../tpl');
 
 const inventoryFileName = 'inventory'
@@ -10,7 +11,8 @@ class Ansible {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    this.ansiblePath = path.join(__dirname, '..', '..', '..', 'ansible');
+    const project = new Project(cfg);
+    this.ansiblePath = path.join(project.path(), 'ansible');
     this.options = {
       cwd: this.ansiblePath,
       verbose: true
@@ -18,9 +20,9 @@ class Ansible {
   }
 
   async sync() {
-    this._writeInventory();
+    const inventoryPath = this._writeInventory();
     //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
-    return this._cmd(`main.yml -i ${inventoryFileName}`);
+    return this._cmd(`main.yml -i ${inventoryPath}`);
   }
 
   async clean() {
@@ -50,6 +52,8 @@ class Ansible {
     };
 
     tpl.create(origin, target, data);
+
+    return target;
   }
 
   _genTplNodes(nodeSet, offset=0) {
