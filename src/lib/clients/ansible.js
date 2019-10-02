@@ -11,8 +11,7 @@ class Ansible {
   constructor(cfg) {
     this.config = JSON.parse(JSON.stringify(cfg));
 
-    const project = new Project(cfg);
-    this.ansiblePath = path.join(project.path(), 'ansible');
+    this.ansiblePath = path.join(__dirname, '..', '..', '..', 'ansible');
     this.options = {
       cwd: this.ansiblePath,
       verbose: true
@@ -36,7 +35,8 @@ class Ansible {
 
   _writeInventory() {
     const origin = path.resolve(__dirname, '..', '..', '..', 'tpl', 'ansible_inventory');
-    const target = path.join(this.ansiblePath, inventoryFileName);
+    const project = new Project(this.config);
+    const target = path.join(project.path(), 'ansible', inventoryFileName);
     const validators = this._genTplNodes(this.config.validators);
     const publicNodes = this._genTplNodes(this.config.publicNodes, validators.length);
     const data = {
