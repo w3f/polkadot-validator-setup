@@ -1,0 +1,127 @@
+ansibleIntegrationTest: &ansibleIntegrationTest
+    docker:
+      - image: web3f/secure-validator-ci:v0.3.1
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          description: execute molecule tests for the ansible role at $ROLE_PATH
+          command: |
+            cd $ROLE_PATH
+            molecule test
+
+
+version: 2
+
+jobs:
+  lint:
+    docker:
+      - image: node:10.15-alpine
+    steps:
+      - checkout
+
+      - run: yarn
+
+      - run:
+          name: Run tests
+          command: |
+            yarn test
+
+  commonIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/common
+    <<: *ansibleIntegrationTest
+
+  polkadotCommonIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-common
+    <<: *ansibleIntegrationTest
+
+  polkadotPublicIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-public
+    <<: *ansibleIntegrationTest
+
+  polkadotValidatorIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-validator
+    <<: *ansibleIntegrationTest
+
+  vpnpeerIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/vpnpeer
+    <<: *ansibleIntegrationTest
+
+  vpnpeerSetupIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/vpnpeer-setup
+    <<: *ansibleIntegrationTest
+
+  publishPackage:
+    docker:
+      - image: node:10.15-alpine
+    steps:
+      - checkout
+
+      - run:
+          name: Publish package
+          command: npm publish --userconfig=.npmrc-auth
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - lint:
+          filters:
+            tags:
+              only: /.*/
+      - commonIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotCommonIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotPublicIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotValidatorIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - vpnpeerIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - vpnpeerSetupIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - publishPackage:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
+          requires:
+            - commonIntegrationTest
+            - polkadotCommonIntegrationTest
+            - polkadotPublicIntegrationTest
+            - polkadotValidatorIntegrationTest
+            - vpnpeerIntegrationTest
+            - vpnpeerSetupIntegrationTest

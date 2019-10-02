@@ -2,7 +2,7 @@
   "name": "secure-validator",
   "version": "0.1.0",
   "main": "src/index.js",
-  "repository": "git@34.65.147.28:kusama/secure-validator.git",
+  "repository": "https://github.com/w3f/polkadot-secure-validator",
   "author": "Federico Gimenez <federico@web3.foundation>",
   "license": "GPL-3.0",
   "scripts": {
