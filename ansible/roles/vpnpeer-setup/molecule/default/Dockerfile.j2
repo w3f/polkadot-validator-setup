@@ -17,5 +17,3 @@ RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
   chmod a+x /usr/bin/systemctl && \
   test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl && \
   rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
-
-RUN . /etc/lsb-release && add-apt-repository "deb http://security.ubuntu.com/ubuntu $DISTRIB_CODENAME-security main restricted"
