@@ -1,9 +1,5 @@
-variable "public3_prefix" {
-  default = "sv-public3"
-}
-
-resource "google_compute_firewall" "ssh-p2p" {
-  name    = "ssh-p2p"
+resource "google_compute_firewall" "ssh-p2p-{{ name }}" {
+  name    = "ssh-p2p-{{ name }}"
   network = "default"
 
   allow {
@@ -12,11 +8,11 @@ resource "google_compute_firewall" "ssh-p2p" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["externalaccess"]
+  target_tags   = ["{{ name }}"]
 }
 
-resource "google_compute_firewall" "vpn" {
-  name    = "vpn"
+resource "google_compute_firewall" "vpn-{{ name }}" {
+  name    = "vpn-{{ name }}"
   network = "default"
 
   allow {
@@ -25,14 +21,14 @@ resource "google_compute_firewall" "vpn" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["externalaccess"]
+  target_tags   = ["{{ name }}"]
 }
 
-resource "google_compute_instance" "main" {
-  name         = "${var.public3_prefix}-${count.index}"
+resource "google_compute_instance" "main-{{ name }}" {
+  name         = "${var.name}-${count.index}"
   machine_type = var.machine_type
   zone         = var.zone
-  tags         = ["externalaccess"]
+  tags         = ["{{ name }}"]
   count        = var.node_count
 
   boot_disk {
@@ -49,7 +45,7 @@ resource "google_compute_instance" "main" {
     }
   }
 
-  depends_on = ["google_compute_firewall.ssh-p2p", "google_compute_firewall.vpn"]
+  depends_on = ["google_compute_firewall.ssh-p2p-{{ name }}", "google_compute_firewall.vpn-{{ name }}"]
 
   service_account {
     scopes = ["compute-ro"]
