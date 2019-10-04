@@ -1,59 +1,55 @@
-variable "public2_prefix" {
-  default = "sv-public2"
-}
-
-resource "azurerm_resource_group" "main" {
-  name     = "${var.public2_prefix}-resources"
+resource "azurerm_resource_group" "main-{{ name }}" {
+  name     = var.name
   location = var.location
 }
 
-resource "azurerm_virtual_network" "main" {
-  name                = "${var.public2_prefix}-network"
+resource "azurerm_virtual_network" "main-{{ name }}" {
+  name                = var.name
   address_space       = ["10.0.0.0/16"]
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+  location            = "${azurerm_resource_group.main-{{ name }}.location}"
+  resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
 }
 
-resource "azurerm_subnet" "internal" {
-  name                      = var.public2_prefix
-  resource_group_name       = "${azurerm_resource_group.main.name}"
-  virtual_network_name      = "${azurerm_virtual_network.main.name}"
+resource "azurerm_subnet" "internal-{{ name }}" {
+  name                      = var.name
+  resource_group_name       = "${azurerm_resource_group.main-{{ name }}.name}"
+  virtual_network_name      = "${azurerm_virtual_network.main-{{ name }}.name}"
   address_prefix            = "10.0.2.0/24"
 }
 
-resource "azurerm_network_interface" "main" {
-  name                = "${var.public2_prefix}-nic-${count.index}"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+resource "azurerm_network_interface" "main-{{ name }}" {
+  name                = "${var.name}-${count.index}"
+  location            = "${azurerm_resource_group.main-{{ name }}.location}"
+  resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
   count               = var.node_count
 
   ip_configuration {
     name                          = "testconfiguration1"
-    subnet_id                     = "${azurerm_subnet.internal.id}"
+    subnet_id                     = "${azurerm_subnet.internal-{{ name }}.id}"
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = "${azurerm_public_ip.main[count.index].id}"
+    public_ip_address_id          = "${azurerm_public_ip.main-{{ name }}[count.index].id}"
   }
 }
 
-resource "azurerm_public_ip" "main" {
-  name                    = "${var.public2_prefix}-ip-${count.index}"
-  location                = "${azurerm_resource_group.main.location}"
-  resource_group_name     = "${azurerm_resource_group.main.name}"
+resource "azurerm_public_ip" "main-{{ name }}" {
+  name                    = "${var.name}-${count.index}"
+  location                = "${azurerm_resource_group.main-{{ name }}.location}"
+  resource_group_name     = "${azurerm_resource_group.main-{{ name }}.name}"
   allocation_method       = "Static"
   sku                     = "Standard"
   idle_timeout_in_minutes = 30
   count                   = var.node_count
 
   tags = {
-    name = var.public2_prefix
+    name = var.name
   }
 }
 
-resource "azurerm_virtual_machine" "main" {
-  name                  = "${var.public2_prefix}-vm-${count.index}"
-  location              = "${azurerm_resource_group.main.location}"
-  resource_group_name   = "${azurerm_resource_group.main.name}"
-  network_interface_ids = ["${azurerm_network_interface.main[count.index].id}"]
+resource "azurerm_virtual_machine" "main-{{ name }}" {
+  name                  = "${var.name}-${count.index}"
+  location              = "${azurerm_resource_group.main-{{ name }}.location}"
+  resource_group_name   = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_interface_ids = ["${azurerm_network_interface.main-{{ name }}[count.index].id}"]
   vm_size               = "Standard_DS1_v2"
   count                 = var.node_count
 
@@ -74,7 +70,7 @@ resource "azurerm_virtual_machine" "main" {
     managed_disk_type = "Standard_LRS"
   }
   os_profile {
-    computer_name = var.public2_prefix
+    computer_name = var.name
     admin_username = var.ssh_user
   }
 
@@ -86,27 +82,27 @@ resource "azurerm_virtual_machine" "main" {
     }
   }
   tags = {
-    name = "${var.public2_prefix}-${count.index}"
+    name = "${var.name}-${count.index}"
   }
 }
 
-data "azurerm_public_ip" "main" {
-  name                = "${azurerm_public_ip.main[count.index].name}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+data "azurerm_public_ip" "main-{{ name }}" {
+  name                = "${azurerm_public_ip.main-{{ name }}[count.index].name}"
+  resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
   count               = var.node_count
 }
 
-resource "azurerm_network_security_group" "main" {
-  name                = var.public2_prefix
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
+resource "azurerm_network_security_group" "main-{{ name }}" {
+  name                = var.name
+  location            = "${azurerm_resource_group.main-{{ name }}.location}"
+  resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
 
   tags = {
-    name = var.public2_prefix
+    name = var.name
   }
 }
 
-resource "azurerm_network_security_rule" "outbound" {
+resource "azurerm_network_security_rule" "outbound-{{ name }}" {
   name                        = "ssh"
   priority                    = 100
   direction                   = "Outbound"
@@ -116,11 +112,11 @@ resource "azurerm_network_security_rule" "outbound" {
   destination_port_range      = "*"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.main.name}"
-  network_security_group_name = "${azurerm_network_security_group.main.name}"
+  resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
 }
 
-resource "azurerm_network_security_rule" "sshIn" {
+resource "azurerm_network_security_rule" "sshIn-{{ name }}" {
   name                        = "sshIn"
   priority                    = 100
   direction                   = "Inbound"
@@ -130,11 +126,11 @@ resource "azurerm_network_security_rule" "sshIn" {
   destination_port_range      = "22"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.main.name}"
-  network_security_group_name = "${azurerm_network_security_group.main.name}"
+  resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
 }
 
-resource "azurerm_network_security_rule" "p2pIn" {
+resource "azurerm_network_security_rule" "p2pIn-{{ name }}" {
   name                        = "p2pIn"
   priority                    = 101
   direction                   = "Inbound"
@@ -144,11 +140,11 @@ resource "azurerm_network_security_rule" "p2pIn" {
   destination_port_range      = "30333"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.main.name}"
-  network_security_group_name = "${azurerm_network_security_group.main.name}"
+  resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
 }
 
-resource "azurerm_network_security_rule" "vpnIn" {
+resource "azurerm_network_security_rule" "vpnIn-{{ name }}" {
   name                        = "vpnIn"
   priority                    = 102
   direction                   = "Inbound"
@@ -158,11 +154,11 @@ resource "azurerm_network_security_rule" "vpnIn" {
   destination_port_range      = "51820"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.main.name}"
-  network_security_group_name = "${azurerm_network_security_group.main.name}"
+  resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
 }
 
-resource "azurerm_subnet_network_security_group_association" "main" {
-  subnet_id                 = "${azurerm_subnet.internal.id}"
-  network_security_group_id = "${azurerm_network_security_group.main.id}"
+resource "azurerm_subnet_network_security_group_association" "main-{{ name }}" {
+  subnet_id                 = "${azurerm_subnet.internal-{{ name }}.id}"
+  network_security_group_id = "${azurerm_network_security_group.main-{{ name }}.id}"
 }
