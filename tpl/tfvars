@@ -6,3 +6,4 @@ location = "{{ location }}"
 zone = "{{ zone }}"
 project_id = "{{ projectId }}"
 node_count = {{ nodeCount }}
+name = "{{ name }}"
