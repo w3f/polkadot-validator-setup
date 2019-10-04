@@ -12,6 +12,9 @@
     "lint": "eslint .",
     "pretest": "yarn lint"
   },
+  "bin": {
+    "polkadot-secure-validator": "src/index.js"
+  },
   "files": [
     "/ansible",
     "/src",
