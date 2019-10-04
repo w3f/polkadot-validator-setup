@@ -1,9 +1,5 @@
-variable "public1_prefix" {
-  default = "sv-public1"
-}
-
-resource "aws_key_pair" "public1" {
-  key_name   = var.public1_prefix
+resource "aws_key_pair" "key-{{ name }}" {
+  key_name   = var.name
   public_key = var.public_key
 }
 
@@ -23,7 +19,7 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_vpc" "main" {
+resource "aws_vpc" "main-{{ name }}" {
   cidr_block = "172.26.0.0/16"
 
   enable_dns_hostnames = true
@@ -31,101 +27,101 @@ resource "aws_vpc" "main" {
   enable_dns_support = true
 
   tags = {
-    Name = var.public1_prefix
+    Name = var.name
   }
 }
 
-resource "aws_subnet" "main" {
-  cidr_block = "${cidrsubnet(aws_vpc.main.cidr_block, 3, 1)}"
+resource "aws_subnet" "main-{{ name }}" {
+  cidr_block = "${cidrsubnet(aws_vpc.main-{{ name }}.cidr_block, 3, 1)}"
 
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${aws_vpc.main-{{ name }}.id}"
 
   availability_zone = var.zone
 
   map_public_ip_on_launch = true
 }
 
-resource "aws_internet_gateway" "main" {
-  vpc_id = "${aws_vpc.main.id}"
+resource "aws_internet_gateway" "main-{{ name }}" {
+  vpc_id = "${aws_vpc.main-{{ name }}.id}"
 
   tags = {
-    Name = var.public1_prefix
+    Name = var.name
   }
 }
 
-resource "aws_route_table" "main" {
-  vpc_id = "${aws_vpc.main.id}"
+resource "aws_route_table" "main-{{ name }}" {
+  vpc_id = "${aws_vpc.main-{{ name }}.id}"
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.main.id}"
+    gateway_id = "${aws_internet_gateway.main-{{ name }}.id}"
   }
 
   tags = {
-    Name = var.public1_prefix
+    Name = var.name
   }
 }
 
-resource "aws_route_table_association" "main" {
-  subnet_id      = "${aws_subnet.main.id}"
-  route_table_id = "${aws_route_table.main.id}"
+resource "aws_route_table_association" "main-{{ name }}" {
+  subnet_id      = "${aws_subnet.main-{{ name }}.id}"
+  route_table_id = "${aws_route_table.main-{{ name }}.id}"
 }
 
-resource "aws_security_group" "main" {
+resource "aws_security_group" "main-{{ name }}" {
   name = "externalssh"
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${aws_vpc.main-{{ name }}.id}"
 }
 
-resource "aws_security_group_rule" "externalssh" {
+resource "aws_security_group_rule" "externalssh-{{ name }}" {
   type            = "ingress"
   from_port       = 22
   to_port         = 22
   protocol        = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
 
-  security_group_id = "${aws_security_group.main.id}"
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
-resource "aws_security_group_rule" "p2p" {
+resource "aws_security_group_rule" "p2p-{{ name }}" {
   type            = "ingress"
   from_port       = 30333
   to_port         = 30333
   protocol        = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
 
-  security_group_id = "${aws_security_group.main.id}"
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
-resource "aws_security_group_rule" "vpn" {
+resource "aws_security_group_rule" "vpn-{{ name }}" {
   type            = "ingress"
   from_port       = 51820
   to_port         = 51820
   protocol        = "udp"
   cidr_blocks = ["0.0.0.0/0"]
 
-  security_group_id = "${aws_security_group.main.id}"
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
-resource "aws_security_group_rule" "allow_all" {
+resource "aws_security_group_rule" "allow_all-{{ name }}" {
   type            = "egress"
   from_port       = 0
   to_port         = 0
   protocol        = "-1"
   cidr_blocks = ["0.0.0.0/0"]
 
-  security_group_id = "${aws_security_group.main.id}"
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
-resource "aws_instance" "main" {
+resource "aws_instance" "main-{{ name }}" {
   ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = var.machine_type
-  key_name      = var.public1_prefix
+  key_name      = var.name
   count         = var.node_count
 
-  subnet_id              = "${aws_subnet.main.id}"
-  vpc_security_group_ids = ["${aws_security_group.main.id}"]
+  subnet_id              = "${aws_subnet.main-{{ name }}.id}"
+  vpc_security_group_ids = ["${aws_security_group.main-{{ name }}.id}"]
 
   tags = {
-    Name = "${var.public1_prefix}-${count.index}"
+    Name = "${var.name}-${count.index}"
   }
 }
