@@ -48,4 +48,4 @@ public-2
 [all:vars]
 project=w3f
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
-polkadot_binary_url=https://github.com/w3f/polkadot/releases/download/v0.6.0/polkadot
+polkadot_binary_url=https://github.com/w3f/polkadot/releases/download/v0.6.1/polkadot
