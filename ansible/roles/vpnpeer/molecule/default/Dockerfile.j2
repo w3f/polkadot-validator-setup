@@ -19,6 +19,7 @@ RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
   rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
 
 RUN mkdir /etc/wireguard && \
-  wget https://raw.githubusercontent.com/WireGuard/WireGuard/master/src/tools/systemd/wg-quick%40.service -O /lib/systemd/system/wg-quick@.service && \
+  wget https://raw.githubusercontent.com/WireGuard/WireGuard/master/src/tools/systemd/wg-quick%40.service -O /etc/systemd/system/wg-quick@.service && \
+  cp /etc/systemd/system/wg-quick@.service /etc/systemd/system/wg-quick@wg0.service && \
   echo "#!/bin/bash\necho true" > /usr/bin/wg-quick && \
   chmod a+x /usr/bin/wg-quick
