@@ -34,7 +34,7 @@ the service account you want to use)
 
 The allows you to specify which providers to use, so you don't need to have
 accounts in all of them, see [here](https://github.com/w3f/polkadot-secure-validator/blob/master/config/main.sample.json)
-for an example of how to define the providers. Yyou could use, for instance,
+for an example of how to define the providers. You could use, for instance,
 packet for the validators and GCP for the public nodes. Keep in mind that, the
 more distributed your public nodes, the fewer opportunities to be affected by
 potential incidents in the respective cloud providers.
