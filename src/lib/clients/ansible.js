@@ -43,6 +43,7 @@ class Ansible {
       project: this.config.project,
 
       polkadotBinaryUrl: this.config.polkadotBinaryUrl,
+      polkadotNetworkId: this.config.polkadotNetworkId || 'ksmcc2',
 
       validators,
       publicNodes,
