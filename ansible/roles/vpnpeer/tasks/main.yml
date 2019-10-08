@@ -6,7 +6,7 @@
     owner: root
     group: root
     mode: 0600
-    validate: "bash -c 'test ! -f /etc/wireguard/wg0.conf' || bash -c 'test ! diff -q %s /etc/wireguard/wg0.conf'"
+  changed_when: false
 
 - name: start VPN setup service
   systemd:
