@@ -30,19 +30,40 @@ class Terraform {
 
     const sshKeys = ssh.keys();
 
-    const syncPromises = [
-      this._create('validator', sshKeys.validatorPublicKey, this.config.validators.nodes),
-      this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes)
-    ];
+    let validatorSyncPromises = [];
+    try {
+      validatorSyncPromises = await this._create('validator', sshKeys.validatorPublicKey, this.config.validators.nodes);
+    } catch(e) {
+      console.log(`Could not get validator sync promises: ${e.message}`);
+    }
+
+    let publicNodeSyncPromises = [];
+    try {
+      publicNodeSyncPromises = await this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes);
+    } catch(e) {
+      console.log(`Could not get publicNodes sync promises: ${e.message}`);
+    }
+    const syncPromises = validatorSyncPromises.concat(publicNodeSyncPromises)
 
     return Promise.all(syncPromises);
   }
 
   async clean() {
-    const cleanPromises = [
-      this._destroy('validator', this.config.validators.nodes),
-      this._destroy('publicNode', this.config.publicNodes.nodes)
-    ];
+    let validatorCleanPromises = [];
+    try {
+      validatorCleanPromises = await this._destroy('validator',this.config.validators.nodes);
+    } catch(e) {
+      console.log(`Could not get validator clean promises: ${e.message}`);
+    }
+
+    let publicNodesCleanPromises = []
+    try {
+      publicNodesCleanPromises = await this._destroy('publicNode', this.config.publicNodes.nodes);
+    } catch(e) {
+      console.log(`Could not get publicNodes clean promises: ${e.message}`);
+    }
+
+    const cleanPromises = validatorCleanPromises.concat(publicNodesCleanPromises);
 
     return Promise.all(cleanPromises);
   }
@@ -58,39 +79,39 @@ class Terraform {
     const createPromises = [];
 
     for (let counter = 0; counter < nodes.length; counter++) {
-      const tfPath = this._terraformNodeDirPath(type, counter);
+      const cwd = this._terraformNodeDirPath(type, counter);
       const backendConfig = this._backendConfig(type, counter);
       const nodeName = this._nodeName(type, counter);
-      createPromises.push(this._createPromise(tfPath, sshKey, nodes[counter], backendConfig, nodeName));
+      createPromises.push(new Promise(async (resolve) => {
+        const options = { cwd };
+        await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
+
+        this._createVarsFile(cwd, nodes[counter], sshKey, nodeName);
+
+        await this._cmd(`apply -auto-approve`, options);
+
+        resolve(true);
+      }));
     }
-    return Promise.all(createPromises);
-  }
-
-  async _createPromise(cwd, sshKey, node, backendConfig, nodeName) {
-    const options = { cwd };
-    await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
-    this._createVarsFile(cwd, node, sshKey, nodeName);
-
-    return this._cmd(`apply -auto-approve`, options);
+    return createPromises;
   }
 
   async _destroy(type, nodes) {
     const destroyPromises = [];
 
     for (let counter = 0; counter < nodes.length; counter++) {
-      const tfPath = this._terraformNodeDirPath(type, counter)
+      const cwd = this._terraformNodeDirPath(type, counter)
       const backendConfig = this._backendConfig(type, counter);
-      destroyPromises.push(this._destroyPromise(tfPath, backendConfig));
+      destroyPromises.push(new Promise(async (resolve) => {
+        const options = { cwd };
+        await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
+
+        await this._cmd('destroy -lock=false -auto-approve', options);
+
+        resolve(true);
+      }));
     }
-    return Promise.all(destroyPromises);
-  }
-
-  async _destroyPromise(cwd, backendConfig) {
-    const options = { cwd };
-    await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
-    return this._cmd('destroy -lock=false -auto-approve', options);
+    return destroyPromises;
   }
 
   async _cmd(command, options = {}) {
