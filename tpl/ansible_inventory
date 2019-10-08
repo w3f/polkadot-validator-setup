@@ -37,3 +37,4 @@ public-{{@index}}
 project={{ project }}
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=25'
 polkadot_binary_url={{ polkadotBinaryUrl }}
+polkadot_network_id={{ polkadotNetworkId }}
