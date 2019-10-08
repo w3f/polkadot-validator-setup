@@ -19,12 +19,15 @@ provisioner:
   lint:
     name: ansible-lint
   inventory:
+
     host_vars:
       polkadot-validator-validator-node:
         vpnpeer_address: 10.0.0.1
+        polkadot_network_id: ksma
       polkadot-validator-public-node:
         vpnpeer_address: 10.0.0.2
         p2p_peer_id: peerid
+        polkadot_network_id: ksma
 verifier:
   name: testinfra
   lint:
