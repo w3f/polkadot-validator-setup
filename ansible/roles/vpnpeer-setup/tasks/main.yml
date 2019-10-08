@@ -33,7 +33,17 @@
   args:
     executable: /bin/bash
   register: private_key_result
-  changed_when: not privatekey_file.stat.exists
+  when: not privatekey_file.stat.exists
+
+- name: get existing private key file content
+  shell: |
+    set -o pipefail
+    cat /etc/wireguard/privatekey
+  args:
+    executable: /bin/bash
+  register: privatekey_file_content
+  when: privatekey_file.stat.exists
+  changed_when: false
 
 - name: check if publickey already exists
   stat:
@@ -49,12 +59,22 @@
     executable: /bin/bash
     stdin: "{{ private_key_result.stdout }}"
   register: public_key
-  changed_when: not publickey_file.stat.exists
+  when: not publickey_file.stat.exists
+
+- name: get existing public key file content
+  shell: |
+    set -o pipefail
+    cat /etc/wireguard/publickey
+  args:
+    executable: /bin/bash
+  register: publickey_file_content
+  when: publickey_file.stat.exists
+  changed_when: false
 
 - name: save private_key as host fact
   set_fact:
-    vpn_private_key: "{{ private_key_result.stdout }}"
+    vpn_private_key: "{{ private_key_result.stdout if not privatekey_file.stat.exists else privatekey_file_content.stdout }}"
 
 - name: save public_key as host fact
   set_fact:
-    vpn_public_key: "{{ public_key.stdout }}"
+    vpn_public_key: "{{ public_key.stdout if not publickey_file.stat.exists else publickey_file_content.stdout }}"
