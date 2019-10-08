@@ -1,6 +1,7 @@
 {
   "project": "w3f",
   "polkadotBinaryUrl": "https://github.com/w3f/polkadot/releases/download/v0.6.2/polkadot",
+  "polkadotNetworkId": "ksmcc2",
   "state": {
     "project": "my_gcp_state_project"
   },
