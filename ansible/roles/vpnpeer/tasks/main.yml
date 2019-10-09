@@ -12,7 +12,6 @@
   shell: |
     set -o pipefail
     wg-quick down wg0 || true
-    wg-quick up wg0
   args:
     executable: /bin/bash
   changed_when: false
@@ -20,5 +19,7 @@
 - name: start VPN setup service
   systemd:
     name: wg-quick@wg0
-    state: started
-  notify: enable VPN setup service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false
