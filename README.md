@@ -34,7 +34,7 @@ the service account you want to use)
 
 The allows you to specify which providers to use, so you don't need to have
 accounts in all of them, see [here](https://github.com/w3f/polkadot-secure-validator/blob/master/config/main.sample.json)
-for an example of how to define the providers. Yyou could use, for instance,
+for an example of how to define the providers. You could use, for instance,
 packet for the validators and GCP for the public nodes. Keep in mind that, the
 more distributed your public nodes, the fewer opportunities to be affected by
 potential incidents in the respective cloud providers.
@@ -92,9 +92,9 @@ and the applications that run on top of it.
 
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
-However, we use terraform for creating both. The code for setting up the bare-
-metal machine is in this repothey up is in [terraform-modules](/terraform-modules)
-dir.
+However, we use terraform for creating both. The code for setting up the 
+bare-metal machine is in the [terraform-modules](/terraform-modules) dir
+of this repository.
 
 The cloud instances are created on 3 different cloud providers for increased
 resiliency, and the bare-metal machine on packet.com. As part of the creation
