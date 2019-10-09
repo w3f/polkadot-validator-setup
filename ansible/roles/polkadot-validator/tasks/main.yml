@@ -20,7 +20,7 @@
   shell: |
     set -o pipefail
     if [ -d /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore ]; then
-      ls /home/polkadot/.local/share/polkadot/chains/ksma/keystore -1U | wc -l
+      ls /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore -1U | wc -l
     else
       mkdir -p /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/
       chown -R polkadot:polkadot /home/polkadot/.local/share/polkadot
