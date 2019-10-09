@@ -18,7 +18,7 @@ $ cd secure-validator
 $ yarn
 $ cp config/main.sample.json config/main.json
 # now you should customize config/main.json
-$ yarn sync
+$ yarn sync -c config/main.json
 ```
 You will need credentials as environment variables for all the infrastructure providers
 used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
