@@ -12,7 +12,7 @@
   systemd:
     name: polkadot.service
     state: started
-  notify: enable polkadot service
+    enabled: yes
 
 - name: save networkState
   uri:
