@@ -1,5 +1,0 @@
----
-- name: enable polkadot service
-  systemd:
-    name: polkadot.service
-    enabled: yes
