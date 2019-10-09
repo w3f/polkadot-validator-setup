@@ -8,6 +8,15 @@
     mode: 0600
   changed_when: false
 
+- name: recreate wg interface
+  shell: |
+    set -o pipefail
+    wg-quick down || true
+    wg-quick up
+  args:
+    executable: /bin/bash
+  changed_when: false
+
 - name: start VPN setup service
   systemd:
     name: wg-quick@wg0
