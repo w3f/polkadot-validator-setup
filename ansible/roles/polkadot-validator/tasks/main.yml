@@ -13,7 +13,7 @@
     name: polkadot.service
     state: restarted
     daemon_reload: yes
-  notify: enable polkadot service
+    enabled: yes
   changed_when: false
 
 - name: check if keys already exist
