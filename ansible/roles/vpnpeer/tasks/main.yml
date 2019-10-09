@@ -11,8 +11,8 @@
 - name: recreate wg interface
   shell: |
     set -o pipefail
-    wg-quick down || true
-    wg-quick up
+    wg-quick down wg0 || true
+    wg-quick up wg0
   args:
     executable: /bin/bash
   changed_when: false
