@@ -42,7 +42,11 @@ these are the required variables:
 and VPC write access.
 * Azure: `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_SUBSCRIPTION_ID`,
 `ARM_TENANT_ID`, `TF_VAR_client_id` (same as `ARM_CLIENT_ID`),
-`TF_VAR_client_secret` (same as `ARM_CLIENT_SECRET`).
+`TF_VAR_client_secret` (same as `ARM_CLIENT_SECRET`). All these credentials
+should correspond to a service principal with at least a `Contributor` role,
+see [here](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
+for details or [create an issue](https://github.com/w3f/polkadot-secure-validator/issues/new) for
+finer grained access control.
 * GCP: `GOOGLE_APPLICATION_CREDENTIALS` (path to json file with credentials of
 the service account you want to use; this service account needs to have write
 access to compute and network resources).
