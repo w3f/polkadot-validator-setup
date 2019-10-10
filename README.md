@@ -24,16 +24,6 @@ Before using polkadot-secure-validator you need to have installed:
 
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
-### Syncronization
-
-```
-$ git clone https://github.com/w3f/secure-validator
-$ cd secure-validator
-$ yarn
-$ cp config/main.sample.json config/main.json
-# now you should customize config/main.json
-$ yarn sync -c config/main.json
-```
 You will need credentials as environment variables for all the infrastructure providers
 used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
 these are the required variables:
@@ -67,6 +57,17 @@ nodes.
 
 * `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
 validators.
+
+### Syncronization
+
+```
+$ git clone https://github.com/w3f/secure-validator
+$ cd secure-validator
+$ yarn
+$ cp config/main.sample.json config/main.json
+# now you should customize config/main.json
+$ yarn sync -c config/main.json
+```
 
 You can also just provision a set of previously created machines with the ansible code
 [here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
