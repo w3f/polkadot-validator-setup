@@ -78,7 +78,7 @@ state.
 You can remove all the created infrastructure with:
 
 ```
-$ yarn clean -c config//main.json
+$ yarn clean -c config/main.json
 ```
 
 ## Structure
