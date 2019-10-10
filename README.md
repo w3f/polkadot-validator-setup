@@ -12,6 +12,20 @@ described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, include
 both layers described in [Workflow](#workflow). This can be done on a host with
 node, yarn and git installed with:
 
+### Prerrequisites
+
+Before using polkadot-secure-validator you need to have installed:
+
+* NodeJs (we recommend to use [nvm](https://github.com/nvm-sh/nvm))
+
+* [Yarn](https://yarnpkg.com/lang/en/docs/install)
+
+* [Terraform](https://www.terraform.io/downloads.html)
+
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+
+### Syncronization
+
 ```
 $ git clone https://github.com/w3f/secure-validator
 $ cd secure-validator
@@ -24,15 +38,17 @@ You will need credentials as environment variables for all the infrastructure pr
 used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
 these are the required variables:
 
-* AWS: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+* AWS: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` of an IAM account with EC2
+and VPC write access.
 * Azure: `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_SUBSCRIPTION_ID`,
 `ARM_TENANT_ID`, `TF_VAR_client_id` (same as `ARM_CLIENT_ID`),
 `TF_VAR_client_secret` (same as `ARM_CLIENT_SECRET`).
 * GCP: `GOOGLE_APPLICATION_CREDENTIALS` (path to json file with credentials of
-the service account you want to use)
-* PACKET: `TF_VAR_auth_token`
+the service account you want to use; this service account needs to have write
+access to compute and network resources).
+* PACKET: `TF_VAR_auth_token`.
 
-The allows you to specify which providers to use, so you don't need to have
+The tool allows you to specify which providers to use, so you don't need to have
 accounts in all of them, see [here](https://github.com/w3f/polkadot-secure-validator/blob/master/config/main.sample.json)
 for an example of how to define the providers. You could use, for instance,
 packet for the validators and GCP for the public nodes. Keep in mind that, the
@@ -51,6 +67,19 @@ validators.
 You can also just provision a set of previously created machines with the ansible code
 [here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
 that you can customize.
+
+The `sync` command is idempotent, you can execute it as much as you want, it will
+only make changes when the actual infrastructure state doesn't match the desired
+state.
+
+
+### Cleaning up
+
+You can remove all the created infrastructure with:
+
+```
+yarn clean -c config//main.json
+```
 
 ## Structure
 
@@ -92,7 +121,7 @@ and the applications that run on top of it.
 
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
-However, we use terraform for creating both. The code for setting up the 
+However, we use terraform for creating both. The code for setting up the
 bare-metal machine is in the [terraform-modules](/terraform-modules) dir
 of this repository.
 
