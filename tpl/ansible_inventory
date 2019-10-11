@@ -36,5 +36,6 @@ public-{{@index}}
 [all:vars]
 project={{ project }}
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=25 -o ControlMaster=no -o UserKnownHostsFile=/dev/null'
-polkadot_binary_url={{ polkadotBinaryUrl }}
-polkadot_network_id={{ polkadotNetworkId }}
+polkadot_binary_url='{{ polkadotBinaryUrl }}'
+polkadot_binary_checksum='{{ polkadotBinaryChecksum }}'
+polkadot_network_id='{{ polkadotNetworkId }}'
