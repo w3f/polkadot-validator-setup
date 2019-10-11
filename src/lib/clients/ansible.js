@@ -42,7 +42,8 @@ class Ansible {
     const data = {
       project: this.config.project,
 
-      polkadotBinaryUrl: this.config.polkadotBinaryUrl,
+      polkadotBinaryUrl: this.config.polkadotBinary.url,
+      polkadotBinaryChecksum: this.config.polkadotBinary.checksum,
       polkadotNetworkId: this.config.polkadotNetworkId || 'ksmcc2',
 
       validators,
