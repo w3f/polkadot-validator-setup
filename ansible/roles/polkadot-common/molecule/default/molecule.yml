@@ -15,7 +15,8 @@ provisioner:
   inventory:
     host_vars:
       polkadot-common-instance:
-        polkadot_binary_url: 'https://github.com/w3f/polkadot/releases/download/v0.5.1/polkadot'
+        polkadot_binary_url: 'https://github.com/w3f/polkadot/releases/download/v0.6.2/polkadot'
+        polkadot_binary_checksum: 'sha256:b90443105acf9dbda67bada39541487bc05d935c57275aaf1daafbe5c8a42f3b'
 verifier:
   name: testinfra
   lint:
