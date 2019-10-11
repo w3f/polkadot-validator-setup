@@ -6,35 +6,33 @@ A brief description of the role goes here.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+No  pre-requisites.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+Chain to use for the validator, example `kusama` which is an early, unaudited and unrefined release of Polkadot. Kusama will serve as a proving ground, allowing teams and developers to build and deploy a parachain or try out Polkadot’s governance, staking, nomination and validation functionality in a real environment.
+
+```
+chain: kusama
+```
+
+Project specified to start in the service file, if not set, defaults to `project`.
+
+```
+ project
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
-
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: validator
+      become: yes
       roles:
-         - { role: polkadot-validator, x: 42 }
+      - polkadot-validator
 
 License
 -------
