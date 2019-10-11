@@ -8,7 +8,7 @@
     group: root
     mode: 0600
 
-- name: start polkadot service
+- name: restart polkadot service
   systemd:
     name: polkadot.service
     state: restarted

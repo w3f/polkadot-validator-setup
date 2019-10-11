@@ -8,11 +8,13 @@
     group: root
     mode: 0600
 
-- name: start polkadot service
+- name: restart polkadot service
   systemd:
     name: polkadot.service
-    state: started
+    state: restarted
     enabled: yes
+    daemon_reload: yes
+  changed_when: false
 
 - name: save networkState
   uri:
