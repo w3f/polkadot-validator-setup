@@ -11,11 +11,41 @@
     group: polkadot
     append: yes
 
+- name: polkadot binary checksum
+  shell: |
+    set -o pipefail
+    if [ -f /usr/local/bin/polkadot ] && \
+       [ -f  /etc/systemd/system/polkadot.service ] && \
+       [ "$(echo -n '{{ polkadot_binary_checksum }}' | cut -f1 -d':')" != "$(cat /usr/local/bin/polkadot | sha256sum | cut -f1 -d' ')" ]; then
+      echo yes
+    else
+      echo no
+    fi
+  args:
+    executable: /bin/bash
+  register: should_upgrade
+  changed_when: False
+
 - name: download polkadot binary
   get_url:
     url: '{{ polkadot_binary_url | quote }}'
     checksum: '{{ polkadot_binary_checksum | quote }}'
-    dest: /usr/local/bin/polkadot
+    dest: /usr/local/bin/polkadot-new
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'
+
+- name: replace polkadot binary
+  shell: |
+    set -o pipefail
+    if [ {{ should_upgrade.stdout }} = yes ]; then
+      systemctl stop polkadot.service
+    fi
+    cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
+    chown polkadot:polkadot /usr/local/bin/polkadot
+    if [ {{ should_upgrade.stdout }} = yes ]; then
+      systemctl start polkadot.service
+    fi
+  args:
+    executable: /bin/bash
+  changed_when: False
