@@ -1,2 +1,1 @@
----
-# defaults file for polkadot-validator-session-info
+subkey_binary_url=https://github.com/w3f/substrate/releases/download/e0f3fa/subkey
