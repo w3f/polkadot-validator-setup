@@ -1,4 +1,4 @@
-def polkadot_user(host):
+def test_polkadot_user(host):
     user = host.user('polkadot')
     assert user.exists
 
