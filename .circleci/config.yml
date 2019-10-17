@@ -3,8 +3,7 @@ ansibleIntegrationTest: &ansibleIntegrationTest
       - image: web3f/secure-validator-ci:v0.3.1
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           description: execute molecule tests for the ansible role at $ROLE_PATH
           command: |
