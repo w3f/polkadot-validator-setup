@@ -58,6 +58,11 @@ jobs:
       ROLE_PATH: ansible/roles/vpnpeer-setup
     <<: *ansibleIntegrationTest
 
+  polkadotValidatorSessionInfoIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-validator-session-info
+    <<: *ansibleIntegrationTest
+
   publishPackage:
     docker:
       - image: node:10.15-alpine
