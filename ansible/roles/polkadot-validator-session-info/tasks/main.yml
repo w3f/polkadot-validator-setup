@@ -1,2 +1,8 @@
----
-# tasks file for polkadot-validator-session-info
+- name: download subkey binary
+  get_url:
+    url: '{{ subkey_binary_url | quote }}'
+    checksum: '{{ subkey_binary_checksum | quote }}'
+    dest: /usr/local/bin/subkey
+    mode: '0777'
+    owner: 'root'
+    group: 'root'
