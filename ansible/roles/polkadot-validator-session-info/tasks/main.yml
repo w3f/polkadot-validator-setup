@@ -6,3 +6,61 @@
     mode: '0777'
     owner: 'root'
     group: 'root'
+
+- name: check if keys already exist
+  shell: |
+    set -o pipefail
+    if [ -d /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore ]; then
+      ls /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore -1U | wc -l
+    else
+      mkdir -p /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/
+      chown -R polkadot:polkadot /home/polkadot/.local/share/polkadot
+      echo 0
+    fi
+  args:
+    executable: /bin/bash
+  register: keystore_files
+  changed_when: False
+
+- name: install xxd
+  apt:
+    name: vim-common
+    update_cache: yes
+
+- name: save session info
+  shell: |
+    set -o pipefail
+
+    if [ {{ item }} = gran ]; then
+      crypto="ed25519"
+    else
+      crypto="sr25519"
+    fi
+
+    hexprefix=$(echo -n {{ item }} | xxd -p)
+
+    cd /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore
+
+    inspect_result=$(cat ./${hexprefix}* | xargs /usr/local/bin/subkey --${crypto} inspect)
+
+    public_key=$(echo -n "${inspect_result}" | grep "Public key" | cut -d':' -f2 | tr -d '[:space:]')
+    address=$(echo -n "${inspect_result}" | grep "Address" | cut -d':' -f2 | tr -d '[:space:]')
+
+    printf '%b\n' "{{ item }}:\n  address: '${address}'\n  public_key: '${public_key}'"
+  args:
+    executable: /bin/bash
+  register: session
+  loop:
+    - babe
+    - gran
+    - imon
+    - para
+  when: keystore_files.stdout != "0"
+  changed_when: False
+
+- name: write session info to disk on remote host
+  template:
+    src: session.yaml.j2
+    dest: /home/polkadot/session.{{ polkadot_network_id }}.yaml
+    mode: 0666
+  when: keystore_files.stdout != "0"
