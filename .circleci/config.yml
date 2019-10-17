@@ -104,6 +104,12 @@ workflows:
               only: /.*/
           requires:
             - lint
+      - polkadotValidatorSessionInfoIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
       - vpnpeerIntegrationTest:
           filters:
             tags:
