@@ -1,4 +1,13 @@
+import pytest
 import yaml
+
+
+@pytest.mark.parametrize("name", [
+    ("vim-common"),
+])
+def test_packages(host, name):
+    pkg = host.package(name)
+    assert pkg.is_installed
 
 
 def test_subkey_binary(host):
@@ -10,19 +19,18 @@ def test_subkey_binary(host):
 
 
 def test_session_info(host):
-    session_file_path = '/home/polkadot/session.yaml'
-    session_info = host.file(session_file_path)
+    session_info = host.file('/home/polkadot/session.ksmcc2.yaml')
 
     assert session_info.exists
 
-    local = host.Host.get_host('local://')
-    cmd = local.run('cat expected.yaml')
-    expected_contents_raw = cmd.out
+    Host = type(host)
+    local = Host.get_host('local://')
+    cmd = local.run('cat ./tests/expected.yaml')
+    expected_contents_raw = cmd.stdout
     expected_contents = yaml.safe_load(expected_contents_raw)
 
-    with open(session_file_path, 'r') as stream:
-        try:
-            contents = yaml.safe_load(stream)
-            assert contents == expected_contents
-        except yaml.YAMLError:
-            assert False
+    try:
+        contents = yaml.safe_load(session_info.content_string)
+        assert contents == expected_contents
+    except yaml.YAMLError:
+        assert False
