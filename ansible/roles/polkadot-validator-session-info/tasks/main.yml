@@ -64,3 +64,9 @@
     dest: /home/polkadot/session.{{ polkadot_network_id }}.yaml
     mode: 0666
   when: keystore_files.stdout != "0"
+
+- name: retrieve session info
+  fetch:
+    src: /home/polkadot/session.{{ polkadot_network_id }}.yaml
+    dest: {{ build_dir }}/ansible
+  when: keystore_files.stdout != "0"
