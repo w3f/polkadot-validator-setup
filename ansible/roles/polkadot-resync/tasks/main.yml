@@ -15,4 +15,4 @@
 - name: start polkadot service
   systemd:
     name: polkadot.service
-    state: stopped
+    state: started
