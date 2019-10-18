@@ -15,7 +15,7 @@ ExecStart=/usr/local/bin/polkadot \
          {% endfor %}
          --chain={{ chain }} \
          {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
-         --telemetry-url {{ hostvars[inventory_hostname].telemetryUrl }}
+         --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
          {% else %}
          --no-telemetry
          {% endif %}
