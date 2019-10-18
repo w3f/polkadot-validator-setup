@@ -1,0 +1,18 @@
+- name: stop polkadot service
+  systemd:
+    name: polkadot.service
+    state: stopped
+
+- name: purge chain
+  shell: |
+    set -o pipefail
+    /usr/local/bin/polkadot purge-chain -y
+  args:
+    executable: /bin/bash
+  register: keystore_files
+  changed_when: False
+
+- name: start polkadot service
+  systemd:
+    name: polkadot.service
+    state: stopped
