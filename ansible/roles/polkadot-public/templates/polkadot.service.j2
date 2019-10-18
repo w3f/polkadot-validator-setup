@@ -2,6 +2,8 @@
 Description=Polkadot Node
 
 [Service]
+User=polkadot
+Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
          --name {{ project|default('project') }}-sv-public-{{ groups['public'].index(inventory_hostname) }} \
          --chain={{ chain }} \
