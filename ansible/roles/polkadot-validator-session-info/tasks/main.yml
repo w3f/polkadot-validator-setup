@@ -51,8 +51,8 @@
     executable: /bin/bash
   register: session
   loop:
-    - babe
     - gran
+    - babe
     - imon
     - para
   when: keystore_files.stdout != "0"
