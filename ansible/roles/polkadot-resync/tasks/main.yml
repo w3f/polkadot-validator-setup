@@ -7,9 +7,10 @@
   shell: |
     set -o pipefail
     /usr/local/bin/polkadot purge-chain -y
+  become: yes
+  become_user: polkadot
   args:
     executable: /bin/bash
-  register: keystore_files
   changed_when: False
 
 - name: start polkadot service
