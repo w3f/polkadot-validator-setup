@@ -68,5 +68,6 @@
 - name: retrieve session info
   fetch:
     src: '/home/polkadot/session.{{ polkadot_network_id }}.yaml'
-    dest: '{{ build_dir }}/ansible'
+    dest: '{{ build_dir }}/session/{{ inventory_hostname }}.{{ polkadot_network_id }}.yaml'
+    flat: yes
   when: keystore_files.stdout != "0"
