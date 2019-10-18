@@ -15,3 +15,4 @@
   become: yes
   roles:
   - polkadot-validator
+  - polkadot-validator-session-info
