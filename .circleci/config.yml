@@ -133,5 +133,6 @@ workflows:
             - polkadotCommonIntegrationTest
             - polkadotPublicIntegrationTest
             - polkadotValidatorIntegrationTest
+            - polkadotValidatorSessionInfoIntegrationTest
             - vpnpeerIntegrationTest
             - vpnpeerSetupIntegrationTest
