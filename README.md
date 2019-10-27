@@ -2,21 +2,21 @@
 
 # Polkadot Secure Validator Setup
 
-This repo describes a potential setup for a polkadot validator that aims to prevent
+This repo describes a potential setup for a Polkadot validator that aims to prevent
 some types of potential attacks.
 
 ## How to use
 
-This repo has code for creating a complete implementaion of the approach
-described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, included
+This repo has code for creating a complete implementation of the approach
+described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, including
 both layers described in [Workflow](#workflow). This can be done on a host with
-node, yarn and git installed with:
+NodeJS, Yarn and Git installed with:
 
-### Prerrequisites
+### Prerequisites
 
 Before using polkadot-secure-validator you need to have installed:
 
-* NodeJs (we recommend to use [nvm](https://github.com/nvm-sh/nvm))
+* NodeJS (we recommend to use [nvm](https://github.com/nvm-sh/nvm))
 
 * [Yarn](https://yarnpkg.com/lang/en/docs/install)
 
