@@ -1,8 +1,8 @@
 {
   "project": "w3f",
   "polkadotBinary": {
-    "url": "https://github.com/w3f/polkadot/releases/download/v0.6.2/polkadot",
-    "checksum": "sha256:b90443105acf9dbda67bada39541487bc05d935c57275aaf1daafbe5c8a42f3b"
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.6.3/polkadot",
+    "checksum": "sha256:95dbc8d87f4eb324fe62723f66bfc1f9d01eda8b3a8176fe74df4fd16c8237b5"
   },
   "polkadotNetworkId": "ksmcc2",
   "state": {
