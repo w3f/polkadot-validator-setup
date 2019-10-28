@@ -121,6 +121,10 @@ resource "aws_instance" "main-{{ name }}" {
   subnet_id              = "${aws_subnet.main-{{ name }}.id}"
   vpc_security_group_ids = ["${aws_security_group.main-{{ name }}.id}"]
 
+  root_block_device {
+    volume_size = 400
+  }
+
   tags = {
     Name = "${var.name}-${count.index}"
   }
