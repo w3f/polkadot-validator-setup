@@ -48,7 +48,7 @@ public-2
 [all:vars]
 project=w3f
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
-polkadot_binary_url='https://github.com/w3f/polkadot/releases/download/v0.6.3/polkadot'
-polkadot_binary_checksum='sha256:95dbc8d87f4eb324fe62723f66bfc1f9d01eda8b3a8176fe74df4fd16c8237b5'
+polkadot_binary_url='https://github.com/w3f/polkadot/releases/download/v0.6.5/polkadot'
+polkadot_binary_checksum='sha256:8dee37e2747ae68dc5e7fad0bef304b4e5c1b741eb70923bfad7338d340ccad6'
 polkadot_network_id=ksmcc2
 build_dir=/home/user/.config/polkadot-secure-validator/build/w3f/ansible
