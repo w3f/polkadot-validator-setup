@@ -186,7 +186,9 @@ configuration applied depend on the type of node:
         Description=Polkadot Node
 
         [Service]
-        ExecStart=/usr/local/bin/polkadot --name sv-public-0
+        ExecStart=/usr/local/bin/polkadot \
+            --name sv-public-0 \
+            --sentry
 
         Restart=always
 

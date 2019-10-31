@@ -7,8 +7,7 @@ Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
          --name {{ project|default('project') }}-sv-public-{{ groups['public'].index(inventory_hostname) }} \
          --chain={{ chain }} \
-         --pruning=archive \
-         --in-peers 500 \
+         --sentry \
          {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
          --telemetry-url {{ hostvars[inventory_hostname].telemetryUrl }}
          {% else %}
