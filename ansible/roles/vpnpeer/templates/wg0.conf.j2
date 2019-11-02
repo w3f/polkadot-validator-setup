@@ -4,13 +4,7 @@ ListenPort = {{ vpn_port }}
 SaveConfig = true
 Address = {{ vpnpeer_address }}/{{ vpnpeer_cidr_suffix }}
 
-{% if inventory_hostname in groups['validator'] %}
-{%- set peers = groups['public'] -%}
-{%- else -%}
-{%- set peers = groups['validator'] -%}
-{% endif %}
-
-{% for peer in peers %}
+{% for peer in groups['validator']|list + groups['public']|list %}
 
 [Peer]
 PublicKey = {{ hostvars[peer].vpn_public_key }}
