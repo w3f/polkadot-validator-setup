@@ -49,3 +49,55 @@
   args:
     executable: /bin/bash
   changed_when: False
+
+- name: check if polkadot service is running
+  shell: |
+    set -o pipefail
+    if [ $(systemctl is-active --quiet polkadot) ]; then
+      echo yes
+    else
+      echo no
+    fi
+  args:
+    executable: /bin/bash
+  register: polkadot_service_running
+  changed_when: false
+
+- name: create polkadot dummy config
+  template:
+    src: polkadot.service.j2
+    dest: /etc/systemd/system/polkadot.service
+    owner: root
+    group: root
+    mode: 0600
+  when: polkadot_service_running.stdout == "no"
+
+- name: start polkadot dummy service
+  systemd:
+    name: polkadot.service
+    state: started
+  changed_when: false
+  when: polkadot_service_running.stdout == "no"
+
+- name: save networkState
+  uri:
+    url: http://localhost:9933
+    method: "POST"
+    body_format: json
+    body: |
+      { "jsonrpc":"2.0", "method":"system_networkState", "params":[], "id":1 }
+  register: network_state
+  until: network_state.status == 200
+  retries: 5
+  delay: 5
+
+- name: set peer id as fact
+  set_fact:
+    p2p_peer_id: "{{ network_state.json.result.peerId }}"
+
+- name: stop polkadot dummy service
+  systemd:
+    name: polkadot.service
+    state: stopped
+  changed_when: false
+  when: polkadot_service_running.stdout == "no"

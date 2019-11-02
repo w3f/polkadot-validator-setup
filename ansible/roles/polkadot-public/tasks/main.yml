@@ -15,16 +15,3 @@
     enabled: yes
     daemon_reload: yes
   changed_when: false
-
-- name: save networkState
-  uri:
-    url: http://localhost:9933
-    method: "POST"
-    body_format: json
-    body: |
-      { "jsonrpc":"2.0", "method":"system_networkState", "params":[], "id":1 }
-  register: network_state
-
-- name: set peer id as fact
-  set_fact:
-    p2p_peer_id: "{{ network_state.json.result.peerId }}"

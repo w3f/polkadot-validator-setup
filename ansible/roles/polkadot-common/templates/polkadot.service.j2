@@ -1,0 +1,11 @@
+[Unit]
+Description=Polkadot Dummy Node
+
+[Service]
+User=polkadot
+Group=polkadot
+ExecStart=/usr/local/bin/polkadot \
+         --name polkadot-dummy
+
+[Install]
+WantedBy=multi-user.target
