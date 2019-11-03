@@ -8,6 +8,9 @@ ExecStart=/usr/local/bin/polkadot \
          --name {{ project|default('project') }}-sv-public-{{ groups['public'].index(inventory_hostname) }} \
          --chain={{ chain }} \
          --sentry \
+         {% for reserved_node in groups['validator'] %}
+         --reserved-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
+         {% endfor %}
          {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
          --telemetry-url {{ hostvars[inventory_hostname].telemetryUrl }}
          {% else %}
