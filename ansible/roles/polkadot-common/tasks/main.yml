@@ -35,27 +35,15 @@
     owner: 'polkadot'
     group: 'polkadot'
 
-- name: replace polkadot binary
-  shell: |
-    set -o pipefail
-    if [ {{ should_upgrade.stdout }} = yes ]; then
-      systemctl stop polkadot.service
-    fi
-    cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
-    chown polkadot:polkadot /usr/local/bin/polkadot
-    if [ {{ should_upgrade.stdout }} = yes ]; then
-      systemctl start polkadot.service
-    fi
-  args:
-    executable: /bin/bash
-  changed_when: False
-
 - name: check if polkadot service is running
   shell: |
     set -o pipefail
-    if [ $(systemctl is-active --quiet polkadot) ]; then
+    systemctl is-active --quiet polkadot
+    if [ "$?" == 0 ]; then
       echo yes
     else
+      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
+      chown polkadot:polkadot /usr/local/bin/polkadot
       echo no
     fi
   args:

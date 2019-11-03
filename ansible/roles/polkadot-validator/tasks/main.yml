@@ -9,12 +9,20 @@
     mode: 0600
 
 - name: restart polkadot service
-  systemd:
-    name: polkadot.service
-    state: restarted
-    daemon_reload: yes
-    enabled: yes
-  changed_when: false
+  shell: |
+    set -o pipefail
+    systemctl stop polkadot.service || true
+
+    if [ -f /usr/local/bin/polkadot-new ]; then
+      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
+      chown polkadot:polkadot /usr/local/bin/polkadot
+      chmod a+x /usr/local/bin/polkadot
+    fi
+    systemctl daemon-reload
+    systemctl start polkadot.service
+  args:
+    executable: /bin/bash
+  changed_when: False
 
 - name: check if keys already exist
   shell: |
