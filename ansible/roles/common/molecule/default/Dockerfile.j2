@@ -26,7 +26,9 @@ RUN echo "#!/bin/sh\nsleep 1" > /bin/modprobe && \
   chmod a+x /sbin/ip6tables && \
   rm -f /sbin/ip6tables-restore && \
   echo "#!/bin/sh\nsleep 1" > /sbin/ip6tables-restore && \
-  chmod a+x /sbin/ip6tables-restore
+  chmod a+x /sbin/ip6tables-restore && \
+  echo "#!/bin/sh\nsleep 1" > /bin/journalctl && \
+  chmod a+x /bin/journalctl
 
 RUN echo "[Unit]\nDescription=My Script\n[Service]\nType=forking\nExecStart=/bin/echo svc\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/systemd-journald.service
 
