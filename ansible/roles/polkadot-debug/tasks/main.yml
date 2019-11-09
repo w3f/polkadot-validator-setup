@@ -1,0 +1,18 @@
+- name: get command output
+  shell: |
+    journalctl -u polkadot --no-pager > /root/polkadot.log
+    tac /root/polkadot.log | grep "noting beginning" | head -n 1
+  become: yes
+  args:
+    executable: /bin/bash
+  changed_when: False
+  register: command_output
+
+- name: result
+  debug:
+    msg: "Command result: {{ command_output.stdout }}"
+
+- name: remove log
+  file:
+    path: /root/polkadot.log
+    state: absent
