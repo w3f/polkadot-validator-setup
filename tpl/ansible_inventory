@@ -7,7 +7,7 @@ ansible_user={{ this.sshUser }}
 vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
 telemetryUrl={{ ../validatorTelemetryUrl }}
-loggingFilter={{ ../validatorLoggingFilter }}
+loggingFilter='{{{ ../validatorLoggingFilter }}}'
 
 {{/each}}
 
@@ -26,7 +26,7 @@ ansible_user={{ this.sshUser }}
 vpnpeer_address={{ this.vpnAddress }}
 vpnpeer_cidr_suffix=24
 telemetryUrl={{ ../publicTelemetryUrl }}
-loggingFilter={{ ../publicLoggingFilter }}
+loggingFilter='{{{ ../publicLoggingFilter }}}'
 
 {{/each}}
 
