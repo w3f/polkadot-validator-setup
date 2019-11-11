@@ -10,7 +10,9 @@ ExecStart=/usr/local/bin/polkadot \
          --listen-addr=/ip4/{{ hostvars[inventory_hostname].vpnpeer_address }}/tcp/30333 \
          --reserved-only \
          --pruning=archive \
-         -lsync=trace,afg=trace,babe=debug \
+         {% if hostvars[inventory_hostname].loggingFilter is defined and hostvars[inventory_hostname].loggingFilter|length %}
+         -l{{ hostvars[inventory_hostname].loggingFilter }} \
+         {% endif %}
          {% for reserved_node in groups['public'] %}
          --reserved-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
          {% endfor %}

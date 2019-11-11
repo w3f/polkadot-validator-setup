@@ -6,7 +6,7 @@ ansible_user=root
 vpnpeer_address=10.0.0.1
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [validator:children]
 validator-0
@@ -20,6 +20,7 @@ ansible_user=ubuntu
 vpnpeer_address=10.0.0.2
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [public-1]
 40.81.189.214
@@ -29,6 +30,7 @@ ansible_user=w3fadmin
 vpnpeer_address=10.0.0.3
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [public-2]
 35.190.164.158
@@ -38,7 +40,7 @@ ansible_user=w3fadmin
 vpnpeer_address=10.0.0.4
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [public:children]
 public-0
@@ -48,7 +50,7 @@ public-2
 [all:vars]
 project=w3f
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
-polkadot_binary_url='https://github.com/w3f/polkadot/releases/download/v0.6.6/polkadot'
-polkadot_binary_checksum='sha256:fd18ea7ec4af9b4cfbdb6a297b17a85a4d35d545e0035354886985af1e7d7a54'
+polkadot_binary_url='https://github.com/w3f/polkadot/releases/download/v0.6.11/polkadot'
+polkadot_binary_checksum='sha256:ce6d4fd45f2c3ff91117423ed04c952ddde3b20f393e3ea05a2081f04b8a926b'
 polkadot_network_id=ksmcc2
 build_dir=/home/user/.config/polkadot-secure-validator/build/w3f/ansible

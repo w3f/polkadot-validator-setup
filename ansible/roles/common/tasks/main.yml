@@ -37,6 +37,14 @@
     src: journald.conf
     dest: /etc/systemd/journald.conf
 
+- name: journalctl vacuum
+  shell: |
+    set -o pipefail
+    journalctl --vacuum-size 1G
+  args:
+    executable: /bin/bash
+  changed_when: false
+
 - name: restart journald
   systemd:
     name: systemd-journald
