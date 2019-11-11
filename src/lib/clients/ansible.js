@@ -53,6 +53,9 @@ class Ansible {
       validatorTelemetryUrl: this.config.validators.telemetryUrl,
       publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
 
+      validatorLoggingFilter: this.config.validators.loggingFilter,
+      publicLoggingFilter: this.config.publicNodes.loggingFilter,
+
       buildDir,
     };
 
