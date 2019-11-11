@@ -6,7 +6,7 @@ ansible_user=root
 vpnpeer_address=10.0.0.1
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [validator:children]
 validator-0
@@ -20,6 +20,7 @@ ansible_user=ubuntu
 vpnpeer_address=10.0.0.2
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [public-1]
 40.81.189.214
@@ -29,6 +30,7 @@ ansible_user=w3fadmin
 vpnpeer_address=10.0.0.3
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [public-2]
 35.190.164.158
@@ -38,7 +40,7 @@ ansible_user=w3fadmin
 vpnpeer_address=10.0.0.4
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-
+loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [public:children]
 public-0
