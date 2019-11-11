@@ -1,8 +1,8 @@
 {
   "project": "w3f",
   "polkadotBinary": {
-    "url": "https://github.com/w3f/polkadot/releases/download/v0.6.11/polkadot",
-    "checksum": "sha256:ce6d4fd45f2c3ff91117423ed04c952ddde3b20f393e3ea05a2081f04b8a926b"
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.6.16/polkadot",
+    "checksum": "sha256:1d3bbc0b51344415ede5c47ee4d2c2b7966805e6218f36cc60aa301b891d4ddc"
   },
   "polkadotNetworkId": "ksmcc2",
   "state": {
@@ -10,6 +10,7 @@
   },
   "validators": {
     "telemetryUrl": "wss://my.private.telemetry.endpoint",
+    "loggingFilter": "sync=trace,afg=trace,babe=debug",
     "nodes": [
       {
         "provider": "packet",
@@ -23,6 +24,7 @@
   },
   "publicNodes": {
     "telemetryUrl": "wss://my.private.telemetry.endpoint",
+    "loggingFilter": "babe=debug",
     "nodes": [
       {
         "provider": "aws",
