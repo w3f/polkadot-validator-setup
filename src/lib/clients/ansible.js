@@ -3,7 +3,7 @@ const path = require('path');
 const cmd = require('../cmd');
 const { Project } = require('../project');
 const tpl = require('../tpl');
-const { nodeExporterUsername, nodeExporterPassword } = require('./env');
+const { nodeExporterUsername, nodeExporterPassword } = require('../env');
 
 const inventoryFileName = 'inventory'
 
