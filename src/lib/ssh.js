@@ -2,15 +2,15 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const forge = require('node-forge');
 
+const { validatorSshPrivateKeyPath, publicNodeSshPrivateKeyPath } = require('./env');
+
 
 module.exports = {
   keys: () => {
-    const validatorSshPrivateKeyPath = process.env['SSH_ID_RSA_VALIDATOR'];
     if(!validatorSshPrivateKeyPath) {
       console.log(chalk.red('Please, export the path of the file with the private SSH key you want to use on validators as the environment variable SSH_ID_RSA_VALIDATOR'));
       process.exit(-1);
     }
-    const publicNodeSshPrivateKeyPath = process.env['SSH_ID_RSA_PUBLIC'];
     if(!publicNodeSshPrivateKeyPath) {
       console.log(chalk.red('Please, export the path of the file with the private SSH key you want to use on public nodes as the environment variable SSH_ID_RSA_PUBLIC'));
       process.exit(-1);
