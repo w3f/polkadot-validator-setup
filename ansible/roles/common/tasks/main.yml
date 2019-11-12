@@ -22,7 +22,7 @@
 - name: open node_exporter port
   command: ufw allow 9100/tcp
   when:
-    - node_exporter_enabled|default(false)|bool == true
+    - node_exporter_enabled|default(false)|bool
     - not ufw_status_result.stdout is search("9100/tcp.*ALLOW IN.*Anywhere")
 
 - name: open p2p port
