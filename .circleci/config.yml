@@ -62,6 +62,11 @@ jobs:
       ROLE_PATH: ansible/roles/polkadot-validator-session-info
     <<: *ansibleIntegrationTest
 
+  nodeExporterIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/node-exporter
+    <<: *ansibleIntegrationTest
+
   publishPackage:
     docker:
       - image: node:10.15-alpine
@@ -122,6 +127,12 @@ workflows:
               only: /.*/
           requires:
             - lint
+      - nodeExporterIntegrationTest
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
       - publishPackage:
           filters:
             tags:
@@ -136,3 +147,4 @@ workflows:
             - polkadotValidatorSessionInfoIntegrationTest
             - vpnpeerIntegrationTest
             - vpnpeerSetupIntegrationTest
+            - nodeExporterIntegrationTest
