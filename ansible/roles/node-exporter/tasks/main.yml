@@ -1,0 +1,84 @@
+- name: install apache2-utils
+  apt:
+    name: apache2-utils
+    state: present
+    update_cache: yes
+
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: check if .htpasswd file already exists
+  stat:
+    path: /etc/nginx/.htpasswd
+  register: htpasswd_file
+
+- name: generate .htpasswd file
+  shell: |
+    set -o pipefail
+    htpasswd -bc /etc/nginx/.htpasswd {{ node_exporter_user }} {{ node_exporter_password }}
+    chmod 600 /etc/nginx/.htpasswd
+    chown www-data:www-data /etc/nginx/.htpasswd
+  args:
+    executable: /bin/bash
+  when: not htpasswd_file.stat.exists
+
+- name: create nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: start nginx service
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false
+
+- name: create node_exporter download dir
+  file:
+    path: /root/node_exporter
+    state: directory
+    mode: '0755'
+
+- name: download node_exporter
+  get_url:
+    url: '{{ node_exporter_binary_url | quote }}'
+    checksum: '{{ node_exporter_binary_checksum | quote }}'
+    dest: /root/node_exporter/archive.tar.gz
+    mode: '0700'
+
+- name: unarchive node_exporter
+  unarchive:
+    src: /root/node_exporter/archive.tar.gz
+    remote_src: yes
+    dest: /root/node_exporter
+
+- name: copy node_exporter binary
+  shell: |
+    set -o pipefail
+    cp /root/node_exporter/node_exporter*linux-amd64/node_exporter /usr/local/bin/
+    chmod 755 /usr/local/bin/node_exporter
+    chown root:root /usr/local/bin/node_exporter
+  args:
+    executable: /bin/bash
+  changed_when: False
+
+- name: create node_exporter systemd unit
+  copy:
+    src: node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: '600'
+
+- name: start node_exporter service
+  systemd:
+    name: node_exporter
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false

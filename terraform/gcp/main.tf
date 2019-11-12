@@ -24,6 +24,19 @@ resource "google_compute_firewall" "vpn-{{ name }}" {
   target_tags   = ["{{ name }}"]
 }
 
+resource "google_compute_firewall" "node-exporter-{{ name }}" {
+  name    = "node-exporter-{{ name }}"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["9100"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["{{ name }}"]
+}
+
 resource "google_compute_instance" "main-{{ name }}" {
   name         = "${var.name}-${count.index}"
   machine_type = var.machine_type

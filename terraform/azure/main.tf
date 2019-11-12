@@ -68,6 +68,7 @@ resource "azurerm_virtual_machine" "main-{{ name }}" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
+    disk_size_gb      = 400
   }
   os_profile {
     computer_name = var.name
@@ -152,6 +153,20 @@ resource "azurerm_network_security_rule" "vpnIn-{{ name }}" {
   protocol                    = "Udp"
   source_port_range           = "*"
   destination_port_range      = "51820"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
+}
+
+resource "azurerm_network_security_rule" "node-exporter-{{ name }}" {
+  name                        = "nodeExporterIn"
+  priority                    = 103
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "9100"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
