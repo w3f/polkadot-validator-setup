@@ -1,0 +1,4 @@
+node_exporter_user: prometheus
+node_exporter_password: node_exporter
+node_exporter_binary_url: https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+node_exporter_binary_checksum: 'sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424'
