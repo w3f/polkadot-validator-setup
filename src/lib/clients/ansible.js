@@ -65,6 +65,8 @@ class Ansible {
       data.nodeExporterPassword = nodeExporterPassword;
       data.nodeExporterBinaryUrl = this.config.nodeExporter.binary.url;
       data.nodeExporterBinaryChecksum = this.config.nodeExporter.binary.checksum;
+    } else {
+      data.nodeExporterEnabled = false;
     }
 
     tpl.create(origin, target, data);
