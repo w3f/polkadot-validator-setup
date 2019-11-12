@@ -2,6 +2,7 @@
   become: yes
   roles:
   - common
+  - node-exporter
   - vpnpeer-setup
   - vpnpeer
   - polkadot-common
