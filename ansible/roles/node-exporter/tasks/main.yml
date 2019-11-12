@@ -20,6 +20,7 @@
     set -o pipefail
     htpasswd -bc /etc/nginx/.htpasswd {{ node_exporter_user }} {{ node_exporter_password }}
     chmod 600 /etc/nginx/.htpasswd
+    chown www-data:www-data /etc/nginx/.htpasswd
   args:
     executable: /bin/bash
   when: not htpasswd_file.stat.exists

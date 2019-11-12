@@ -13,8 +13,8 @@ def test_packages(host, name):
 def test_htpasswd(host):
     htpasswd = host.file("/etc/nginx/.htpasswd")
     assert htpasswd.exists
-    assert htpasswd.user == 'root'
-    assert htpasswd.group == 'root'
+    assert htpasswd.user == 'www-data'
+    assert htpasswd.group == 'www-data'
     assert htpasswd.mode == 0o600
 
 
