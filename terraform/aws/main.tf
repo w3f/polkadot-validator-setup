@@ -102,6 +102,16 @@ resource "aws_security_group_rule" "vpn-{{ name }}" {
   security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
+resource "aws_security_group_rule" "node-exporter-{{ name }}" {
+  type            = "ingress"
+  from_port       = 9100
+  to_port         = 9100
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
+}
+
 resource "aws_security_group_rule" "allow_all-{{ name }}" {
   type            = "egress"
   from_port       = 0
