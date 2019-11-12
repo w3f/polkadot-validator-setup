@@ -4,6 +4,13 @@
     "url": "https://github.com/w3f/polkadot/releases/download/v0.6.16/polkadot",
     "checksum": "sha256:1d3bbc0b51344415ede5c47ee4d2c2b7966805e6218f36cc60aa301b891d4ddc"
   },
+  "nodeExporter": {
+    "enabled": true,
+    "binary": {
+      "url": "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz",
+      "checksum": "sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424"
+    }
+  },
   "polkadotNetworkId": "ksmcc2",
   "state": {
     "project": "my_gcp_state_project"
