@@ -3,6 +3,7 @@ const path = require('path');
 const cmd = require('../cmd');
 const { Project } = require('../project');
 const tpl = require('../tpl');
+const { nodeExporterUsername, nodeExporterPassword } = require('./env');
 
 const inventoryFileName = 'inventory'
 
@@ -58,6 +59,13 @@ class Ansible {
 
       buildDir,
     };
+    if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
+      data.nodeExporterEnabled = true;
+      data.nodeExporterUsername = nodeExporterUsername;
+      data.nodeExporterPassword = nodeExporterPassword;
+      data.nodeExporterBinaryUrl = this.config.nodeExporter.binary.url;
+      data.nodeExporterBinaryChecksum = this.config.nodeExporter.binary.checksum;
+    }
 
     tpl.create(origin, target, data);
 
