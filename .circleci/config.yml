@@ -127,7 +127,7 @@ workflows:
               only: /.*/
           requires:
             - lint
-      - nodeExporterIntegrationTest
+      - nodeExporterIntegrationTest:
           filters:
             tags:
               only: /.*/
