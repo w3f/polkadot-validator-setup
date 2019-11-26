@@ -31,6 +31,12 @@
     - not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
     - inventory_hostname in groups['public']
 
+- name: open p2p port for validators (vpn interface)
+  command: ufw allow in on wg0 to any port {{ p2p_port }} proto tcp
+  when:
+    - not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
+    - inventory_hostname in groups['validator']
+
 - name: enable firewall
   shell: |
     set -o pipefail
