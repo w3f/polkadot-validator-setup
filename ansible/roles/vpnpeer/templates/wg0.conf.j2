@@ -1,7 +1,7 @@
 [Interface]
 PrivateKey = {{ vpn_private_key }}
 ListenPort = {{ vpn_port }}
-SaveConfig = true
+SaveConfig = false
 Address = {{ vpnpeer_address }}/{{ vpnpeer_cidr_suffix }}
 
 {% for peer in groups['validator']|list + groups['public']|list %}
