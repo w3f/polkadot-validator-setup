@@ -38,8 +38,8 @@ see [here](https://docs.microsoft.com/en-us/azure/role-based-access-control/role
 for details or [create an issue](https://github.com/w3f/polkadot-secure-validator/issues/new) for
 finer grained access control.
 * GCP: `GOOGLE_APPLICATION_CREDENTIALS` (path to json file with credentials of
-the service account you want to use. This service account needs to have write
-access to compute and network resources. If you have separate projects for your state and your sentry node, this service account needs access to both, see [here](https://cloud.google.com/iam/docs/granting-changing-revoking-access)).
+the service account you want to use; this service account needs to have write
+access to compute and network resources).
 * PACKET: `TF_VAR_auth_token`.
 
 The tool allows you to specify which providers to use, so you don't need to have
