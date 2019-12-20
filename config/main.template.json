@@ -1,0 +1,62 @@
+{
+  "project": "<whatever-name-you-want>",
+  "polkadotBinary": {
+    "url": "<url-to-most-recent-polkadot-binary>",
+    "checksum": "sha256:<checksum-of-most-recent-polkadot-binary>"
+  },
+  "nodeExporter": {
+    "enabled": true,
+    "binary": {
+      "url": "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz",
+      "checksum": "sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424"
+    }
+  },
+  "polkadotNetworkId": "<polkadot-network-id>",
+  "state": {
+    "project": "<gcp-state-project-id>"
+  },
+  "validators": {
+    "telemetryUrl": "<your-telemetry-endpoint>",
+    "loggingFilter": "sync=trace,afg=trace,babe=debug",
+    "nodes": [
+      {
+        "provider": "packet",
+        "machineType": "c1.small.x86",
+        "count": 1,
+        "location": "<packet-server-location>",
+        "projectId": "<your-packet-project-id>",
+        "sshUser": "root"
+      }
+    ]
+  },
+  "publicNodes": {
+    "telemetryUrl": "<your-telemetry-endpoint>",
+    "loggingFilter": "babe=debug",
+    "nodes": [
+      {
+        "provider": "aws",
+        "machineType": "m4.large",
+        "count": 1,
+        "location": "<aws-server-location>",
+        "zone": "<aws-server-zone>",
+        "sshUser": "ubuntu"
+      },
+      {
+        "provider": "azure",
+        "machineType": "Standard_D2s_v3",
+        "count": 1,
+        "location": "<azure-server-location>",
+        "sshUser": "<whatever-azure-ssh-username-you-want>"
+      },      
+      {
+        "provider": "gcp",
+        "machineType": "n1-standard-2",
+        "count": 1,
+        "location": "<gcp-server-location>",
+        "zone": "<gcp-server-zone>",
+        "projectId": "<gcp-project-id>",
+        "sshUser": "<whatever-gcp-ssh-username-you-want>"
+      }
+    ]
+  }
+}
