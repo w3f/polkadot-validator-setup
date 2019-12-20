@@ -58,6 +58,13 @@ nodes.
 * `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
 validators.
 
+Ansible requires that you add these keys to your ssh-agent, which can be done via `ssh-add`:
+
+```bash
+$ ssh-keygen -f <path>
+$ ssh-add <path>
+```
+
 ### Syncronization
 
 ```
