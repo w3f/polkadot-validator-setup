@@ -58,7 +58,7 @@ nodes.
 * `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
 validators.
 
-You can easily create them and add them to your ssh-agent as follows:
+You can easily create and add them to your ssh-agent as follows:
 
 ```bash
 $ ssh-keygen -f <path>
