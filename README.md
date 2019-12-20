@@ -16,13 +16,13 @@ NodeJS, Yarn and Git installed with:
 
 Before using polkadot-secure-validator you need to have installed:
 
-* NodeJS (we recommend to use [nvm](https://github.com/nvm-sh/nvm))
+* NodeJS (we recommend using [nvm](https://github.com/nvm-sh/nvm))
 
 * [Yarn](https://yarnpkg.com/lang/en/docs/install)
 
-* [Terraform](https://www.terraform.io/downloads.html)
+* [Terraform](https://www.terraform.io/downloads.html) (the snap package available via your package manager will not work)
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+, available through pip)
 
 You will need credentials as environment variables for all the infrastructure providers
 used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
