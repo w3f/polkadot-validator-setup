@@ -16,13 +16,13 @@ NodeJS, Yarn and Git installed with:
 
 Before using polkadot-secure-validator you need to have installed:
 
-* NodeJS (we recommend to use [nvm](https://github.com/nvm-sh/nvm))
+* NodeJS (we recommend using [nvm](https://github.com/nvm-sh/nvm))
 
 * [Yarn](https://yarnpkg.com/lang/en/docs/install)
 
-* [Terraform](https://www.terraform.io/downloads.html)
+* [Terraform](https://www.terraform.io/downloads.html) (the snap package available via your package manager will not work)
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+, available through pip)
 
 You will need credentials as environment variables for all the infrastructure providers
 used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
@@ -58,14 +58,21 @@ nodes.
 * `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
 validators.
 
+You can easily create and add them to your ssh-agent as follows:
+
+```bash
+$ ssh-keygen -f <path>
+$ ssh-add <path>
+```
+
 ### Syncronization
 
 ```
 $ git clone https://github.com/w3f/secure-validator
 $ cd secure-validator
 $ yarn
-$ cp config/main.sample.json config/main.json
-# now you should customize config/main.json
+$ cp config/main.template.json config/main.json
+# now you should complete and customize config/main.json, using main.sample.json as a reference
 $ yarn sync -c config/main.json
 ```
 
