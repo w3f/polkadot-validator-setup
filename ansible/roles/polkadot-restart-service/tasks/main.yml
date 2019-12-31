@@ -1,0 +1,6 @@
+- name: Restart polkadot service
+  cron:
+    name: "restart polkadot"
+    minute: "0"
+    hour: "4,12,20"
+    job: "/bin/systemctl restart polkadot.service"
