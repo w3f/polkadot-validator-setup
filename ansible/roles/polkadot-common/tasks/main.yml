@@ -89,3 +89,14 @@
     state: stopped
   changed_when: false
   when: polkadot_service_running.stdout == "no"
+
+- name: cronjob for restarting polkadot service
+  cron:
+    name: "restart polkadot"
+    minute: "{{ polkadot_restart_minute }}"
+    hour: "{{ polkadot_restart_hour }}"
+    day: "{{ polkadot_restart_day }}"
+    month: "{{ polkadot_restart_month }}"
+    weekday: "{{ polkadot_restart_weekday }}"
+    job: "/bin/systemctl restart polkadot.service"
+  when: "polkadot_restart_enabled|default(false)|bool"
