@@ -59,11 +59,3 @@
     content: "{{ rotate_keys.json }}"
     dest: /home/polkadot/rotate_keys.log
   when: keystore_files.stdout == "0"
-
-- name: set journalctl vacuum-size
-  shell: |
-    set -o pipefail
-    journalctl --vacuum-size=10G
-  args:
-    executable: /bin/bash
-  changed_when: False
