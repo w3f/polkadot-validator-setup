@@ -1,7 +1,7 @@
 - name: get command output
   shell: |
     journalctl -u polkadot --no-pager > /root/polkadot.log
-    tac /root/polkadot.log | grep "noting beginning" | head -n 1
+    tail -n 10000 /root/polkadot.log | grep "Waiting to import block"
   become: yes
   args:
     executable: /bin/bash

@@ -1,5 +1,5 @@
 [Journal]
-#Storage=auto
+Storage=persistent
 #Compress=yes
 #Seal=yes
 #SplitMode=uid
