@@ -49,6 +49,7 @@ class Terraform {
   }
 
   async clean() {
+    this._initializeTerraform();
     let validatorCleanPromises = [];
     try {
       validatorCleanPromises = await this._destroy('validator',this.config.validators.nodes);
