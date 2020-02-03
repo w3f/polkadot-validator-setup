@@ -7,6 +7,7 @@ Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
          --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
          --validator \
+         --execution=wasm \
          --listen-addr=/ip4/{{ hostvars[inventory_hostname].vpnpeer_address }}/tcp/30333 \
          --reserved-only \
          {% if hostvars[inventory_hostname].loggingFilter is defined and hostvars[inventory_hostname].loggingFilter|length %}
