@@ -65,7 +65,7 @@ $ ssh-keygen -f <path>
 $ ssh-add <path>
 ```
 
-### Syncronization
+### Synchronization
 
 ```
 $ git clone https://github.com/w3f/secure-validator
@@ -96,12 +96,12 @@ $ yarn clean -c config/main.json
 
 The secure validator setup is composed of a bare-metal machine that runs the
 actual validator and a set of cloud nodes connected to it. The validator is
-isolated from the internet and only has access to the polkadot network through
+isolated from the internet and only has access to the Polkadot network through
 the cloud nodes, which are accessible from the internet and are connected to
-the rest of the polkadot network.
+the rest of the Polkadot network.
 
 The connection between the validator node and the cloud nodes is performed
-defining a VPN to which all these nodes belong. The polkadot instance running in
+defining a VPN to which all these nodes belong. The Polkadot instance running in
 the validator node is configured to only listen on the VPN-attached interface,
 and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
 also protected by a firewall that only allows connections on the VPN port.
@@ -125,7 +125,7 @@ we recommend to not send this information to endpoints publicly accessible.
 
 ## Workflow
 
-The secure validator setup is structured in two layers, an underlaying platform
+The secure validator setup is structured in two layers, an underlying platform
 and the applications that run on top of it.
 
 ### Platform creation
@@ -133,7 +133,7 @@ and the applications that run on top of it.
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
 However, we use terraform for creating both. The code for setting up the
-bare-metal machine is in the [terraform-modules](/terraform-modules) dir
+bare-metal machine is in the [terraform](/terraform) dir
 of this repository.
 
 The cloud instances are created on 3 different cloud providers for increased
@@ -181,7 +181,7 @@ configuration applied depend on the type of node:
         Endpoint = 45.243.244.130:51820
         ```
 
-    * Polkadot setup: create a polkadot user and group and download the binary.
+    * Polkadot setup: create a Polkadot user and group and download the binary.
 
 * Public nodes:
 
@@ -232,7 +232,7 @@ configuration applied depend on the type of node:
 
 This setup partitions the network in 3 separate kind of nodes: secure validator,
 its public node and the regular network nodes, haveing each group a different
-vision and accessiblity to the rest of the network. To verify this, we'll execute
+vision and accessibility to the rest of the network. To verify this, we'll execute
 the `system_networkState` RPC call on nodes of each partition:
 
 ```
