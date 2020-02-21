@@ -32,14 +32,14 @@ class Terraform {
 
     let validatorSyncPromises = [];
     try {
-      validatorSyncPromises = await this._create('validator', sshKeys.validatorPublicKey, this.config.validators.nodes);
+      validatorSyncPromises = await this._create('validator', false, sshKeys.validatorPublicKey, this.config.validators.nodes);
     } catch(e) {
       console.log(`Could not get validator sync promises: ${e.message}`);
     }
 
     let publicNodeSyncPromises = [];
     try {
-      publicNodeSyncPromises = await this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes);
+      publicNodeSyncPromises = await this._create('publicNode', true, sshKeys.publicNodePublicKey, this.config.publicNodes.nodes);
     } catch(e) {
       console.log(`Could not get publicNodes sync promises: ${e.message}`);
     }
@@ -76,7 +76,7 @@ class Terraform {
     return this._cmd(`output -json ${outputField}`, options);
   }
 
-  async _create(type, sshKey, nodes) {
+  async _create(type, isPublic, sshKey, nodes) {
     const createPromises = [];
 
     for (let counter = 0; counter < nodes.length; counter++) {
@@ -86,7 +86,7 @@ class Terraform {
       createPromises.push(new Promise(async (resolve) => {
         const options = { cwd };
         await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
+        nodes[counter].isPublic = isPublic;
         this._createVarsFile(cwd, nodes[counter], sshKey, nodeName);
 
         await this._cmd(`apply -auto-approve`, options);
@@ -132,16 +132,18 @@ class Terraform {
   _createVarsFile(cwd, node, sshKey, nodeName) {
     const data = {
       stateProject: this.config.state.project,
+      isPublic: node.isPublic,
       publicKey: sshKey,
       sshUser: node.sshUser,
       machineType: node.machineType,
+      network: node.network,
+      subnetwork: node.subnetwork,
       location: node.location,
       zone: node.zone,
       projectId: node.projectId,
       nodeCount: node.count || 1,
       name: nodeName
     }
-
     const source = path.join(__dirname, '..', '..', '..', 'tpl', 'tfvars');
     const target = path.join(cwd, 'terraform.tfvars');
 
