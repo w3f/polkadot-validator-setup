@@ -33,3 +33,15 @@ variable "node_count" {
 variable "name" {
   default = "node"
 }
+
+variable "network" {
+  default = "default"
+}
+
+variable "subnetwork" {
+  default = ""
+}
+
+variable "is_public" {
+  default = false
+}

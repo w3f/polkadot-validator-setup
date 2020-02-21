@@ -21,6 +21,7 @@ class Ansible {
 
   async sync() {
     const inventoryPath = this._writeInventory();
+    console.log(inventoryPath);
     //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
     return this._cmd(`main.yml -f 30 -i ${inventoryPath}`);
   }
