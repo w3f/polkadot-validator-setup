@@ -144,7 +144,6 @@ class Terraform {
       nodeCount: node.count || 1,
       name: nodeName
     }
-    console.log(data);
     const source = path.join(__dirname, '..', '..', '..', 'tpl', 'tfvars');
     const target = path.join(cwd, 'terraform.tfvars');
 

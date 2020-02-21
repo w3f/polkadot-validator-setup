@@ -5,3 +5,4 @@ ansible/**/__pycache__
 config/main.json
 yarn-error.log
 .env
+.idea

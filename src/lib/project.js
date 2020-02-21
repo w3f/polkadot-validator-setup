@@ -8,7 +8,7 @@ class Project {
   }
 
   path() {
-    return path.join(ospath.home(), 'kadot-secure-validator', 'build', this.name);
+    return path.join(ospath.home(), '.polkadot-secure-validator', 'build', this.name);
   }
 }
 
