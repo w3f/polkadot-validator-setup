@@ -1,12 +1,14 @@
 [Unit]
-Description=Polkadot Dummy Node
+Description=Centrifuge Chain Dummy Node
 
 [Service]
 User=polkadot
 Group=polkadot
-ExecStart=/usr/local/bin/polkadot \
+ExecStart=/usr/local/bin/centrifuge-chain \
          --name polkadot-dummy \
-         --validator
+         --validator \
+         --base-path /home/polkadot/data \
+         --chain {{ chain }}
 
 [Install]
 WantedBy=multi-user.target

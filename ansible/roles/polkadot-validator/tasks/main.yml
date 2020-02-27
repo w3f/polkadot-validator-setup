@@ -1,5 +1,17 @@
 ---
 # tasks file for polkadot-validator
+- name: get hostname
+  command: hostname
+  register: hostname
+  changed_when: False
+
+- name: Copy keystore files
+  copy:
+    src: ../keys/{{ hostname.stdout }}/
+    dest: /home/polkadot/keystore/
+    owner: polkadot
+    group: polkadot
+
 - name: create polkadot service file
   template:
     src: polkadot.service.j2
@@ -13,10 +25,10 @@
     set -o pipefail
     systemctl stop polkadot.service || true
 
-    if [ -f /usr/local/bin/polkadot-new ]; then
-      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
-      chown polkadot:polkadot /usr/local/bin/polkadot
-      chmod a+x /usr/local/bin/polkadot
+    if [ -f /usr/local/bin/centrifuge-chain-new ]; then
+      cp /usr/local/bin/centrifuge-chain-new /usr/local/bin/centrifuge-chain
+      chown polkadot:polkadot /usr/local/bin/centrifuge-chain
+      chmod a+x /usr/local/bin/centrifuge-chain
     fi
     systemctl daemon-reload
     systemctl start polkadot.service
@@ -39,23 +51,23 @@
   register: keystore_files
   changed_when: False
 
-- name: initialize server keys
-  uri:
-    url: http://localhost:9933
-    method: "POST"
-    body_format: json
-    body: |
-      { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
-  when: keystore_files.stdout == "0"
-  register: rotate_keys
-
-- name: show rotateKeys output
-  debug:
-    var: rotate_keys
-  when: keystore_files.stdout == "0"
-
-- name: save rotateKeys output
-  copy:
-    content: "{{ rotate_keys.json }}"
-    dest: /home/polkadot/rotate_keys.log
-  when: keystore_files.stdout == "0"
+#- name: initialize server keys
+#  uri:
+#    url: http://localhost:9933
+#    method: "POST"
+#    body_format: json
+#    body: |
+#      { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
+#  when: keystore_files.stdout == "0"
+#  register: rotate_keys
+#
+#- name: show rotateKeys output
+#  debug:
+#    var: rotate_keys
+#  when: keystore_files.stdout == "0"
+#
+#- name: save rotateKeys output
+#  copy:
+#    content: "{{ rotate_keys.json }}"
+#    dest: /home/polkadot/rotate_keys.log
+#  when: keystore_files.stdout == "0"
