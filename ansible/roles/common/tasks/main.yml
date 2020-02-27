@@ -15,9 +15,9 @@
   command: ufw allow 22/tcp
   when: not ufw_status_result.stdout is search("22/tcp.*ALLOW IN.*Anywhere")
 
-- name: open vpn port
-  command: ufw allow {{ vpn_port }}/udp
-  when: not ufw_status_result.stdout is search(vpn_port ~ "/udp.*ALLOW IN.*Anywhere")
+#- name: open vpn port
+#  command: ufw allow {{ vpn_port }}/udp
+#  when: not ufw_status_result.stdout is search(vpn_port ~ "/udp.*ALLOW IN.*Anywhere")
 
 - name: open node_exporter port
   command: ufw allow 9100/tcp

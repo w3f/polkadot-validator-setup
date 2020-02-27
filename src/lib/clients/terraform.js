@@ -138,6 +138,7 @@ class Terraform {
       machineType: node.machineType,
       network: node.network,
       subnetwork: node.subnetwork,
+      networkIP: node.networkIP,
       location: node.location,
       zone: node.zone,
       projectId: node.projectId,

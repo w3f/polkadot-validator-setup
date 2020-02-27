@@ -42,6 +42,10 @@ variable "subnetwork" {
   default = ""
 }
 
+variable "network_ip" {
+  default = ""
+}
+
 variable "is_public" {
   default = false
 }

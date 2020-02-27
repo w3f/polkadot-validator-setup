@@ -1,5 +1,17 @@
 ---
 # tasks file for polkadot
+- name: create a ext4 filesystem on /dev/sdb
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdb
+
+- name: mount up device by id
+  mount:
+    path: /home/polkadot/data
+    src: /dev/sdb
+    fstype: ext4
+    state: mounted
+
 - name: create polkadot group
   group:
     name: polkadot
@@ -11,12 +23,34 @@
     group: polkadot
     append: yes
 
+- name: Create keystore dir if it does not exist
+  file:
+    path: /home/polkadot/keystore
+    state: directory
+    mode: '0755'
+
+- name: change ownership keystore dir
+  file:
+    path: /home/polkadot/keystore
+    state: directory
+    recurse: yes
+    owner: polkadot
+    group: polkadot
+
+- name: change ownership data dir
+  file:
+    path: /home/polkadot/data
+    state: directory
+    recurse: yes
+    owner: polkadot
+    group: polkadot
+
 - name: polkadot binary checksum
   shell: |
     set -o pipefail
-    if [ -f /usr/local/bin/polkadot ] && \
+    if [ -f /usr/local/bin/centrifuge-chain ] && \
        [ -f  /etc/systemd/system/polkadot.service ] && \
-       [ "$(echo -n '{{ polkadot_binary_checksum }}' | cut -f1 -d':')" != "$(cat /usr/local/bin/polkadot | sha256sum | cut -f1 -d' ')" ]; then
+       [ "$(echo -n '{{ polkadot_binary_checksum }}' | cut -f1 -d':')" != "$(cat /usr/local/bin/centrifuge-chain | sha256sum | cut -f1 -d' ')" ]; then
       echo yes
     else
       echo no
@@ -30,7 +64,7 @@
   get_url:
     url: '{{ polkadot_binary_url | quote }}'
     checksum: '{{ polkadot_binary_checksum | quote }}'
-    dest: /usr/local/bin/polkadot-new
+    dest: /usr/local/bin/centrifuge-chain-new
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'
@@ -42,8 +76,8 @@
     if [ "$?" == 0 ]; then
       echo yes
     else
-      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
-      chown polkadot:polkadot /usr/local/bin/polkadot
+      cp /usr/local/bin/centrifuge-chain-new /usr/local/bin/centrifuge-chain
+      chown polkadot:polkadot /usr/local/bin/centrifuge-chain
       echo no
     fi
   args:

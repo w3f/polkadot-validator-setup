@@ -4,7 +4,7 @@
 
 [validator-{{@index}}:vars]
 ansible_user={{ this.sshUser }}
-vpnpeer_address={{ this.vpnAddress }}
+vpnpeer_address={{ this.ipAddress }}
 vpnpeer_cidr_suffix=24
 telemetryUrl={{ ../validatorTelemetryUrl }}
 loggingFilter='{{{ ../validatorLoggingFilter }}}'
@@ -23,10 +23,11 @@ validator-{{@index}}
 
 [public-{{@index}}:vars]
 ansible_user={{ this.sshUser }}
-vpnpeer_address={{ this.vpnAddress }}
+vpnpeer_address={{ this.ipAddress }}
 vpnpeer_cidr_suffix=24
 telemetryUrl={{ ../publicTelemetryUrl }}
 loggingFilter='{{{ ../publicLoggingFilter }}}'
+bootNodes={{ ../bootNodes }}
 
 {{/each}}
 
@@ -42,6 +43,7 @@ polkadot_binary_url='{{ polkadotBinaryUrl }}'
 polkadot_binary_checksum='{{ polkadotBinaryChecksum }}'
 polkadot_network_id='{{ polkadotNetworkId }}'
 build_dir={{ buildDir }}
+use_custom_vpn='{{ useCustomVPN }}'
 node_exporter_enabled='{{ nodeExporterEnabled }}'
 node_exporter_user='{{ nodeExporterUsername }}'
 node_exporter_password='{{ nodeExporterPassword }}'

@@ -3,13 +3,13 @@
   strategy: free
   roles:
   - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
-  - vpnpeer-setup
+  - { role: vpnpeer-setup, when: "use_custom_vpn|default(false)|bool == false" }
   - polkadot-common
 
 - hosts: all
   become: yes
   roles:
-  - vpnpeer
+  - { role: vpnpeer, when: "use_custom_vpn|default(false)|bool == false" }
   - common
 
 - hosts: public

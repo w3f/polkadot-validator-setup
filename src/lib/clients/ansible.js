@@ -46,16 +46,19 @@ class Ansible {
 
       polkadotBinaryUrl: this.config.polkadotBinary.url,
       polkadotBinaryChecksum: this.config.polkadotBinary.checksum,
-      polkadotNetworkId: this.config.polkadotNetworkId || 'ksmcc2',
+      polkadotNetworkId: this.config.polkadotNetworkId || 'amber',
 
       validators,
       publicNodes,
 
+      bootNodes: this.config.publicNodes.bootNodes,
       validatorTelemetryUrl: this.config.validators.telemetryUrl,
       publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
 
       validatorLoggingFilter: this.config.validators.loggingFilter,
       publicLoggingFilter: this.config.publicNodes.loggingFilter,
+
+      useCustomVPN: this.config.useCustomVPN,
 
       buildDir,
     };
@@ -93,7 +96,7 @@ class Ansible {
       node.ipAddresses.forEach((ipAddress) => {
         counter++;
         const item = {
-          ipAddress,
+          ipAddress: ipAddress,
           sshUser: node.sshUser,
           vpnAddress: `${vpnAddressBase}.${counter}`
         };

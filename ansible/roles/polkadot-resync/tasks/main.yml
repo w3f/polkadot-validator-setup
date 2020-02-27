@@ -6,7 +6,7 @@
 - name: purge chain
   shell: |
     set -o pipefail
-    /usr/local/bin/polkadot purge-chain -y
+    /usr/local/bin/centrifuge-chain purge-chain -y
   become: yes
   become_user: polkadot
   args:

@@ -13,10 +13,10 @@
     set -o pipefail
     systemctl stop polkadot.service || true
 
-    if [ -f /usr/local/bin/polkadot-new ]; then
-      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
-      chown polkadot:polkadot /usr/local/bin/polkadot
-      chmod a+x /usr/local/bin/polkadot
+    if [ -f /usr/local/bin/centrifuge-chain-new ]; then
+      cp /usr/local/bin/centrifuge-chain-new /usr/local/bin/centrifuge-chain
+      chown polkadot:polkadot /usr/local/bin/centrifuge-chain
+      chmod a+x /usr/local/bin/centrifuge-chain
     fi
     systemctl daemon-reload
     systemctl start polkadot.service
