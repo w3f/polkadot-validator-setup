@@ -65,6 +65,10 @@ $ ssh-keygen -f <path>
 $ ssh-add <path>
 ```
 
+Create `keys` folder in parent directory with:
+- `ssh` folder containing ssh public keys to add each instance
+- One folder per validator name (`validator1-0`) containing the keystore for gran/babe/imon/audi
+
 ### Synchronization
 
 ```

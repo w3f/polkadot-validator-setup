@@ -1,0 +1,6 @@
+- name: Set up authorized keys
+  authorized_key:
+    user: centadmin
+    state: present
+    key: "{{ lookup('file', item) }}"
+  with_fileglob: '../keys/ssh/*'
