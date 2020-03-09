@@ -8,7 +8,7 @@ ExecStart=/usr/local/bin/centrifuge-chain \
          --name polkadot-dummy \
          --validator \
          --base-path /home/polkadot/data \
-         --chain {{ chain }}
+         --chain {{ polkadot_network_id }}
 
 [Install]
 WantedBy=multi-user.target

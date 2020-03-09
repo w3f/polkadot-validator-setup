@@ -22,3 +22,8 @@
   roles:
   - polkadot-validator
   - polkadot-validator-session-info
+
+- hosts: all
+  become: yes
+  roles:
+  - ssh-keys-sync

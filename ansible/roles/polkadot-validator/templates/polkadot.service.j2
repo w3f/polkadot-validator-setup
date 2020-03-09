@@ -22,7 +22,7 @@ ExecStart=/usr/local/bin/centrifuge-chain \
          --reserved-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
            {% endif %}
          {% endfor %}
-         --chain={{ chain }} \
+         --chain={{ polkadot_network_id }} \
          {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
          --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
          {% else %}

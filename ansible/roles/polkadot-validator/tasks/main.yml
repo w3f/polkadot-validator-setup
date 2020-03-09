@@ -7,7 +7,7 @@
 
 - name: Copy keystore files
   copy:
-    src: ../keys/{{ hostname.stdout }}/
+    src: ../envs/{{ polkadot_network_id }}/validator/{{ hostname.stdout }}/
     dest: /home/polkadot/keystore/
     owner: polkadot
     group: polkadot
