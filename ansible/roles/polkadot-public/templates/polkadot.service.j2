@@ -6,12 +6,14 @@ User=polkadot
 Group=polkadot
 ExecStart=/usr/local/bin/centrifuge-chain \
          --name {{ project|default('project') }}-sv-public-{{ groups['public'].index(inventory_hostname) }} \
-         --chain={{ chain }} \
+         --chain={{ polkadot_network_id }} \
          {% if hostvars[inventory_hostname].loggingFilter is defined and hostvars[inventory_hostname].loggingFilter|length %}
          -l{{ hostvars[inventory_hostname].loggingFilter }} \
          {% endif %}
          --sentry \
+         {% if hostvars[inventory_hostname].bootNodes is defined and hostvars[inventory_hostname].bootNodes|length %}
          --bootnodes {{ hostvars[inventory_hostname].bootNodes }} \
+         {% endif %}
          --base-path /home/polkadot/data \
          --keystore-path /home/polkadot/keystore \
          {% for reserved_node in groups['validator'] %}
