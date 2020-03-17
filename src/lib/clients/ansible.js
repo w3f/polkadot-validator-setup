@@ -58,6 +58,10 @@ class Ansible {
       publicLoggingFilter: this.config.publicNodes.loggingFilter,
 
       buildDir,
+
+      polkadotAdditionalCommonFlags: this.config.additionalFlags,
+      polkadotAdditionalValidatorFlags: this.config.validators.additionalFlags,
+      polkadotAdditionalPublicFlags: this.config.publicNodes.additionalFlags,
     };
     if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
       data.nodeExporterEnabled = true;

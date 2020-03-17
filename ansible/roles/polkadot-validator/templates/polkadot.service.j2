@@ -9,6 +9,12 @@ ExecStart=/usr/local/bin/polkadot \
          --validator \
          --listen-addr=/ip4/{{ hostvars[inventory_hostname].vpnpeer_address }}/tcp/30333 \
          --reserved-only \
+         {% if hostvars[inventory_hostname].polkadot_additional_common_flags is defined and hostvars[inventory_hostname].polkadot_additional_common_flags|length %}
+         {{ hostvars[inventory_hostname].polkadot_additional_common_flags }} \
+         {% endif %}
+         {% if hostvars[inventory_hostname].polkadot_additional_validator_flags is defined and hostvars[inventory_hostname].polkadot_additional_validator_flags|length %}
+         {{ hostvars[inventory_hostname].polkadot_additional_validator_flags }} \
+         {% endif %}
          {% if hostvars[inventory_hostname].loggingFilter is defined and hostvars[inventory_hostname].loggingFilter|length %}
          -l{{ hostvars[inventory_hostname].loggingFilter }} \
          {% endif %}

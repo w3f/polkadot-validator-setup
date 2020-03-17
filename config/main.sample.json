@@ -15,6 +15,7 @@
   "state": {
     "project": "my_gcp_state_project"
   },
+  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512",
   "validators": {
     "telemetryUrl": "wss://my.private.telemetry.endpoint",
     "loggingFilter": "sync=trace,afg=trace,babe=debug",
