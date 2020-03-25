@@ -60,6 +60,14 @@
   register: should_upgrade
   changed_when: False
 
+#- name: Copy polkadot binary with owner and permissions
+#  copy:
+#    src: ../bin/centrifuge-chain
+#    dest: /usr/local/bin/centrifuge-chain-new
+#    owner: 'polkadot'
+#    group: 'polkadot'
+#    mode: '0700'
+
 - name: download polkadot binary
   get_url:
     url: '{{ polkadot_binary_url | quote }}'
