@@ -1,0 +1,15 @@
+[Unit]
+Description=Centrifuge Chain Node Health Monitoring
+
+[Service]
+User=polkadot
+Group=polkadot
+Environment=ROUTING_KEY={{ monitoring_alert_key }}
+Environment=SOURCE_NODE={{ inventory_hostname }}
+Environment=CENT_ENV={{ polkadot_network_id }}
+ExecStart=/usr/local/bin/start-monitoring.sh
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

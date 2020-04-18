@@ -54,6 +54,7 @@ polkadot_binary_url='https://github.com/w3f/polkadot/releases/download/v0.6.11/p
 polkadot_binary_checksum='sha256:ce6d4fd45f2c3ff91117423ed04c952ddde3b20f393e3ea05a2081f04b8a926b'
 polkadot_network_id=ksmcc2
 build_dir=/home/user/.config/polkadot-secure-validator/build/w3f/ansible
+monitoring_alert_key=''
 node_exporter_enabled='true'
 node_exporter_user='node_exporter_user'
 node_exporter_password='node_exporter_password'

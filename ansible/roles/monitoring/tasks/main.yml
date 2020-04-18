@@ -1,0 +1,37 @@
+---
+# tasks file for polkadot monitoring
+- name: install jq
+  apt:
+    name: jq
+    state: present
+    update_cache: yes
+
+- name: copy health check file
+  copy:
+    src: health-check.sh
+    dest: /usr/local/bin/health-check.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy start monitoring file
+  copy:
+    src: start-monitoring.sh
+    dest: /usr/local/bin/start-monitoring.sh
+    owner: polkadot
+    group: polkadot
+    mode: 0755
+
+- name: copy health monitor service file
+  template:
+    src: health-monitor.service.j2
+    dest: /etc/systemd/system/health-monitor.service
+    owner: polkadot
+    group: polkadot
+    mode: 0600
+
+- name: start monitoring service
+  systemd:
+    name: health-monitor.service
+    state: started
+  changed_when: false

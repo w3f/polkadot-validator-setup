@@ -47,6 +47,7 @@ class Ansible {
       polkadotBinaryUrl: this.config.polkadotBinary.url,
       polkadotBinaryChecksum: this.config.polkadotBinary.checksum,
       polkadotNetworkId: this.config.polkadotNetworkId || 'amber',
+      monitoringAlertKey: this.config.monitoringAlertKey,
 
       validators,
       publicNodes,

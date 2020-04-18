@@ -42,6 +42,7 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=25 -o Con
 polkadot_binary_url='{{ polkadotBinaryUrl }}'
 polkadot_binary_checksum='{{ polkadotBinaryChecksum }}'
 polkadot_network_id='{{ polkadotNetworkId }}'
+monitoring_alert_key='{{ monitoringAlertKey }}'
 build_dir={{ buildDir }}
 use_custom_vpn='{{ useCustomVPN }}'
 node_exporter_enabled='{{ nodeExporterEnabled }}'
