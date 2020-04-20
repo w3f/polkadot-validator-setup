@@ -1,4 +1,0 @@
-- name: rstart polkadot service
-  systemd:
-    name: polkadot.service
-    state: restarted

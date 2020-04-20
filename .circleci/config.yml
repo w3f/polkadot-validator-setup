@@ -5,10 +5,8 @@ ansibleIntegrationTest: &ansibleIntegrationTest
       - checkout
       - setup_remote_docker
       - run:
-          description: execute molecule tests for the ansible role at $ROLE_PATH
-          command: |
-            cd $ROLE_PATH
-            molecule test
+          description: install collection from galaxy
+          command: ansible-galaxy collection install --force -p ./ansible w3f.polkadot_validator
 
 
 version: 2
@@ -29,42 +27,42 @@ jobs:
 
   commonIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/common
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/common
     <<: *ansibleIntegrationTest
 
   polkadotCommonIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-common
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-common
     <<: *ansibleIntegrationTest
 
   polkadotPublicIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-public
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-public
     <<: *ansibleIntegrationTest
 
   polkadotValidatorIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-validator
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-validator
     <<: *ansibleIntegrationTest
 
   vpnpeerIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/vpnpeer
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/vpnpeer
     <<: *ansibleIntegrationTest
 
   vpnpeerSetupIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/vpnpeer-setup
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/vpnpeer-setup
     <<: *ansibleIntegrationTest
 
   polkadotValidatorSessionInfoIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-validator-session-info
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-validator-session-info
     <<: *ansibleIntegrationTest
 
   nodeExporterIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/node-exporter
+      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/node-exporter
     <<: *ansibleIntegrationTest
 
   publishPackage:
