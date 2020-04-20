@@ -6,7 +6,7 @@ ansibleIntegrationTest: &ansibleIntegrationTest
       - setup_remote_docker
       - run:
           description: install collection from galaxy
-          command: ansible-galaxy collection install --force -p ./ansible w3f.polkadot_validator
+          command: ansible-galaxy collection install --force -p ./ansible w3f.polkadot_validator:0.0.3
 
 
 version: 2
