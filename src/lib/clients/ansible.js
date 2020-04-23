@@ -32,10 +32,6 @@ class Ansible {
 
   }
 
-  async _cmd(command, options = {}) {
-
-  }
-
   _writeInventory() {
     const origin = path.resolve(__dirname, '..', '..', '..', 'tpl', 'ansible_inventory');
     const project = new Project(this.config);
