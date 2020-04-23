@@ -1,5 +1,5 @@
 state_project = "{{ stateProject }}"
-public_key = "{{ publicKey }}"
+public_key = "{{{ publicKey }}}"
 ssh_user = "{{ sshUser }}"
 machine_type = "{{ machineType }}"
 location = "{{ location }}"
