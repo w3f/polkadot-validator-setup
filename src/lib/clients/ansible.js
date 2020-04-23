@@ -20,10 +20,9 @@ class Ansible {
   }
 
   async sync() {
-    const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.3';
     const inventoryPath = this._writeInventory();
     //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
-    return this._cmd(`ansible-galaxy collection install --force -p ../../../ansible w3f.polkadot_validator:${polkadotValidatorCollectionVersion} && main.yml -f 30 -i ${inventoryPath}`);
+    return this._cmd(`main.yml -f 30 -i ${inventoryPath}`);
   }
 
   async clean() {
@@ -31,6 +30,8 @@ class Ansible {
   }
 
   async _cmd(command, options = {}) {
+    const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.3';
+    cmd.exec(`ansible-galaxy collection install --force -p ${this.ansiblePath} w3f.polkadot_validator:${polkadotValidatorCollectionVersion}`);
     const actualOptions = Object.assign({}, this.options, options);
     return cmd.exec(`ansible-playbook ${command}`, actualOptions);
   }
