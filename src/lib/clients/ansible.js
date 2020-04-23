@@ -20,8 +20,6 @@ class Ansible {
   }
 
   async sync() {
-    const util = require('util');
-    const exec = util.promisify(require('child_process').exec);
     const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.3';
     const inventoryPath = this._writeInventory();
     //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
