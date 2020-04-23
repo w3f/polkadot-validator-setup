@@ -12,6 +12,7 @@
     }
   },
   "polkadotNetworkId": "ksmcc3",
+  "polkadotValidatorCollectionVersion": "0.0.3",
   "state": {
     "project": "my_gcp_state_project"
   },
