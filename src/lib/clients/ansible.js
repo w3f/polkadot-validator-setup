@@ -22,9 +22,8 @@ class Ansible {
   async sync() {
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
-    const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.3'
+    const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.3';
     const inventoryPath = this._writeInventory();
-    console.log(exec)
     //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
     return this._cmd(`ansible-galaxy collection install --force -p ../../../ansible w3f.polkadot_validator:${polkadotValidatorCollectionVersion} && main.yml -f 30 -i ${inventoryPath}`);
   }
