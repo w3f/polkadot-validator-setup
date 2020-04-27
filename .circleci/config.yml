@@ -1,14 +1,3 @@
-ansibleIntegrationTest: &ansibleIntegrationTest
-    docker:
-      - image: web3f/secure-validator-ci:v0.3.2
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          description: install collection from galaxy
-          command: ansible-galaxy collection install --force -p ./ansible w3f.polkadot_validator:0.0.3
-
-
 version: 2
 
 jobs:
@@ -24,46 +13,6 @@ jobs:
           name: Run tests
           command: |
             yarn test
-
-  commonIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/common
-    <<: *ansibleIntegrationTest
-
-  polkadotCommonIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-common
-    <<: *ansibleIntegrationTest
-
-  polkadotPublicIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-public
-    <<: *ansibleIntegrationTest
-
-  polkadotValidatorIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-validator
-    <<: *ansibleIntegrationTest
-
-  vpnpeerIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/vpnpeer
-    <<: *ansibleIntegrationTest
-
-  vpnpeerSetupIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/vpnpeer-setup
-    <<: *ansibleIntegrationTest
-
-  polkadotValidatorSessionInfoIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/polkadot-validator-session-info
-    <<: *ansibleIntegrationTest
-
-  nodeExporterIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/ansible_collections/w3f/polkadot_validator/roles/node-exporter
-    <<: *ansibleIntegrationTest
 
   publishPackage:
     docker:
@@ -83,54 +32,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - commonIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - polkadotCommonIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - polkadotPublicIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - polkadotValidatorIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - polkadotValidatorSessionInfoIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - vpnpeerIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - vpnpeerSetupIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
-      - nodeExporterIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - lint
       - publishPackage:
           filters:
             tags:
@@ -138,11 +39,4 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-            - commonIntegrationTest
-            - polkadotCommonIntegrationTest
-            - polkadotPublicIntegrationTest
-            - polkadotValidatorIntegrationTest
-            - polkadotValidatorSessionInfoIntegrationTest
-            - vpnpeerIntegrationTest
-            - vpnpeerSetupIntegrationTest
-            - nodeExporterIntegrationTest
+            - lint
