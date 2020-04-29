@@ -1,0 +1,5 @@
+- name: backup keystore
+  copy:
+    src: /home/polkadot/.local/share/polkadot/chains/ksmcc3/keystore
+    dest: /home/polkadot/keystore
+    remote_src: yes

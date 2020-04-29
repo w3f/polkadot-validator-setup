@@ -1,0 +1,28 @@
+- name: download db
+  get_url:
+    url: https://storage.googleapis.com/kusama-db/db.tar.gz
+    dest: /home/polkadot/.local/share/polkadot/chains/ksmcc3/
+    mode: '0700'
+    owner: 'polkadot'
+    group: 'polkadot'
+
+- name: stop polkadot service
+  systemd:
+    name: polkadot.service
+    state: stopped
+
+- name: unpack db
+  shell: |
+    set -o pipefail
+    cd /home/polkadot/.local/share/polkadot/chains/ksmcc3/
+    mv db db.back
+    tar xzf db.tar.gz
+    rm db.tar.gz
+    chown -R polkadot:polkadot db/
+  args:
+    executable: /bin/bash
+
+- name: start polkadot service
+  systemd:
+    name: polkadot.service
+    state: started
