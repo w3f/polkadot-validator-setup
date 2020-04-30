@@ -138,7 +138,7 @@ class Terraform {
       location: node.location,
       zone: node.zone,
       projectId: node.projectId,
-      nodeCount: node.count || 1,
+      nodeCount: node.count,
       name: nodeName
     }
 
