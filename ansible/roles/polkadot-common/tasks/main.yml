@@ -76,7 +76,7 @@
       { "jsonrpc":"2.0", "method":"system_localPeerId", "params":[], "id":1 }
   register: peerId
   until: peerId.status == 200
-  retries: 5
+  retries: 10
   delay: 5
 
 - name: set peer id as fact
