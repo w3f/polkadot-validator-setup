@@ -12,28 +12,25 @@
     }
   },
   "polkadotNetworkId": "ksmcc3",
-  "polkadotValidatorCollectionVersion": "0.0.3",
+  "polkadotValidatorCollectionVersion": "0.0.4",
   "state": {
-    "project": "polkadot-benchmarks"
+    "project": "development"
   },
   "additionalFlags": "--grandpa-pause 0 0 --db-cache 512",
   "validators": {
-    "telemetryUrl": "wss://my.private.telemetry.endpoint",
-    "loggingFilter": "sync=trace,afg=trace,babe=debug",
     "nodes": [
       {
-        "provider": "packet",
-        "machineType": "c1.small.x86",
+        "provider": "gcp",
+        "machineType": "n1-standard-1",
         "count": 3,
-        "location": "ewr1",
-        "projectId": "polkadot-benchmarks",
-        "sshUser": "root"
+        "location": "us-east1",
+        "zone": "us-east1-b",
+        "projectId": "development-252112",
+        "sshUser": "w3fadmin"
       }
     ]
   },
   "publicNodes": {
-    "telemetryUrl": "wss://my.private.telemetry.endpoint",
-    "loggingFilter": "babe=debug",
     "nodes": [
       {
         "provider": "gcp",
@@ -41,7 +38,7 @@
         "count": 2,
         "location": "us-east1",
         "zone": "us-east1-b",
-        "projectId": "polkadot-benchmarks",
+        "projectId": "development-252112",
         "sshUser": "w3fadmin"
       }
     ]
