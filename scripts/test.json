@@ -1,5 +1,5 @@
 {
-  "project": "w3f",
+  "project": "integration-test",
   "polkadotBinary": {
     "url": "https://github.com/w3f/polkadot/releases/download/v0.7.29/polkadot",
     "checksum": "sha256:e229f984c89e2d40a1786ea634d3eae167c30bb0a5b742cfd800a067a4ed146d"
