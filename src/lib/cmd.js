@@ -3,9 +3,13 @@ const { spawn } = require('child_process');
 
 
 module.exports = {
-  exec: async (command, options={}) => {
+  splitCommandAndArgs: function (command) {
+    const regex = new RegExp('"[^"]+"|[\\S]+', 'g');
+    return command.match(regex).map(s => s.replace(/"/g, ''));
+  }, exec: async (command, options={}) => {
     return new Promise((resolve, reject) => {
-      const items = command.split(' ');
+      let items = module.exports.splitCommandAndArgs(command);
+
       const child = spawn(items[0], items.slice(1), options);
       if(options.detached) {
         child.unref();
