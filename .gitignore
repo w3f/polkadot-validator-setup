@@ -9,3 +9,4 @@ public_keyfile
 public_keyfile.pub
 validator_keyfile
 validator_keyfile.pub
+ansible/ansible_collections

@@ -21,7 +21,7 @@ yarn sync -c scripts/test.json
 # ssh root@nas01 uname -mrs
 
 # Check
-# prometheus endpoint
+# prometheus endpoint 30333 51820 9100
 
 
 

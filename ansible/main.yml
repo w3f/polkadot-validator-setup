@@ -1,24 +1,47 @@
+---
 - hosts: all
   become: yes
   strategy: free
-  roles:
-  - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
-  - vpnpeer-setup
-  - polkadot-common
+  tasks:
+  - name: polkadot-common
+    include_role:
+      name: polkadot-common
+  - name: vpnpeer-setup
+    include_role:
+      name: vpnpeer-setup
+  - name: node-exporter
+    include_role:
+      name: node-exporter
+    when: node_exporter_enabled
+#  roles:
+#  - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
+#  - vpnpeer-setup
+#  - polkadot-common
 
 - hosts: all
   become: yes
-  roles:
-  - vpnpeer
-  - common
+  tasks:
+  - name: vpnpeer
+    include_role:
+      name: vpnpeer
+  tasks:
+  - name: common
+    include_role:
+      name: common
 
 - hosts: public
   become: yes
-  roles:
-  - polkadot-public
+  tasks:
+  - name: polkadot-public
+    include_role:
+      name: polkadot-public
 
 - hosts: validator
   become: yes
-  roles:
-  - polkadot-validator
-  - polkadot-validator-session-info
+  tasks:
+  - name: polkadot-validator
+    include_role:
+      name: polkadot-validator
+  - name: polkadot-validator-session-info
+    include_role:
+      name: polkadot-validator-session-info

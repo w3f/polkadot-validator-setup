@@ -22,7 +22,7 @@
       {
         "provider": "gcp",
         "machineType": "n1-standard-1",
-        "count": 3,
+        "count": 1,
         "location": "us-east1",
         "zone": "us-east1-b",
         "projectId": "development-252112",
@@ -34,7 +34,7 @@
     "nodes": [
       {
         "provider": "gcp",
-        "machineType": "n1-standard-2",
+        "machineType": "n1-standard-1",
         "count": 2,
         "location": "us-east1",
         "zone": "us-east1-b",
