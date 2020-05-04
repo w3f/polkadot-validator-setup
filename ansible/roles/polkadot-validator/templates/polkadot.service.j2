@@ -27,6 +27,9 @@ ExecStart=/usr/local/bin/polkadot \
            {% endif %}
          {% endfor %}
          --chain={{ chain }} \
+         {% if hostvars[inventory_hostname].base_path is defined and hostvars[inventory_hostname].base_path|length %}
+         --base-path '{{ hostvars[inventory_hostname].base_path }}' \
+         {% endif %}
          {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
          --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
          {% else %}

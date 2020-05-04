@@ -7,6 +7,7 @@ vpnpeer_address=10.0.0.1
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
+base_path='' # Use default db location
 
 [validator:children]
 validator-0
@@ -21,6 +22,7 @@ vpnpeer_address=10.0.0.2
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
+base_path='' # Use default db location
 
 [public-1]
 40.81.189.214
@@ -31,6 +33,7 @@ vpnpeer_address=10.0.0.3
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
+base_path='' # Use default db location
 
 [public-2]
 35.190.164.158
@@ -41,6 +44,7 @@ vpnpeer_address=10.0.0.4
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
+base_path='' # Use default db location
 
 [public:children]
 public-0

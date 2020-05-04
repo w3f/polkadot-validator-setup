@@ -19,6 +19,9 @@ ExecStart=/usr/local/bin/polkadot \
          {% for reserved_node in groups['validator'] %}
          --sentry /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
          {% endfor %}
+         {% if hostvars[inventory_hostname].base_path is defined and hostvars[inventory_hostname].base_path|length %}
+         --base-path '{{ hostvars[inventory_hostname].base_path }}' \
+         {% endif %}
          {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
          --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
          {% else %}
