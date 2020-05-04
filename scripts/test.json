@@ -1,0 +1,49 @@
+{
+  "project": "w3f",
+  "polkadotBinary": {
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.7.29/polkadot",
+    "checksum": "sha256:e229f984c89e2d40a1786ea634d3eae167c30bb0a5b742cfd800a067a4ed146d"
+  },
+  "nodeExporter": {
+    "enabled": true,
+    "binary": {
+      "url": "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz",
+      "checksum": "sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424"
+    }
+  },
+  "polkadotNetworkId": "ksmcc3",
+  "polkadotValidatorCollectionVersion": "0.0.3",
+  "state": {
+    "project": "polkadot-benchmarks"
+  },
+  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512",
+  "validators": {
+    "telemetryUrl": "wss://my.private.telemetry.endpoint",
+    "loggingFilter": "sync=trace,afg=trace,babe=debug",
+    "nodes": [
+      {
+        "provider": "packet",
+        "machineType": "c1.small.x86",
+        "count": 3,
+        "location": "ewr1",
+        "projectId": "polkadot-benchmarks",
+        "sshUser": "root"
+      }
+    ]
+  },
+  "publicNodes": {
+    "telemetryUrl": "wss://my.private.telemetry.endpoint",
+    "loggingFilter": "babe=debug",
+    "nodes": [
+      {
+        "provider": "gcp",
+        "machineType": "n1-standard-2",
+        "count": 2,
+        "location": "us-east1",
+        "zone": "us-east1-b",
+        "projectId": "polkadot-benchmarks",
+        "sshUser": "w3fadmin"
+      }
+    ]
+  }
+}
