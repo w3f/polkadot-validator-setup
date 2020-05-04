@@ -21,7 +21,7 @@ class Ansible {
 
   async sync() {
     const inventoryPath = this._writeInventory();
-    const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.3';
+    const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.4';
 
     await cmd.exec(`ansible-galaxy collection install --force -p ${this.ansiblePath} w3f.polkadot_validator:${polkadotValidatorCollectionVersion}`, this.options);
 
