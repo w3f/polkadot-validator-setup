@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Provision
 ssh-add -D
@@ -38,4 +38,4 @@ yarn sync -c scripts/test.json
 
 
 # Destroy
-#yarn clean -c scripts/test.json
+yarn clean -c scripts/test.json
