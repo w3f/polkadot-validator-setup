@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Provision
+ssh-add -D
 pwd=$(pwd)
 export SSH_ID_RSA_PUBLIC=$pwd/public_keyfile
 export SSH_ID_RSA_VALIDATOR=$pwd/validator_keyfile
@@ -20,7 +21,7 @@ else
     ssh-keygen -f validator_keyfile -P "" -C "SSH_ID_RSA_VALIDATOR" -m PEM
 fi
 ssh-add validator_keyfile
-
+ssh-add -L
 
 # Install
 yarn sync -c scripts/test.json
