@@ -3,52 +3,30 @@
   hosts: all
   gather_facts: no
   tasks:
-  - name: Wait for system to become reachable
+  - name: Wait for nodes to become reachable
     wait_for_connection:
 
 - hosts: all
   become: yes
   strategy: free
-  tasks:
-  - name: polkadot-common
-    include_role:
-      name: polkadot_common
-  - name: vpnpeer-setup
-    include_role:
-      name: vpnpeer_setup
-  - name: node-exporter
-    include_role:
-      name: node-exporter
-    when: node_exporter_enabled
-#  roles:
-#  - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
-#  - vpnpeer-setup
-#  - polkadot-common
+  roles:
+  - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
+  - vpnpeer_setup
+  - polkadot_common
 
 - hosts: all
   become: yes
-  tasks:
-  - name: vpnpeer
-    include_role:
-      name: vpnpeer
-  tasks:
-  - name: common
-    include_role:
-      name: common
+  roles:
+  - vpnpeer
+  - common
 
 - hosts: public
   become: yes
-  tasks:
-  - name: polkadot-public
-    include_role:
-      name: polkadot_public
+  roles:
+  - polkadot_public
 
 - hosts: validator
   become: yes
-  tasks:
-  - name: polkadot-validator
-    include_role:
-      name: polkadot_validator
-  - name: polkadot-validator-session-info
-    include_role:
-      name: polkadot_validator_session_info
+  roles:
+  - polkadot_validator
+  - polkadot_validator_session_info
