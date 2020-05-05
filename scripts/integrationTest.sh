@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Provision
 ssh-add -D
