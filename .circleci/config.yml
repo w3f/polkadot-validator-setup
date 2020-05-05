@@ -24,6 +24,12 @@ jobs:
           name: Set credentials path
           command: export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
       - run:
+          name: Install ssh-agent
+          command: apk --update add openssh-client
+      - run:
+          name: Yarn install
+          command: yarn install
+      - run:
           name: integrationTest
           command: ./scripts/integrationTest.sh
 
