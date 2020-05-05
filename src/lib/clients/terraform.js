@@ -167,8 +167,8 @@ class Terraform {
     const originDirPath = path.join(this.terraformOriginPath, provider);
     fs.ensureDirSync(targetDirPath);
 
-    const name = this._nodeName(type, counter);
-
+    const nodeName = this._nodeName(type, counter);
+    const name = `${this.config.project}-${nodeName}`;
     fs.readdirSync(originDirPath).forEach((item) => {
       const origin = path.join(originDirPath, item);
       const target = path.join(targetDirPath, item);
