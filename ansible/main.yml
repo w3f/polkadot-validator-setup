@@ -10,7 +10,7 @@
   become: yes
   strategy: free
   roles:
-  - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
+  - { role: node_exporter, when: "node_exporter_enabled|default(false)|bool == true" }
   - vpnpeer_setup
   - polkadot_common
 
