@@ -14,9 +14,15 @@ jobs:
 
   integrationTest:
     docker:
-      - image: web3f/secure-validator-ci:v0.3.2
+      - image: web3f/secure-validator-ci:v1.0.0
     steps:
       - checkout
+      - run:
+          name: Copy credentials
+          command: echo $GOOGLE_APPLICATION_CREDENTIALS > $(pwd)/credentials.json
+      - run:
+          name: Set credentials path
+          command: export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
       - run:
           name: Yarn install
           command: yarn install
