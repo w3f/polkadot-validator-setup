@@ -126,7 +126,7 @@ class Terraform {
     return this._manageState('apply');
   }
 
-  asyn _cleanState(){
+  async _cleanState(){
     return this._manageState('destroy');
   }
 
