@@ -6,9 +6,7 @@ jobs:
       - image: node:10.15-alpine
     steps:
       - checkout
-
       - run: yarn
-
       - run:
           name: Run tests
           command: |
@@ -40,11 +38,15 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - integrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint              
       - publishPackage:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
             branches:
               ignore: /.*/
-          requires:
-            - lint
