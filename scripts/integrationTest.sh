@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Provision
+eval `ssh-agent -s`
 ssh-add -D
 pwd=$(pwd)
 export SSH_ID_RSA_PUBLIC=$pwd/public_keyfile
