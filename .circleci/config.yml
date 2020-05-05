@@ -21,12 +21,6 @@ jobs:
           name: Copy credentials
           command: echo $GOOGLE_APPLICATION_CREDENTIALS_CONTENT > $(pwd)/credentials.json
       - run:
-          name: Set credentials path
-          command: export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
-      - run:
-          name: test creds
-            command: echo $GOOGLE_APPLICATION_CREDENTIALS
-      - run:
           name: Yarn install
           command: yarn install
       - run:
