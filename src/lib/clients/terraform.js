@@ -66,7 +66,9 @@ class Terraform {
 
     const cleanPromises = validatorCleanPromises.concat(publicNodesCleanPromises);
 
-    return Promise.all(cleanPromises);
+    await Promise.all(cleanPromises);
+
+    return this._cleanState();
   }
 
   nodeOutput(type, counter, outputField) {
@@ -121,12 +123,20 @@ class Terraform {
   }
 
   async _initState(){
+    return this._manageState('apply');
+  }
+
+  asyn _cleanState(){
+    return this._manageState('destroy');
+  }
+
+  async _manageState(action='apply'){
     const cwd = this._terraformNodeDirPath('remote-state');
     const options = { cwd };
 
     await this._cmd(`init -var state_project=${this.config.state.project}`, options);
     const bucketName = this._bucketName()
-    return this._cmd(`apply -var state_project=${this.config.state.project} -var name=${bucketName} -auto-approve`, options);
+    return this._cmd(`${action} -var state_project=${this.config.state.project} -var name=${bucketName} -auto-approve`, options);
   }
 
   _createVarsFile(cwd, node, sshKey, nodeName) {
