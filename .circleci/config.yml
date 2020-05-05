@@ -18,8 +18,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Copy credentials
+          command: echo $GCP_DEV_CREDENTIALS > $(pwd)/credentials.json
+      - run:
+          name: Set credentials path
+          command: export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
+      - run:
           name: integrationTest
-          command: scripts/integrationTest.sh
+          command: ./scripts/integrationTest.sh
 
   publishPackage:
     docker:
@@ -43,7 +49,7 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - lint              
+            - lint
       - publishPackage:
           filters:
             tags:
