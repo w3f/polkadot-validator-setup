@@ -19,10 +19,10 @@ jobs:
       - checkout
       - run:
           name: Copy credentials
-          command: echo $GCP_DEV_CREDENTIALS > credentials.json
+          command: echo $GCP_DEV_CREDENTIALS > $(pwd)/credentials.json
       - run:
           name: Set credentials path
-          command: export GOOGLE_APPLICATION_CREDENTIALS="credentials.json"
+          command: export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
       - run:
           name: integrationTest
           command: ./scripts/integrationTest.sh
