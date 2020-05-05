@@ -12,10 +12,10 @@
   tasks:
   - name: polkadot-common
     include_role:
-      name: polkadot-common
+      name: polkadot_common
   - name: vpnpeer-setup
     include_role:
-      name: vpnpeer-setup
+      name: vpnpeer_setup
   - name: node-exporter
     include_role:
       name: node-exporter
@@ -41,14 +41,14 @@
   tasks:
   - name: polkadot-public
     include_role:
-      name: polkadot-public
+      name: polkadot_public
 
 - hosts: validator
   become: yes
   tasks:
   - name: polkadot-validator
     include_role:
-      name: polkadot-validator
+      name: polkadot_validator
   - name: polkadot-validator-session-info
     include_role:
-      name: polkadot-validator-session-info
+      name: polkadot_validator_session_info

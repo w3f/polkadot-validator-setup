@@ -23,7 +23,7 @@ class Ansible {
     const inventoryPath = this._writeInventory();
     const polkadotValidatorCollectionVersion = this.config.polkadotValidatorCollectionVersion || '0.0.4';
 
-    await cmd.exec(`ansible-galaxy collection install --force -p ${this.ansiblePath} w3f.polkadot_validator:${polkadotValidatorCollectionVersion}`, this.options);
+    await cmd.exec(`ansible-galaxy collection install --force w3f.polkadot_validator:${polkadotValidatorCollectionVersion}`, this.options);
     return cmd.exec(`ansible-playbook main.yml -f 30 -i ${inventoryPath}`, this.options);
   }
 
