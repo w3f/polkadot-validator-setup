@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Provision
 eval `ssh-agent -s`
@@ -41,11 +42,3 @@ yarn sync -c scripts/test.json
 
 # Destroy
 #yarn clean -c scripts/test.json
-
-if [[ $(cat /var/log/ansible.log | grep failed) ]]; then
-    echo "Detected ansible failures"
-    cat /var/log/ansible.log | grep failed
-    exit 0
-else
-    echo "No failures found"
-fi
