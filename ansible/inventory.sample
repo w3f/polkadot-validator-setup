@@ -21,6 +21,7 @@ vpnpeer_address=10.0.0.2
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
+base_path='/mnt/volume01/polkadot/' # Custom location for chain
 
 [public-1]
 40.81.189.214
