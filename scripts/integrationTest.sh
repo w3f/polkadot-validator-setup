@@ -29,16 +29,5 @@ ssh-add -L
 # Install
 yarn sync -c scripts/test.json
 
-# Test
-# Check ssh to validator port
-# ssh w3fadmin@nas01 uname -mrs
-# Check ssh to pub ports
-# ssh w3fadmin@nas01 uname -mrs
-
-# Check
-# prometheus endpoint 30333 51820 9100
-
-
-
 # Destroy
-#yarn clean -c scripts/test.json
+yarn clean -c scripts/test.json
