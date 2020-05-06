@@ -22,10 +22,14 @@ jobs:
           command: echo $GOOGLE_APPLICATION_CREDENTIALS_CONTENT > $(pwd)/credentials.json
       - run:
           name: Yarn install
-          command: yarn install
+          command: |
+            set -e
+            yarn install
       - run:
           name: integrationTest
-          command: ./scripts/integrationTest.sh
+          command: |
+            set -e
+            ./scripts/integrationTest.sh
 
   publishPackage:
     docker:
