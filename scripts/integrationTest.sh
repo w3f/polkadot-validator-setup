@@ -41,3 +41,11 @@ yarn sync -c scripts/test.json
 
 # Destroy
 #yarn clean -c scripts/test.json
+
+if [[ $(cat /var/log/ansible.log | grep failed) ]]; then
+    echo "there are in ansible failures"
+    cat /var/log/ansible.log | grep failed
+    exit 0
+else
+    echo "no failures found"
+fi
