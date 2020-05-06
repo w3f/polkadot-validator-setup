@@ -43,9 +43,9 @@ yarn sync -c scripts/test.json
 #yarn clean -c scripts/test.json
 
 if [[ $(cat /var/log/ansible.log | grep failed) ]]; then
-    echo "there are in ansible failures"
+    echo "Detected ansible failures"
     cat /var/log/ansible.log | grep failed
     exit 0
 else
-    echo "no failures found"
+    echo "No failures found"
 fi
