@@ -1,7 +1,7 @@
 - name: download db
   get_url:
-    url: https://storage.googleapis.com/kusama-db/db.tar.gz
-    dest: /home/polkadot/.local/share/polkadot/chains/ksmcc3/
+    url: "https://storage.googleapis.com/{{ chain }}-db/db.tar.gz"
+    dest: "/home/polkadot/.local/share/polkadot/{{ polkadot_network_id }}//"
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'
@@ -14,7 +14,7 @@
 - name: unpack db
   shell: |
     set -o pipefail
-    cd /home/polkadot/.local/share/polkadot/chains/ksmcc3/
+    cd /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/
     mv db db.back
     tar xzf db.tar.gz
     rm db.tar.gz
