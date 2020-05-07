@@ -46,6 +46,7 @@ class Ansible {
 
       polkadotBinaryUrl: this.config.polkadotBinary.url,
       polkadotBinaryChecksum: this.config.polkadotBinary.checksum,
+      chain: this.config.chain || 'kusama',
       polkadotNetworkId: this.config.polkadotNetworkId || 'ksmcc2',
 
       validators,
