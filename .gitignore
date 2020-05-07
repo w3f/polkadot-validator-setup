@@ -5,3 +5,8 @@ ansible/**/__pycache__
 config/main.json
 yarn-error.log
 .env
+public_keyfile
+public_keyfile.pub
+validator_keyfile
+validator_keyfile.pub
+credentials.json

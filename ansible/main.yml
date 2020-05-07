@@ -1,10 +1,18 @@
+---
+- name: Wait for system ready
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Wait for nodes to become reachable
+    wait_for_connection:
+
 - hosts: all
   become: yes
   strategy: free
   roles:
-  - { role: node-exporter, when: "node_exporter_enabled|default(false)|bool == true" }
-  - vpnpeer-setup
-  - polkadot-common
+  - { role: node_exporter, when: "node_exporter_enabled|default(false)|bool == true" }
+  - vpnpeer_setup
+  - polkadot_common
 
 - hosts: all
   become: yes
@@ -15,10 +23,10 @@
 - hosts: public
   become: yes
   roles:
-  - polkadot-public
+  - polkadot_public
 
 - hosts: validator
   become: yes
   roles:
-  - polkadot-validator
-  - polkadot-validator-session-info
+  - polkadot_validator
+  - polkadot_validator_session_info
