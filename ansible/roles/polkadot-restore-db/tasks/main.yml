@@ -1,7 +1,7 @@
 - name: download db
   get_url:
     url: "https://storage.googleapis.com/{{ chain }}-db/db.tar.gz"
-    dest: "/home/polkadot/.local/share/polkadot/{{ polkadot_network_id }}//"
+    dest: "/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}//"
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'
