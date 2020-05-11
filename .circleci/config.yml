@@ -31,17 +31,17 @@ jobs:
 
   polkadotCommonIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot_common
+      ROLE_PATH: ansible/roles/polkadot-common
     <<: *ansibleIntegrationTest
 
   polkadotPublicIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot_public
+      ROLE_PATH: ansible/roles/polkadot-public
     <<: *ansibleIntegrationTest
 
   polkadotValidatorIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot_validator
+      ROLE_PATH: ansible/roles/polkadot-validator
     <<: *ansibleIntegrationTest
 
   vpnpeerIntegrationTest:
@@ -51,17 +51,17 @@ jobs:
 
   vpnpeerSetupIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/vpnpeer_setup
+      ROLE_PATH: ansible/roles/vpnpeer-setup
     <<: *ansibleIntegrationTest
 
   polkadotValidatorSessionInfoIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot_validator_session_info
+      ROLE_PATH: ansible/roles/polkadot-validator-session-info
     <<: *ansibleIntegrationTest
 
   nodeExporterIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/node_exporter
+      ROLE_PATH: ansible/roles/node-exporter
     <<: *ansibleIntegrationTest
 
   integrationTest:
