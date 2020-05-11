@@ -1,3 +1,15 @@
+ansibleIntegrationTest: &ansibleIntegrationTest
+    docker:
+      - image: web3f/secure-validator-ci:v0.3.1
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          description: execute molecule tests for the ansible role at $ROLE_PATH
+          command: |
+            cd $ROLE_PATH
+            molecule test
+
 version: 2
 
 jobs:
@@ -11,6 +23,46 @@ jobs:
           name: Run tests
           command: |
             yarn test
+
+  commonIntegrationTest:
+      environment:
+        ROLE_PATH: ansible/roles/common
+      <<: *ansibleIntegrationTest
+
+  polkadotCommonIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-common
+    <<: *ansibleIntegrationTest
+
+  polkadotPublicIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-public
+    <<: *ansibleIntegrationTest
+
+  polkadotValidatorIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-validator
+    <<: *ansibleIntegrationTest
+
+  vpnpeerIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/vpnpeer
+    <<: *ansibleIntegrationTest
+
+  vpnpeerSetupIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/vpnpeer-setup
+    <<: *ansibleIntegrationTest
+
+  polkadotValidatorSessionInfoIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-validator-session-info
+    <<: *ansibleIntegrationTest
+
+  nodeExporterIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/node-exporter
+    <<: *ansibleIntegrationTest
 
   integrationTest:
     docker:
@@ -44,6 +96,54 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - commonIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotCommonIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotPublicIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotValidatorIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - polkadotValidatorSessionInfoIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - vpnpeerIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - vpnpeerSetupIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
+      - nodeExporterIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - lint
       - integrationTest:
           filters:
             tags:
