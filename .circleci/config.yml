@@ -31,17 +31,17 @@ jobs:
 
   polkadotCommonIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-common
+      ROLE_PATH: ansible/roles/polkadot_common
     <<: *ansibleIntegrationTest
 
   polkadotPublicIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-public
+      ROLE_PATH: ansible/roles/polkadot_public
     <<: *ansibleIntegrationTest
 
   polkadotValidatorIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-validator
+      ROLE_PATH: ansible/roles/polkadot_validator
     <<: *ansibleIntegrationTest
 
   vpnpeerIntegrationTest:
@@ -51,17 +51,17 @@ jobs:
 
   vpnpeerSetupIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/vpnpeer-setup
+      ROLE_PATH: ansible/roles/vpnpeer_setup
     <<: *ansibleIntegrationTest
 
   polkadotValidatorSessionInfoIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/polkadot-validator-session-info
+      ROLE_PATH: ansible/roles/polkadot_validator_session_info
     <<: *ansibleIntegrationTest
 
   nodeExporterIntegrationTest:
     environment:
-      ROLE_PATH: ansible/roles/node-exporter
+      ROLE_PATH: ansible/roles/node_exporter
     <<: *ansibleIntegrationTest
 
   integrationTest:
@@ -149,10 +149,19 @@ workflows:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           requires:
-            - lint
+            - commonIntegrationTest
+            - polkadotCommonIntegrationTest
+            - polkadotPublicIntegrationTest
+            - polkadotValidatorIntegrationTest
+            - polkadotValidatorSessionInfoIntegrationTest
+            - vpnpeerIntegrationTest
+            - vpnpeerSetupIntegrationTest
+            - nodeExporterIntegrationTest
       - publishPackage:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
             branches:
               ignore: /.*/
+          requires:
+            - integrationTest
