@@ -1,3 +1,11 @@
+---
+- name: Wait for system ready
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Wait for nodes to become reachable
+    wait_for_connection:
+
 - hosts: all
   become: yes
   strategy: free

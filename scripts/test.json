@@ -1,0 +1,46 @@
+{
+  "project": "integration-test",
+  "polkadotBinary": {
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.7.32/polkadot",
+    "checksum": "sha256:c34d63e5d80994b2123a3a0b7c5a81ce8dc0f257ee72064bf06654c2b93e31c9"
+  },
+  "nodeExporter": {
+    "enabled": true,
+    "binary": {
+      "url": "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz",
+      "checksum": "sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424"
+    }
+  },
+  "polkadotNetworkId": "ksmcc3",
+  "polkadotValidatorCollectionVersion": "0.0.5",
+  "state": {
+    "project": "development-252112"
+  },
+  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512 --unsafe-rpc-expose",
+  "validators": {
+    "nodes": [
+      {
+        "provider": "gcp",
+        "machineType": "n1-standard-1",
+        "count": 1,
+        "location": "us-east1",
+        "zone": "us-east1-b",
+        "projectId": "development-252112",
+        "sshUser": "w3fadmin"
+      }
+    ]
+  },
+  "publicNodes": {
+    "nodes": [
+      {
+        "provider": "gcp",
+        "machineType": "n1-standard-1",
+        "count": 2,
+        "location": "us-east1",
+        "zone": "us-east1-b",
+        "projectId": "development-252112",
+        "sshUser": "w3fadmin"
+      }
+    ]
+  }
+}

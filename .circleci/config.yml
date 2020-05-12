@@ -10,7 +10,6 @@ ansibleIntegrationTest: &ansibleIntegrationTest
             cd $ROLE_PATH
             molecule test
 
-
 version: 2
 
 jobs:
@@ -19,9 +18,7 @@ jobs:
       - image: node:10.15-alpine
     steps:
       - checkout
-
       - run: yarn
-
       - run:
           name: Run tests
           command: |
@@ -67,12 +64,26 @@ jobs:
       ROLE_PATH: ansible/roles/node-exporter
     <<: *ansibleIntegrationTest
 
+  integrationTest:
+    docker:
+      - image: web3f/secure-validator-ci:v1.0.0
+    steps:
+      - checkout
+      - run:
+          name: Copy credentials
+          command: echo $GOOGLE_APPLICATION_CREDENTIALS_CONTENT > $(pwd)/credentials.json
+      - run:
+          name: Yarn install
+          command: yarn install
+      - run:
+          name: integrationTest
+          command: ./scripts/integrationTest.sh
+
   publishPackage:
     docker:
       - image: node:10.15-alpine
     steps:
       - checkout
-
       - run:
           name: Publish package
           command: npm publish --userconfig=.npmrc-auth
@@ -133,12 +144,12 @@ workflows:
               only: /.*/
           requires:
             - lint
-      - publishPackage:
+      - integrationTest:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
             branches:
-              ignore: /.*/
+              ignore: /.*/              
           requires:
             - commonIntegrationTest
             - polkadotCommonIntegrationTest
@@ -148,3 +159,11 @@ workflows:
             - vpnpeerIntegrationTest
             - vpnpeerSetupIntegrationTest
             - nodeExporterIntegrationTest
+      - publishPackage:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+            branches:
+              ignore: /.*/
+          requires:
+            - integrationTest
