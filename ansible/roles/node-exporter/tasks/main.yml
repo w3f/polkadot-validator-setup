@@ -1,6 +1,6 @@
 - name: install multiverse apt source
   apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu focal main universe restricted multiverse
+    repo: deb http://archive.ubuntu.com/ubuntu bionic main universe restricted multiverse
     state: present
 
 - name: install apache2-utils
