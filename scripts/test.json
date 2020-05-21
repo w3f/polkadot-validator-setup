@@ -1,8 +1,8 @@
 {
   "project": "integration-test",
   "polkadotBinary": {
-    "url": "https://github.com/w3f/polkadot/releases/download/v0.7.32/polkadot",
-    "checksum": "sha256:c34d63e5d80994b2123a3a0b7c5a81ce8dc0f257ee72064bf06654c2b93e31c9"
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.7.33/polkadot",
+    "checksum": "sha256:8efe2b6260ffe519aff806fac309b92b2170cebfaf21df744fa8c4d2c9ce7435"
   },
   "nodeExporter": {
     "enabled": true,
@@ -16,7 +16,7 @@
   "state": {
     "project": "development-252112"
   },
-  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512 --unsafe-rpc-expose",
+  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512",
   "validators": {
     "nodes": [
       {
