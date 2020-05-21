@@ -7,7 +7,8 @@ Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
          --name polkadot-dummy \
          --validator \
-         --chain={{ chain }} 
+         --rpc-methods=Unsafe \
+         --chain={{ chain }}
 
 [Install]
 WantedBy=multi-user.target
