@@ -1,6 +1,6 @@
 ansibleIntegrationTest: &ansibleIntegrationTest
     docker:
-      - image: web3f/secure-validator-ci:v0.3.1
+      - image: web3f/secure-validator-ci:v1.1.1
     steps:
       - checkout
       - setup_remote_docker
@@ -13,9 +13,9 @@ ansibleIntegrationTest: &ansibleIntegrationTest
 version: 2
 
 jobs:
-  lint:
+  unitTests:
     docker:
-      - image: node:10.15-alpine
+      - image: web3f/node:v0.1.0
     steps:
       - checkout
       - run: yarn
@@ -66,7 +66,7 @@ jobs:
 
   integrationTest:
     docker:
-      - image: web3f/secure-validator-ci:v1.0.0
+      - image: web3f/secure-validator-ci:v1.1.1
     steps:
       - checkout
       - run:
@@ -74,14 +74,14 @@ jobs:
           command: echo $GOOGLE_APPLICATION_CREDENTIALS_CONTENT > $(pwd)/credentials.json
       - run:
           name: Yarn install
-          command: yarn install
+          command: yarn
       - run:
           name: integrationTest
           command: ./scripts/integrationTest.sh
 
   publishPackage:
     docker:
-      - image: node:10.15-alpine
+      - image: web3f/node:v0.1.0
     steps:
       - checkout
       - run:
@@ -92,7 +92,7 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - lint:
+      - unitTests:
           filters:
             tags:
               only: /.*/
@@ -101,55 +101,55 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - polkadotCommonIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - polkadotPublicIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - polkadotValidatorIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - polkadotValidatorSessionInfoIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - vpnpeerIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - vpnpeerSetupIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - nodeExporterIntegrationTest:
           filters:
             tags:
               only: /.*/
           requires:
-            - lint
+            - unitTests
       - integrationTest:
           filters:
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
             branches:
-              ignore: /.*/              
+              ignore: /.*/
           requires:
             - commonIntegrationTest
             - polkadotCommonIntegrationTest
