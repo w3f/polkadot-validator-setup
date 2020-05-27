@@ -1,6 +1,6 @@
 ansibleIntegrationTest: &ansibleIntegrationTest
     docker:
-      - image: web3f/secure-validator-ci:v1.1.0
+      - image: web3f/secure-validator-ci:v1.1.1
     steps:
       - checkout
       - setup_remote_docker
