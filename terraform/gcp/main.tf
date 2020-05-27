@@ -59,7 +59,7 @@ resource "google_compute_instance" "main-{{ name }}" {
     }
   }
 
-  depends_on = ["google_compute_firewall.ssh-p2p-{{ name }}", "google_compute_firewall.vpn-{{ name }}"]
+  depends_on = [google_compute_firewall.ssh-p2p-{{ name }}, google_compute_firewall.vpn-{{ name }}]
 
   service_account {
     scopes = ["compute-ro"]
