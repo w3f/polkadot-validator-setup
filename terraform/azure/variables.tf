@@ -38,5 +38,5 @@ variable "name" {
 }
 
 variable "image" {
-  default = "20.04-LTS"
+  default = "18.04-LTS"
 }
