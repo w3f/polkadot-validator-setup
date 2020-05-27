@@ -37,5 +37,5 @@ variable "name" {
 }
 
 variable "image" {
-  default = "ubuntu_18_04"
+  default = "ubuntu_20_04"
 }
