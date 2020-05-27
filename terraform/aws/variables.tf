@@ -33,3 +33,7 @@ variable "node_count" {
 variable "name" {
   default = "node"
 }
+
+variable "image" {
+  default = "bionic-18.04"
+}

@@ -36,3 +36,7 @@ variable "project_id" {
 variable "zone" {
   default = "unused"
 }
+
+variable "image" {
+  default = "ubuntu-18-04-x64"
+}

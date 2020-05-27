@@ -7,7 +7,7 @@ resource "packet_device" "validator-{{ name }}" {
   hostname         = "${var.name}-${count.index}"
   plan             = var.machine_type
   facilities       = [var.location]
-  operating_system = "ubuntu_18_04"
+  operating_system = var.image
   billing_cycle    = "hourly"
   project_id       = var.project_id
 #  depends_on       = ["packet_ssh_key.key-{{ name }}"]

@@ -27,7 +27,8 @@
         "count": 1,
         "location": "ewr1",
         "projectId": "my_packet_project",
-        "sshUser": "root"
+        "sshUser": "root",
+        "image": "ubuntu_20_04"
       }
     ]
   },
@@ -41,14 +42,16 @@
         "count": 1,
         "location": "eu-central-1",
         "zone": "eu-central-1a",
-        "sshUser": "ubuntu"
+        "sshUser": "ubuntu",
+        "image": "focal-20.04"
       },
       {
         "provider": "azure",
         "machineType": "Standard_D2s_v3",
         "count": 1,
         "location": "brazilsouth",
-        "sshUser": "w3fadmin"
+        "sshUser": "w3fadmin",
+        "image": "20.04-LTS"
       },
       {
         "provider": "gcp",
@@ -57,7 +60,8 @@
         "location": "us-east1",
         "zone": "us-east1-b",
         "projectId": "my_gcp_project",
-        "sshUser": "w3fadmin"
+        "sshUser": "w3fadmin",
+        "image": "2004"
       }
     ]
   }

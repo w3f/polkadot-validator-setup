@@ -4,9 +4,16 @@ set -e
 # Provision
 eval `ssh-agent -s`
 ssh-add -D
-pwd=$(pwd)
-export SSH_ID_RSA_PUBLIC=$pwd/public_keyfile
-export SSH_ID_RSA_VALIDATOR=$pwd/validator_keyfile
+
+teardown(){
+    # Destroy
+    yarn clean -c scripts/test.json
+}
+
+trap teardown EXIT
+
+export SSH_ID_RSA_PUBLIC=$(pwd)/public_keyfile
+export SSH_ID_RSA_VALIDATOR=$(pwd)/validator_keyfile
 export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
 
 if [ -f "$SSH_ID_RSA_PUBLIC" ]; then
@@ -28,6 +35,3 @@ ssh-add -L
 
 # Install
 yarn sync -c scripts/test.json
-
-# Destroy
-yarn clean -c scripts/test.json

@@ -46,7 +46,7 @@ resource "google_compute_instance" "main-{{ name }}" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      image = "ubuntu-os-cloud/ubuntu-${var.image}-lts"
       size  = 400
     }
   }
@@ -59,7 +59,7 @@ resource "google_compute_instance" "main-{{ name }}" {
     }
   }
 
-  depends_on = ["google_compute_firewall.ssh-p2p-{{ name }}", "google_compute_firewall.vpn-{{ name }}"]
+  depends_on = [google_compute_firewall.ssh-p2p-{{ name }}, google_compute_firewall.vpn-{{ name }}]
 
   service_account {
     scopes = ["compute-ro"]

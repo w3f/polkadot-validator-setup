@@ -7,3 +7,6 @@ zone = "{{ zone }}"
 project_id = "{{ projectId }}"
 node_count = {{ nodeCount }}
 name = "{{ name }}"
+{{#if image}}
+image = "{{ image }}"
+{{/if}}
