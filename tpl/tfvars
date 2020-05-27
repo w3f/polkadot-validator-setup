@@ -9,4 +9,4 @@ node_count = {{ nodeCount }}
 name = "{{ name }}"
 {{#if image}}
 image = "{{ image }}"
-{/if}}
+{{/if}}
