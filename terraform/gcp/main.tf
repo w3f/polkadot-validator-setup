@@ -46,7 +46,7 @@ resource "google_compute_instance" "main-{{ name }}" {
 
   boot_disk {
     initialize_params {
-      image = var.image
+      image = "ubuntu-os-cloud/ubuntu-${var.image}-lts"
       size  = 400
     }
   }

@@ -35,5 +35,5 @@ variable "name" {
 }
 
 variable "image" {
-  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+  default = "1804"
 }

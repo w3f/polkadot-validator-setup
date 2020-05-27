@@ -8,7 +8,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = [var.image]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-${var.image}-amd64-server-*"]
   }
 
   filter {
