@@ -3,7 +3,7 @@ data "digitalocean_project" "default" {
 }
 
 resource "digitalocean_droplet" "default" {
-  image = "ubuntu-18-04-x64"
+  image = var.image
   name = "${var.name}-${count.index}"
   region = var.location
   size = var.machine_type

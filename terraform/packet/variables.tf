@@ -35,3 +35,7 @@ variable "node_count" {
 variable "name" {
   default = "w3f"
 }
+
+variable "image" {
+  default = "ubuntu_18_04"
+}

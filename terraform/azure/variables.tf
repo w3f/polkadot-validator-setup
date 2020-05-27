@@ -36,3 +36,7 @@ variable "node_count" {
 variable "name" {
   default = "node"
 }
+
+variable "image" {
+  default = "18.04-LTS"
+}

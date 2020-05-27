@@ -33,3 +33,7 @@ variable "node_count" {
 variable "name" {
   default = "node"
 }
+
+variable "image" {
+  default = "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"
+}

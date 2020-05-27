@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine" "main-{{ name }}" {
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    sku       = var.image
     version   = "latest"
   }
   storage_os_disk {
