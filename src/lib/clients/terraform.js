@@ -142,6 +142,10 @@ class Terraform {
       name: nodeName
     }
 
+    if(node.image) {
+      data.image = node.image;
+    }
+
     const source = path.join(__dirname, '..', '..', '..', 'tpl', 'tfvars');
     const target = path.join(cwd, 'terraform.tfvars');
 
