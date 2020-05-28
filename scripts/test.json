@@ -1,8 +1,8 @@
 {
   "project": "integration-test",
   "polkadotBinary": {
-    "url": "https://github.com/w3f/polkadot/releases/download/v0.7.33/polkadot",
-    "checksum": "sha256:8efe2b6260ffe519aff806fac309b92b2170cebfaf21df744fa8c4d2c9ce7435"
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.8.0/polkadot",
+    "checksum": "sha256:775c036ebfa4bc535128148e40d09149599b10cee24e8bc51e72553a4eb2307b"
   },
   "nodeExporter": {
     "enabled": true,
@@ -12,11 +12,9 @@
     }
   },
   "polkadotNetworkId": "ksmcc3",
-  "polkadotValidatorCollectionVersion": "0.0.5",
   "state": {
     "project": "development-252112"
   },
-  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512",
   "validators": {
     "nodes": [
       {
@@ -41,7 +39,7 @@
         "zone": "us-east1-b",
         "projectId": "development-252112",
         "sshUser": "w3fadmin",
-        "image": "1804"
+        "image": "2004"
       }
     ]
   }
