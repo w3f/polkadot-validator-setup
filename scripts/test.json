@@ -41,7 +41,7 @@
         "zone": "us-east1-b",
         "projectId": "development-252112",
         "sshUser": "w3fadmin",
-        "image": "1804"
+        "image": "2004"
       }
     ]
   }
