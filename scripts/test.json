@@ -12,11 +12,9 @@
     }
   },
   "polkadotNetworkId": "ksmcc3",
-  "polkadotValidatorCollectionVersion": "0.0.5",
   "state": {
     "project": "development-252112"
   },
-  "additionalFlags": "--grandpa-pause 0 0 --db-cache 512",
   "validators": {
     "nodes": [
       {
