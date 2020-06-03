@@ -1,27 +1,29 @@
 # Ansible Guide
 
-This collection of Ansible scripts allows for privisioning of all registered nodes.
+This collection of Ansible scripts, so called "Playbooks", allow for the provisioning of all configured nodes. It handles the [Application creation workflow](../README.md) as specified by the [Secure Validator Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) by issuing a single command.
+
+The Ansible Playbook gets executed locally on your machine and then connects to the configured nodes and sets up the required tooling such as Firewalls, VPN, Polkadot and so on.
 
 ## Prerequisites
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+, available through pip)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+, can be installed with `apt install ansible`)
 
 ## Inventory
 
-All required data is configured in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html), which is placed under `/etc/ansible/hosts`. Most default values from the [sample file](inventory.sample) can be copied. Only a handful of entries must be adjusted.
+All required data is saved in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html), which is placed under `/etc/ansible/hosts` and must only be configured once. Most default values from the [sample file](inventory.sample) can be copied. Only a handful of entries must be adjusted.
 
-It's up to you on how many servers you want to use. General advice is to use one validator which connects to two or more sentries nodes. For each server, the following information must be available in the Ansible inventory:
+It's up to you on how many servers you want to use. General advice is to use one validator which connects to two or more sentries nodes. For each server, the following information must be configured in the Ansible inventory:
 
 * IP address or URL.
 * SSH user (as `ansible_user`). It's encouraged NOT to use `root`.
 * VPN address.
-* (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`)
+* (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
 
-The other default values from the example can be left as is.
+The other default values from the example file can be left as is.
 
 **NOTE**: VPN address should start at `10.0.0.1` for the validator and increment for each other (sentry) node: `10.0.0.2`, `10.0.0.3`, etc.
 
-**NOTE**: Telemetry information exposes IP address, among other information. For this reason it's highly encouraged to use a [private telemetry server](https://github.com/paritytech/substrate-telemetry) and not to expose the validator to a public one server.
+**NOTE**: Telemetry information exposes IP address, among other information. For this reason it's highly encouraged to use a [private telemetry server](https://github.com/paritytech/substrate-telemetry) and not to expose the validator to a public server.
 
 ### Setup Validator
 
@@ -45,7 +47,7 @@ loggingFilter='sync=trace,afg=trace,babe=debug'
 
 Setup one or multiple sentry nodes by specifying a `[public-<NUM>]` host, including its required variables. `<NUM>` should start at `0` and increment for each other sentry.
 
-Example
+Example:
 
 ```
 [public-0]
@@ -99,7 +101,7 @@ Important variables which should vary from the example inventory:
 * `polkadot_network_id` - The network identifier, such as `ksmcc2` (for Kusama) or `polkadot`.
 * `node_exporter_enabled` - Enable or disable the setup of [Node Exporter](https://github.com/prometheus/node_exporter). It's up to you whether you want it or not.
 
-The other default values from the example can be left as is.
+The other default values from the example file can be left as is.
 
 Example:
 
@@ -123,3 +125,17 @@ polkadot_restart_day='1'
 polkadot_restart_month='*'
 polkadot_restart_weekday='*'
 ```
+
+## Execution
+
+Once the inventory file is configured, simply run the full Ansible Playbook:
+
+``` bash
+ansible-playbook ansible/main.yml
+```
+
+Pass on the `--ask-become` flag so Ansible asks you for the sudo password for the corresponding `ansible_user` for each host, if that's required. The Playbook can be executed over and over again without causing issues on the targeted hosts.
+
+### Updating Polkadot 
+
+...
