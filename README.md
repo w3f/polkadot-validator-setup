@@ -9,8 +9,11 @@ some types of potential attacks.
 
 This repo has code for creating a complete implementation of the approach
 described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, including
-both layers described in [Workflow](#workflow). This can be done on a host with
-NodeJS, Yarn and Git installed with:
+both layers described in [Workflow](#workflow). This can be done on any host with
+NodeJS, Yarn and Git installed.
+
+Alternatively, if you already have some nodes running and just need the Application layer workflow,
+you can use the Ansible scripts available in `ansible/`. See the [Ansible guide](ansible/README.md) for more.
 
 ### Prerequisites
 
