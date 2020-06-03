@@ -131,13 +131,13 @@ polkadot_restart_weekday='*'
 
 ## Execution
 
-Once the inventory file is configured, simply run the full Ansible Playbook:
+Once the inventory file is configured, simply run the main Ansible Playbook:
 
 ```bash
 ansible-playbook main.yml
 ```
 
-If required, pass on the `--ask-become` flag so Ansible asks you for the sudo password for the corresponding `ansible_user` of each host. The Playbook can be executed over and over again without causing issues on the targeted hosts.
+If required, pass on the `--ask-become` flag so Ansible asks you for the sudo password for the corresponding `ansible_user` of each host. This Playbook can be executed over and over again.
 
 Additional Playbooks are provided besides `main.yml`, but those are outside the scope of this guide.
 
