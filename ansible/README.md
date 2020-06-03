@@ -2,7 +2,7 @@
 
 This collection of Ansible scripts, so called "Playbooks", allow for the provisioning of all configured nodes. It automatically sets up the [Application layer workflow](../README.md/#application-creation) as specified by the [Secure Validator Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) approach.
 
-The Ansible Playbook gets executed locally on your machine and then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. Not manual intervention into the remote nodes is required.
+The Ansible Playbook gets executed locally on your machine, then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. Not manual intervention into the remote nodes is required.
 
 ## Prerequisites
 
