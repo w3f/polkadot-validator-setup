@@ -98,9 +98,9 @@ Finally, define the common variables for all the nodes.
 Important variables which should vary from the example inventory:
 
 * `project` - The name for how each node should be prefixed for the telemetry name.
-* `polkadot_binary_url` - This is the URL from which were the Ansible Playbook will download the Polkadot binary. Binary releases are available in the official [Parity Releases repo](https://github.com/paritytech/polkadot/releases) or the [W3F Releases repo](https://github.com/w3f/polkadot/releases).
-* `polkadot_binary_checksum` - The SHA256 checksum of the Polkadot binary which the Ansible Playbook verifies. must be prefixed with `sha256:`.
-* `chain` - The chain which Polkadot should work on, such as `kusama` or `polkadot`.
+* `polkadot_binary_url` - This is the URL from were the Ansible Playbook will download the Polkadot binary. Binary releases are available in the official [Parity Releases repo](https://github.com/paritytech/polkadot/releases) or the [W3F Releases repo](https://github.com/w3f/polkadot/releases).
+* `polkadot_binary_checksum` - The SHA256 checksum of the Polkadot binary which the Ansible Playbook verifies. Must be prefixed with `sha256:`.
+* `chain` - The chain to work on, such as `kusama` or `polkadot`.
 * `polkadot_network_id` - The network identifier, such as `ksmcc2` (for Kusama) or `polkadot`.
 * `node_exporter_enabled` - Enable or disable the setup of [Node Exporter](https://github.com/prometheus/node_exporter). It's up to you whether you want it or not.
 
