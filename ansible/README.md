@@ -1,22 +1,21 @@
 # Ansible Guide
 
-This collection of Ansible scripts, so called "Playbooks", allow for the provisioning of all configured nodes. It sets up the [Application creation workflow](../README.md/#application-creation) as specified by the [Secure Validator Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) approach.
+This collection of Ansible scripts, so called "Playbooks", allow for the provisioning of all configured nodes. It automatically sets up the [Application creation workflow](../README.md/#application-creation) as specified by the [Secure Validator Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) approach.
 
 The Ansible Playbook gets executed locally on your machine and then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. Not manual intervention into the remote nodes is required.
 
 ## Prerequisites
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+)
-  On Debian based systems this can be installed with `apt install ansible` from the standard repositories.
-* Running Debian based node with configured SSH access. The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes.
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+). On Debian-based systems this can be installed with `apt install ansible` from the standard repositories.
+* Running Debian-based nodes with configured SSH access. The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes.
 
 For convenience, it's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 
 ## Inventory
 
-All required data is saved in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html), which is placed under `/etc/ansible/hosts` and must only be configured once. Most default values from the [sample file](inventory.sample) can be copied. Only a handful of entries must be adjusted.
+All required data is saved in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html), which is placed under `/etc/ansible/hosts` and must only be configured once. Most default values from the [SAMPLE FILE](inventory.sample) can be copied. Only a handful of entries must be adjusted.
 
-For each server, the following information must be configured in the Ansible inventory:
+For each node, the following information must be configured in the Ansible inventory:
 
 * IP address or URL.
 * SSH user (as `ansible_user`). It's encouraged NOT to use `root`.
@@ -140,7 +139,7 @@ ansible-playbook main.yml
 
 Pass on the `--ask-become` flag so Ansible asks you for the sudo password for the corresponding `ansible_user` for each host, if that's required. The Playbook can be executed over and over again without causing issues on the targeted hosts.
 
-Additional Playbooks are provided besides `main.yaml`, but those are outside the scope of this guide.
+Additional Playbooks are provided besides `main.yml`, but those are outside the scope of this guide.
 
 ### Updating Polkadot
 
