@@ -4,6 +4,8 @@ This collection of Ansible scripts, so called "Playbooks", allow for the provisi
 
 The Ansible Playbook gets executed locally on your machine, then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. Not manual intervention into the remote nodes is required.
 
+![Polkadot Secure Validator](polkadot_secure_validator.svg)
+
 ## Prerequisites
 
 * [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+). On Debian-based systems this can be installed with `apt install ansible` from the standard repositories.
