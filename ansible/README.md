@@ -4,7 +4,7 @@ This collection of Ansible scripts, so called "Playbooks", allow for the provisi
 
 The Ansible Playbook gets executed locally on your machine, then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. Not manual intervention into the remote nodes is required.
 
-![Polkadot Secure Validator](polkadot_secure_validator.svg)
+![Polkadot Validator-Sentry Model](polkadot-validator-sentry.svg)
 
 ## Prerequisites
 
