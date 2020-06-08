@@ -19,7 +19,7 @@
       chmod a+x /usr/local/bin/polkadot
     fi
     systemctl daemon-reload
-    systemctl start polkadot.service
+    systemctl enable --now polkadot.service
   args:
     executable: /bin/bash
   changed_when: False
