@@ -1,6 +1,6 @@
 # Ansible Guide
 
-This repo contains collections of Ansible scripts inside the `ansible/`
+This repo contains collections of Ansible scripts inside the [ansible](ansible)
 directory, so called "Playbooks", which allow for the provisioning of all
 configured nodes. It automatically sets up the [Application layer
 workflow](README.md/#application-creation) as specified by the [Secure Validator

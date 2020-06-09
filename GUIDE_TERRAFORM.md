@@ -70,9 +70,10 @@ $ cp config/main.template.json config/main.json
 $ yarn sync -c config/main.json
 ```
 
-You can also just provision a set of previously created machines with the ansible code
-[here](ansible). We have provided an [example inventory](ansible/inventory.sample)
-that you can customize. See the [Ansible Guide](GUIDE_ANSIBLE.md) for more.
+You can also just provision a set of previously created machines with the
+[ansible code](ansible). We have provided an [example
+inventory](ansible/inventory.sample) that you can customize. See the [Ansible
+Guide](GUIDE_ANSIBLE.md) for more.
 
 The `sync` command is idempotent, unless there are errors it will always have
 the same results. You can execute it as much as you want, it will only make
