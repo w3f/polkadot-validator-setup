@@ -8,20 +8,20 @@ The Ansible Playbook gets executed locally on your machine, then connects to the
 
 ## Prerequisites
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+). On Debian-based systems this can be installed with `apt install ansible` from the standard repositories.
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+). On Debian-based systems this can be installed with `sudo apt install ansible` from the standard repositories.
 * Running Debian-based nodes with configured SSH access. The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes.
 
 For convenience, it's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 
 ## Inventory
 
-All required data is saved in the [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html), which is placed under `/etc/ansible/hosts` and must only be configured once. Most default values from the [SAMPLE FILE](inventory.sample) can be copied. Only a handful of entries must be adjusted.
+All required data is saved in a [Ansible inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html), which is placed under `/etc/ansible/hosts` and must only be configured once. Most default values from the [SAMPLE FILE](inventory.sample) can be copied. Only a handful of entries must be adjusted.
 
 For each node, the following information must be configured in the Ansible inventory:
 
 * IP address or URL.
-* SSH user (as `ansible_user`). It's encouraged NOT to use `root`.
-* VPN address.
+* SSH user (as `ansible_user`). It's encouraged NOT to use `root`, but a regular user with `sudo` privileges.
+* A unique VPN address within the `10.0.0.0/24` network.
 * (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
 
 The other default values from the example file can be left as is.
@@ -36,7 +36,7 @@ Setup the validator node by specifying a `[validator-<NUM>]` host, including its
 
 Example:
 
-```yaml
+```ini
 [validator-0]
 147.75.76.65
 
@@ -54,7 +54,7 @@ Setup one or multiple sentry nodes by specifying a `[public-<NUM>]` host, includ
 
 Example:
 
-```yaml
+```ini
 [public-0]
 18.184.100.247
 
@@ -84,7 +84,7 @@ Validators are grouped under `[validators:children]` and sentries under `[public
 
 Example:
 
-```yaml
+```ini
 [validator:children]
 validator-0
 
@@ -110,7 +110,7 @@ The other default values from the example file can be left as is.
 
 Example:
 
-```yaml
+```ini
 project=w3f
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
 polkadot_binary_url='https://github.com/paritytech/polkadot/releases/download/v0.8.2/polkadot'
@@ -118,7 +118,7 @@ polkadot_binary_checksum='sha256:349b786476de9188b79817cab48fc6fc030908ac0e8e2a4
 polkadot_network_id=ksmcc2
 chain=kusama
 build_dir=/home/user/.config/polkadot-secure-validator/build/w3f/ansible
-node_exporter_enabled='true'
+node_exporter_enabled='false'
 node_exporter_user='node_exporter_user'
 node_exporter_password='node_exporter_password'
 node_exporter_binary_url='https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz'
@@ -133,13 +133,16 @@ polkadot_restart_weekday='*'
 
 ## Execution
 
-Once the inventory file is configured, simply run the main Ansible Playbook:
+Once the inventory file is configured, simply run the setup script:
 
 ```bash
-ansible-playbook main.yml
+$ git clone https://github.com/w3f/polkadot-secure-validator.git
+$ cd polkadot-secure-validator
+$ chmod +x ansible/setup.sh
+$ ./ansible/setup.sh
 ```
 
-If required, pass on the `--ask-become` flag so Ansible asks you for the sudo password for the corresponding `ansible_user` of each host. This Playbook can be executed over and over again.
+This script can be executed over and over again.
 
 Additional Playbooks are provided besides `main.yml`, but those are outside the scope of this guide.
 
@@ -147,9 +150,11 @@ Additional Playbooks are provided besides `main.yml`, but those are outside the 
 
 To update the Polkadot version, simply adjust those two lines in the Ansible inventory:
 
-```yaml
+```ini
 polkadot_binary_url='...'
 polkadot_binary_checksum='sha256:...'
 ```
 
-Then just execute the `main.yml` Playbook again.
+Then just execute `setup.sh` again.
+
+### Ansible Playbooks
