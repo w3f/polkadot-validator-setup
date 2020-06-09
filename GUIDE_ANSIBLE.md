@@ -73,7 +73,7 @@ Example:
 147.75.76.65
 
 [validator-0:vars]
-ansible_user=ubuntu_user
+ansible_user=alice
 vpnpeer_address=10.0.0.1
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
@@ -93,7 +93,7 @@ Example:
 18.184.100.247
 
 [public-0:vars]
-ansible_user=ubuntu_user
+ansible_user=alice
 vpnpeer_address=10.0.0.2
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
@@ -103,7 +103,7 @@ loggingFilter='sync=trace,afg=trace,babe=debug'
 40.81.189.214
 
 [public-1:vars]
-ansible_user=ubuntu_user
+ansible_user=alice
 vpnpeer_address=10.0.0.3
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
