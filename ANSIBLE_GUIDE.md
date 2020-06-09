@@ -159,7 +159,8 @@ Once the inventory file is configured, simply run the setup script and specify t
 
 ```console
 user@pc:~$ chmod +x ansible/setup.sh
-user@pc:~$ ./ansible/setup.sh my_sudo_pw
+user@pc:~$ ./ansible/setup.sh
+Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
 >> Finding validator hosts... [OK]
