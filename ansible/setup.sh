@@ -35,7 +35,7 @@ if [[ $out == *"hosts (0)"* ]]; then
   (exit 1)
   handle_error "$out"
 else
-  echo ""
+  echo -e "[\e[32mOK\e[39m]"
   echo "$out"
 fi
 
@@ -46,7 +46,7 @@ if [[ $out == *"hosts (0)"* ]]; then
   (exit 1)
   handle_error "$out"
 else
-  echo ""
+  echo -e "[\e[32mOK\e[39m]"
   echo "$out"
 fi
 

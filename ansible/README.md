@@ -162,18 +162,20 @@ Once the inventory file is configured, simply run the setup script and specify t
 ```console
 user@pc:~$ chmod +x ansible/setup.sh
 user@pc:~$ ./ansible/setup.sh my_sudo_pw
-### Pulling upstream changes... [OK]
-### Testing Ansible availability... [OK]
-### Finding validator hosts... 
+>> Pulling upstream changes... [OK]
+>> Testing Ansible availability... [OK]
+>> Finding validator hosts... [OK]
   hosts (1):
     147.75.85.223
-### Finding public hosts... 
+>> Finding public hosts... [OK]
   hosts (3):
     142.93.37.41
     104.156.225.18
     167.172.190.112
-### Testing connectivity to nodes... [OK]
-### Executing Ansible Playbook...
+>> Testing connectivity to nodes... [OK]
+>> Executing Ansible Playbook...
+
+...
 ```
 
 Alternatively, execute the Playbook manually ("become" implies `sudo` privileges).
@@ -182,7 +184,7 @@ Alternatively, execute the Playbook manually ("become" implies `sudo` privileges
 user@pc:~$ ansible-playbook ansible/main.yml --become --ask-become
 ```
 
-The `setup.sh` script handles some extra functionality, such as downloading the newest changes from upstream and checking connectivity of remote hosts including privilege escalation. This script/Playbook can be executed over and over again.
+The `setup.sh` script handles some extra functionality, such as downloading the newest upstream changes and checking connectivity of remote hosts including privilege escalation. This script/Playbook can be executed over and over again.
 
 Additional Playbooks are provided besides `main.yml`, but those are outside the scope of this guide.
 
