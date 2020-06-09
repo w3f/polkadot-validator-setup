@@ -20,11 +20,11 @@ ExecStart=/usr/local/bin/polkadot \
          -l{{ hostvars[inventory_hostname].loggingFilter }} \
          {% endif %}
          {% for reserved_node in (groups['public'] | shuffle)[:10] %}
-         --reserved-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
+         --sentry-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
          {% endfor %}
          {% for reserved_node in (groups['validator'] | shuffle)[:5] %}
            {% if hostvars[inventory_hostname].vpnpeer_address != hostvars[reserved_node].vpnpeer_address %}
-         --reserved-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
+         --sentry-nodes /ip4/{{ hostvars[reserved_node].vpnpeer_address }}/tcp/30333/p2p/{{ hostvars[reserved_node].p2p_peer_id }} \
            {% endif %}
          {% endfor %}
          --chain={{ chain }} \
