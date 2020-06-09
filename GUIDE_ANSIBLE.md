@@ -1,10 +1,10 @@
 # Ansible Guide
 
-This repo contains collections of Ansible scripts inside the [ansible](ansible)
-directory, so called "Playbooks", which allow for the provisioning of all
-configured nodes. It automatically sets up the [Application layer
-workflow](README.md/#application-creation) as specified by the [Secure Validator
-Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) approach.
+This repo contains collections of Ansible scripts inside the [ansible/](ansible)
+directory, so called "Playbooks", which are responsible for the provisioning of
+all configured nodes. It automatically sets up the [Application
+Layer](README.md/#application-creation) and manages updates for Polkadot
+software releases.
 
 ![Polkadot Secure Network Chart](secure_network_chart.svg)
 
