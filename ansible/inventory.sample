@@ -49,8 +49,8 @@ public-1
 public-2
 
 [all:vars]
-# General sett
-project=MyValidator
+# The name for how each node should be prefixed for the telemetry name
+project=alice
 
 # Can be left as is.
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
