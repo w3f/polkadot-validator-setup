@@ -1,8 +1,10 @@
 # Ansible Guide
 
-This collection of Ansible scripts, so called "Playbooks", allow for the provisioning of all configured nodes. It automatically sets up the [Application layer workflow](README.md/#application-creation) as specified by the [Secure Validator Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) approach.
+This repo contains collections of Ansible scripts inside the `ansible/` directory, so called "Playbooks", which allow for the provisioning of all configured nodes. It automatically sets up the [Application layer workflow](README.md/#application-creation) as specified by the [Secure Validator Setup](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) approach.
 
-The Ansible Playbook gets executed locally on your machine, then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. Not manual intervention into the remote nodes is required.
+![Polkadot Secure Network Chart](secure_network_chart.svg)
+
+The Ansible Playbook gets executed locally on your machine, then connects to the configured nodes and sets up the required tooling. Firewalls, VPN connections, Polkadot and all its dependencies are installed by issuing a single command. No manual intervention into the remote nodes is required.
 
 ## Prerequisites
 
@@ -12,7 +14,7 @@ The Ansible Playbook gets executed locally on your machine, then connects to the
 
 * Running Debian-based nodes
 
-  The nodes require configured SSH access, but don't need any other preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same `sudo` password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
+  The nodes require configured SSH access, but don't need any other preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentry nodes. This setup assumes the remote users have `sudo` privileges with the same `sudo` password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
 
 It's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 

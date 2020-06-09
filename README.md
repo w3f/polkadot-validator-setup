@@ -5,9 +5,11 @@
 This repo describes a potential setup for a Polkadot validator that aims to prevent
 some types of potential attacks.
 
-![Polkadot Validator-Sentry Model](polkadot-validator-sentry.svg)
+![Polkadot Secure Network Chart](secure_network_chart.svg)
 
 ## How to use
+
+There are two ways of using this repository:
 
 ...
 
