@@ -3,15 +3,25 @@
 # Polkadot Secure Validator Setup
 
 This repo describes a potential setup for a Polkadot validator that aims to prevent
-some types of potential attacks.
+some types of potential attacks. The [Workflow](#workflow) section describes the setup for the [Platform Layer](#platform-layer) and the [Application Layer](#application-layer) in more detail.
 
 ![Polkadot Secure Network Chart](secure_network_chart.svg)
 
-## How to use
+## Usage
 
 There are two ways of using this repository:
 
-...
+* **Application Layer**
+
+  Setup Debian-based machines yourself, which only need basic SSH access and configure those in an Ansible inventory. The Ansible scripts will setup the entire [Application Layer](#application-layer).
+
+  See the [Ansible Guide](GUIDE_ANSIBLE.md) for more.
+
+* **Platform & Application Layer** [ADVANCED]
+
+  Configure credentials for infrastructure providers such as AWS, Azure, GCP and/or Packet, then execute the Terraform process to automatically deploy the required machines ([Platform Layer](#platform-layer)) and setup the [Application Layer](#application-layer).
+
+  See the [Terraform Guide](GUIDE_TERRAFORM.md) for more.
 
 ## Structure
 
@@ -49,7 +59,7 @@ we recommend to not send this information to endpoints publicly accessible.
 The secure validator setup is structured in two layers, an underlying platform
 and the applications that run on top of it.
 
-### Platform creation
+### Platform Layer
 
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
@@ -62,7 +72,7 @@ resiliency, and the bare-metal machine on packet.com. As part of the creation
 process of the cloud instances we define a hardware firewall to only allow access
 on the VPN and p2p ports.
 
-### Application creation
+### Application Layer
 
 This is done through the ansible playbook and roles located at [ansible](/ansible), the
 configuration applied depend on the type of node:

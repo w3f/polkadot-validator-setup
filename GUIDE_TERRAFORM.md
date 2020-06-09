@@ -71,7 +71,7 @@ $ yarn sync -c config/main.json
 ```
 
 You can also just provision a set of previously created machines with the ansible code
-[here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
+[here](ansible). We have provided an [example inventory](ansible/inventory.sample)
 that you can customize.
 
 The `sync` command is idempotent, unless there are errors it will always have
