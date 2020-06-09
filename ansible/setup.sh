@@ -11,7 +11,7 @@ fi
 function handle_error() {
   if (( $? )) ; then
     echo -e "[\e[31mERROR\e[39m]"
-    echo -e >&2 "CAUSE:\n" $1
+    echo -e >&2 "CAUSE:\n $1"
     exit 1 
   else
     echo -e "[\e[32mOK\e[39m]"
@@ -35,7 +35,8 @@ if [[ $out == *"hosts (0)"* ]]; then
   (exit 1)
   handle_error "$out"
 else
-  echo $out
+  echo ""
+  echo "$out"
 fi
 
 echo -n "### Finding public hosts... "
@@ -45,7 +46,8 @@ if [[ $out == *"hosts (0)"* ]]; then
   (exit 1)
   handle_error "$out"
 else
-  echo $out
+  echo ""
+  echo "$out"
 fi
 
 echo -n "### Testing connectivity to nodes... "
