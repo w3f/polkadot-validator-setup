@@ -2,8 +2,10 @@
 
 # Polkadot Secure Validator Setup
 
-This repo describes a potential setup for a Polkadot validator that aims to prevent
-some types of potential attacks. The [Workflow](#workflow) section describes the [Platform Layer](#platform-layer) and the [Application Layer](#application-layer) in more detail.
+This repo describes a potential setup for a Polkadot validator that aims to
+prevent some types of potential attacks. The [Workflow](#workflow) section
+describes the [Platform Layer](#platform-layer) and the [Application
+Layer](#application-layer) in more detail.
 
 ![Polkadot Secure Network Chart](secure_network_chart.svg)
 
@@ -13,13 +15,18 @@ There are two ways of using this repository:
 
 * **Application Layer**
 
-  Setup Debian-based machines yourself, which only need basic SSH access and configure those in an Ansible inventory. The Ansible scripts will setup the entire [Application Layer](#application-layer).
+  Setup Debian-based machines yourself, which only need basic SSH access and
+  configure those in an inventory. The Ansible scripts will setup the entire
+  [Application Layer](#application-layer).
 
   See the [Ansible Guide](GUIDE_ANSIBLE.md) for more.
 
 * **Platform & Application Layer** [ADVANCED]
 
-  Configure credentials for infrastructure providers such as AWS, Azure, GCP and/or Packet, then execute the Terraform process to automatically deploy the required machines ([Platform Layer](#platform-layer)) and setup the [Application Layer](#application-layer).
+  Configure credentials for infrastructure providers such as AWS, Azure, GCP
+  and/or Packet, then execute the Terraform process to automatically deploy the
+  required machines ([Platform Layer](#platform-layer)) and setup the
+  [Application Layer](#application-layer).
 
   See the [Terraform Guide](GUIDE_TERRAFORM.md) for more.
 
