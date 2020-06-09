@@ -151,22 +151,35 @@ polkadot_restart_weekday='*'
 ## Execution
 
 Download the required files.
-```bash
-$ git clone https://github.com/w3f/polkadot-secure-validator.git
-$ cd polkadot-secure-validator
+
+```console
+user@pc:~$ git clone https://github.com/w3f/polkadot-secure-validator.git
+user@pc:~$ cd polkadot-secure-validator
 ```
 
 Once the inventory file is configured, simply run the setup script and specify the `sudo` password for the remote machines.
 
-```bash
-$ chmod +x ansible/setup.sh
-$ ./ansible/setup.sh my_sudo_pw
+```console
+user@pc:~$ chmod +x ansible/setup.sh
+user@pc:~$ ./ansible/setup.sh my_sudo_pw
+### Pulling upstream changes... [OK]
+### Testing Ansible availability... [OK]
+### Finding validator hosts... 
+  hosts (1):
+    147.75.85.223
+### Finding public hosts... 
+  hosts (3):
+    142.93.37.41
+    104.156.225.18
+    167.172.190.112
+### Testing connectivity to nodes... [OK]
+### Executing Ansible Playbook...
 ```
 
 Alternatively, execute the Playbook manually ("become" implies `sudo` privileges).
 
-```bash
-$ ansible-playbook ansible/main.yml --become --ask-become
+```console
+user@pc:~$ ansible-playbook ansible/main.yml --become --ask-become
 ```
 
 The `setup.sh` script handles some extra functionality, such as downloading the newest changes from upstream and checking connectivity of remote hosts including privilege escalation. This script/Playbook can be executed over and over again.
