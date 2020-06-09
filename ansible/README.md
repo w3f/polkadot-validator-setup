@@ -8,10 +8,15 @@ The Ansible Playbook gets executed locally on your machine, then connects to the
 
 ## Prerequisites
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+). On Debian-based systems this can be installed with `sudo apt install ansible` from the standard repositories.
-* Running Debian-based nodes with configured SSH access. The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes.
+### [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+)
 
-For convenience, it's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
+On Debian-based systems this can be installed with `sudo apt install ansible` from the standard repositories.
+
+### Running Debian-based nodes with configured SSH access
+
+The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same password.
+
+It's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 
 ## Inventory
 
@@ -20,7 +25,7 @@ All required data is saved in a [Ansible inventory](https://docs.ansible.com/ans
 For each node, the following information must be configured in the Ansible inventory:
 
 * IP address or URL.
-* SSH user (as `ansible_user`). It's encouraged NOT to use `root`, but a regular user with `sudo` privileges.
+* SSH user (as `ansible_user`). It's encouraged NOT to use `root`.
 * A unique VPN address within the `10.0.0.0/24` network.
 * (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
 
