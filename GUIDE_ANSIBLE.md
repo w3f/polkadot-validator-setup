@@ -138,12 +138,12 @@ Important variables which should vary from the example inventory:
 
 * `project` - The name for how each node should be prefixed for the telemetry
   name.
-* `polkadot_binary_url` - This is the URL from were the Ansible Playbook will
+* `polkadot_binary_url` - This is the URL from were Ansible will
   download the Polkadot binary. Binary releases are available in the official
   [Parity Releases repo](https://github.com/paritytech/polkadot/releases) or the
   [W3F Releases repo](https://github.com/w3f/polkadot/releases).
 * `polkadot_binary_checksum` - The SHA256 checksum of the Polkadot binary which
-  the Ansible Playbook verifies. Must be prefixed with `sha256:`.
+  Ansible verifies during execution. Must be prefixed with `sha256:`.
 * `chain` - The chain to work on, such as `kusama` or `polkadot`.
 * `polkadot_network_id` - The network identifier, such as `ksmcc2` (for Kusama)
   or `polkadot`.
@@ -202,7 +202,7 @@ the `sudo` password for the remote machines.
 
 ```console
 user@pc:~$ chmod +x ansible/setup.sh
-user@pc:~$ ./ansible/setup.sh
+user@pc:~$ ansible/setup.sh
 Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
