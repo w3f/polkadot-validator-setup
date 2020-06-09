@@ -1,5 +1,13 @@
 #!/bin/bash
 
+SUDO_PW=$1
+
+if [ -z ${1+x} ]; then
+  echo "Please set a sudo password for remote machines:"
+  echo "  $ setup.sh <my_sudo_pw>"
+  exit 1
+fi
+
 function handle_error() {
   if (( $? )) ; then
     echo -e "[\e[31mERROR\e[39m]"
@@ -41,12 +49,11 @@ else
 fi
 
 echo -n "### Testing connectivity to nodes... "
-out=$((ansible all -m ping) 2>&1)
+out=$((ansible all -m ping --become --extra-vars "ansible_become_pass=$SUDO_PW") 2>&1)
 handle_error "$out"
 
 echo "### Executing Ansible Playbook..."
 
-#ansible-playbook main.yml
+ansible-playbook main.yml --become --extra-vars "ansible_become_pass=$SUDO_PW"
 
 echo "### Done!"
-

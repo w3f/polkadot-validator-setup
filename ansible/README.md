@@ -14,7 +14,7 @@ On Debian-based systems this can be installed with `sudo apt install ansible` fr
 
 ### Running Debian-based nodes with configured SSH access
 
-The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same password.
+The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
 
 It's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 
@@ -138,16 +138,26 @@ polkadot_restart_weekday='*'
 
 ## Execution
 
-Once the inventory file is configured, simply run the setup script:
-
+Download the required files.
 ```bash
 $ git clone https://github.com/w3f/polkadot-secure-validator.git
 $ cd polkadot-secure-validator
-$ chmod +x ansible/setup.sh
-$ ./ansible/setup.sh
 ```
 
-This script can be executed over and over again.
+Once the inventory file is configured, simply run the setup script and specify the `sudo` password for the remote machines.
+
+```bash
+$ chmod +x ansible/setup.sh
+$ ./ansible/setup.sh my_sudo_pw
+```
+
+Alternatively, execute the Playbook manually ("become" implies `sudo` privileges).
+
+```bash
+$ ansible-playbook ansible/main.yml --become --ask-become
+```
+
+The `setup.sh` script handles some extra functionality, such as downloading the newest changes from upstream and checking connectivity of remote hosts including privilege escalation. This script/Playbook can be executed over and over again.
 
 Additional Playbooks are provided besides `main.yml`, but those are outside the scope of this guide.
 
