@@ -165,12 +165,12 @@ Sudo password for remote servers:
 >> Testing Ansible availability... [OK]
 >> Finding validator hosts... [OK]
   hosts (1):
-    147.75.85.223
+    147.75.76.65
 >> Finding public hosts... [OK]
   hosts (3):
-    142.93.37.41
-    104.156.225.18
-    167.172.190.112
+    18.184.100.247
+    40.81.189.214
+    35.190.164.158
 >> Testing connectivity to nodes... [OK]
 >> Executing Ansible Playbook...
 
