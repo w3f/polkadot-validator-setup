@@ -6,13 +6,13 @@ The Ansible Playbook gets executed locally on your machine, then connects to the
 
 ## Prerequisites
 
-### [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+)
 
-On Debian-based systems this can be installed with `sudo apt install ansible` from the standard repositories.
+  On Debian-based systems this can be installed with `sudo apt install ansible` from the standard repositories.
 
-### Running Debian-based nodes
+* Running Debian-based nodes
 
-The nodes require configured SSH access, but don't need any other preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same `sudo` password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
+  The nodes require configured SSH access, but don't need any other preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same `sudo` password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
 
 It's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 
