@@ -12,9 +12,9 @@ The Ansible Playbook gets executed locally on your machine, then connects to the
 
 On Debian-based systems this can be installed with `sudo apt install ansible` from the standard repositories.
 
-### Running Debian-based nodes with configured SSH access
+### Running Debian-based nodes
 
-The nodes don't need any special preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
+The nodes require configured SSH access, but don't need any other preparatory work. It's up to you on how many node you want to use. General advice is to use one validator which connects to two or more sentries nodes. This setup assumes the remote users have `sudo` privileges with the same `sudo` password. Alternatively, [additional configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html) is required.
 
 It's recommended to setup SSH pubkey authentication for the nodes and to add the access keys to the SSH agent.
 
@@ -116,22 +116,34 @@ The other default values from the example file can be left as is.
 Example:
 
 ```ini
-project=w3f
+[all:vars]
+# The name for how each node should be prefixed for the telemetry name
+project=alice-in-wonderland
+
+# Can be left as is.
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
+build_dir=$HOME/.config/polkadot-secure-validator/build/w3f/ansible
+
+# Specify which `polkadot` binary to install. Checksum is verified during execution.
 polkadot_binary_url='https://github.com/paritytech/polkadot/releases/download/v0.8.2/polkadot'
 polkadot_binary_checksum='sha256:349b786476de9188b79817cab48fc6fc030908ac0e8e2a46a1600625b1990758'
-polkadot_network_id=ksmcc2
-chain=kusama
-build_dir=/home/user/.config/polkadot-secure-validator/build/w3f/ansible
+
+# Specify the chain/network.
+polkadot_network_id=polkadot
+chain=polkadot
+
+# Node exporter settings. Disabled by default.
 node_exporter_enabled='false'
 node_exporter_user='node_exporter_user'
 node_exporter_password='node_exporter_password'
 node_exporter_binary_url='https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz'
 node_exporter_binary_checksum='sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424'
+
+# Polkadot service restart settings. Enabled to restart every hour.
 polkadot_restart_enabled='true'
-polkadot_restart_minute='50'
-polkadot_restart_hour='10'
-polkadot_restart_day='1'
+polkadot_restart_minute='0'
+polkadot_restart_hour='*'
+polkadot_restart_day='*'
 polkadot_restart_month='*'
 polkadot_restart_weekday='*'
 ```

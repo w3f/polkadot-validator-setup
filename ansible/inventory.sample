@@ -54,13 +54,11 @@ project=alice-in-wonderland
 
 # Can be left as is.
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
+build_dir=$HOME/.config/polkadot-secure-validator/build/w3f/ansible
 
 # Specify which `polkadot` binary to install. Checksum is verified during execution.
 polkadot_binary_url='https://github.com/paritytech/polkadot/releases/download/v0.8.2/polkadot'
 polkadot_binary_checksum='sha256:349b786476de9188b79817cab48fc6fc030908ac0e8e2a46a1600625b1990758'
-
-# Can be left as is, but adjust the "user" to the username of your **local** machine.
-build_dir=/home/user/.config/polkadot-secure-validator/build/w3f/ansible
 
 # Specify the chain/network.
 #
