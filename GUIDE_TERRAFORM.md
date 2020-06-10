@@ -1,8 +1,7 @@
 # Terraform Guide
 
-This repo has code for creating a complete implementation of the approach
-described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, including
-both layers described in [Workflow](README.md/#workflow). This can be done on any host with
+This repo has code for creating a complete implementation of both layers
+described in [Workflow](README.md/#workflow). This can be done on any host with
 NodeJS, Yarn and Git installed.
 
 ### Prerequisites

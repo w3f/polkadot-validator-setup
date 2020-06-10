@@ -3,9 +3,10 @@
 # Polkadot Secure Validator Setup
 
 This repo describes a potential setup for a Polkadot validator that aims to
-prevent some types of potential attacks. The [Workflow](#workflow) section
-describes the [Platform Layer](#platform-layer) and the [Application
-Layer](#application-layer) in more detail.
+prevent some types of potential attacks, as described in the
+[Polkadot Secure Validator approach](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g).
+The [Workflow](#workflow) section describes the [Platform Layer](#platform-layer)
+and the [Application Layer](#application-layer) in more detail.
 
 ![Polkadot Secure Network Chart](secure_network_chart.svg)
 
