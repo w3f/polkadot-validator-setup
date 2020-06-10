@@ -1,7 +1,7 @@
 # Ansible Guide
 
 This repo contains collections of Ansible scripts inside the [ansible/](ansible)
-directory, so called "Playbooks", which are responsible for the provisioning of
+directory, so called "Roles", which are responsible for the provisioning of
 all configured nodes. It automatically sets up the [Application
 Layer](README.md/#application-creation) and manages updates for Polkadot
 software releases.
