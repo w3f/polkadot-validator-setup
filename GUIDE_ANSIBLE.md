@@ -8,7 +8,7 @@ software releases.
 
 ![Polkadot Secure Network Chart](secure_network_chart.svg)
 
-The Ansible Playbook gets executed locally on your machine, then connects to the
+There is a main Ansible Playbook that orchestrates all the roles, it gets executed locally on your machine, then connects to the
 configured nodes and sets up the required tooling. Firewalls, VPN connections,
 Polkadot and all its dependencies are installed by issuing a single command. No
 manual intervention into the remote nodes is required.
