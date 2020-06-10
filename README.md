@@ -14,15 +14,7 @@ and the [Application Layer](#application-layer) in more detail.
 
 There are two ways of using this repository:
 
-* **Application Layer**
-
-  Setup Debian-based machines yourself, which only need basic SSH access and
-  configure those in an inventory. The Ansible scripts will setup the entire
-  [Application Layer](#application-layer).
-
-  See the [Ansible Guide](GUIDE_ANSIBLE.md) for more.
-
-* **Platform & Application Layer** [ADVANCED]
+* **Platform & Application Layer**
 
   Configure credentials for infrastructure providers such as AWS, Azure, GCP
   and/or Packet, then execute the Terraform process to automatically deploy the
@@ -30,6 +22,14 @@ There are two ways of using this repository:
   [Application Layer](#application-layer).
 
   See the [Terraform Guide](GUIDE_TERRAFORM.md) for more.
+
+* **Application Layer**
+
+  Setup Debian-based machines yourself, which only need basic SSH access and
+  configure those in an inventory. The Ansible scripts will setup the entire
+  [Application Layer](#application-layer).
+
+  See the [Ansible Guide](GUIDE_ANSIBLE.md) for more.
 
 ## Structure
 
