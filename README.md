@@ -2,96 +2,34 @@
 
 # Polkadot Secure Validator Setup
 
-This repo describes a potential setup for a Polkadot validator that aims to prevent
-some types of potential attacks.
+This repo describes a potential setup for a Polkadot validator that aims to
+prevent some types of potential attacks, as described in the
+[Polkadot Secure Validator approach](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g).
+The [Workflow](#workflow) section describes the [Platform Layer](#platform-layer)
+and the [Application Layer](#application-layer) in more detail.
 
-## How to use
+![Polkadot Secure Network Chart](secure_network_chart.svg)
 
-This repo has code for creating a complete implementation of the approach
-described [here](https://hackmd.io/QSJlqjZpQBihEU_ojmtR8g) from scratch, including
-both layers described in [Workflow](#workflow). This can be done on a host with
-NodeJS, Yarn and Git installed with:
+## Usage
 
-### Prerequisites
+There are two ways of using this repository:
 
-Before using polkadot-secure-validator you need to have installed:
+* **Platform & Application Layer**
 
-* NodeJS (we recommend using [nvm](https://github.com/nvm-sh/nvm))
+  Configure credentials for infrastructure providers such as AWS, Azure, GCP
+  and/or Packet, then execute the Terraform process to automatically deploy the
+  required machines ([Platform Layer](#platform-layer)) and setup the
+  [Application Layer](#application-layer).
 
-* [Yarn](https://yarnpkg.com/lang/en/docs/install)
+  See the [Terraform Guide](GUIDE_TERRAFORM.md) for more.
 
-* [Terraform](https://www.terraform.io/downloads.html) (the snap package available via your package manager will not work)
+* **Application Layer**
 
-* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (v2.8+, available through pip)
+  Setup Debian-based machines yourself, which only need basic SSH access and
+  configure those in an inventory. The Ansible scripts will setup the entire
+  [Application Layer](#application-layer).
 
-You will need credentials as environment variables for all the infrastructure providers
-used in the platform creation phase. The tool now supports AWS, Azure, GCP and packet,
-these are the required variables:
-
-* AWS: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` of an IAM account with EC2
-and VPC write access.
-* Azure: `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_SUBSCRIPTION_ID`,
-`ARM_TENANT_ID`, `TF_VAR_client_id` (same as `ARM_CLIENT_ID`),
-`TF_VAR_client_secret` (same as `ARM_CLIENT_SECRET`). All these credentials
-should correspond to a service principal with at least a `Contributor` role,
-see [here](https://docs.microsoft.com/en-us/azure/role-based-access-control/role-assignments-portal)
-for details or [create an issue](https://github.com/w3f/polkadot-secure-validator/issues/new) for
-finer grained access control.
-* GCP: `GOOGLE_APPLICATION_CREDENTIALS` (path to json file with credentials of
-the service account you want to use; this service account needs to have write
-access to compute and network resources).
-* PACKET: `TF_VAR_auth_token`.
-* DigitalOcean: `TF_VAR_do_token`.
-
-The tool allows you to specify which providers to use, so you don't need to have
-accounts in all of them, see [here](https://github.com/w3f/polkadot-secure-validator/blob/master/config/main.sample.json)
-for an example of how to define the providers. You could use, for instance,
-packet for the validators and GCP for the public nodes. Keep in mind that, the
-more distributed your public nodes, the fewer opportunities to be affected by
-potential incidents in the respective cloud providers.
-
-You need two additional environment variables to allow ansible to connect to the
-created machines:
-
-* `SSH_ID_RSA_PUBLIC`: path to private SSH key you want to use for the public
-nodes.
-
-* `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
-validators.
-
-You can easily create and add them to your ssh-agent as follows:
-
-```bash
-$ ssh-keygen -f <path>
-$ ssh-add <path>
-```
-
-### Synchronization
-
-```
-$ git clone https://github.com/w3f/secure-validator
-$ cd secure-validator
-$ yarn
-$ cp config/main.template.json config/main.json
-# now you should complete and customize config/main.json, using main.sample.json as a reference
-$ yarn sync -c config/main.json
-```
-
-You can also just provision a set of previously created machines with the ansible code
-[here](./ansible). We have provided an [example inventory](./ansible/inventory.sample)
-that you can customize.
-
-The `sync` command is idempotent, unless there are errors it will always have
-the same results. You can execute it as much as you want, it will only make
-changes when the actual infrastructure state doesn't match the desired state.
-
-### Cleaning up
-
-You can remove all the created infrastructure with:
-
-```
-$ yarn clean -c config/main.json
-```
+  See the [Ansible Guide](GUIDE_ANSIBLE.md) for more.
 
 ## Structure
 
@@ -129,7 +67,7 @@ we recommend to not send this information to endpoints publicly accessible.
 The secure validator setup is structured in two layers, an underlying platform
 and the applications that run on top of it.
 
-### Platform creation
+### Platform Layer
 
 Because of the different nature of the validator and the cloud nodes, the
 platform is hybrid, consisting of a bare-metal machine and cloud instances.
@@ -142,7 +80,7 @@ resiliency, and the bare-metal machine on packet.com. As part of the creation
 process of the cloud instances we define a hardware firewall to only allow access
 on the VPN and p2p ports.
 
-### Application creation
+### Application Layer
 
 This is done through the ansible playbook and roles located at [ansible](/ansible), the
 configuration applied depend on the type of node:
