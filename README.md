@@ -21,7 +21,7 @@ There are two ways of using this repository:
   required machines ([Platform Layer](#platform-layer)) and setup the
   [Application Layer](#application-layer).
 
-  See the [Terraform Guide](GUIDE_TERRAFORM.md) for more.
+  See the [Complete Guide](GUIDE_COMPLETE.md) for more.
 
 * **Application Layer**
 
