@@ -1,0 +1,62 @@
+---
+all:
+  vars:
+    # The name for how each node should be prefixed for the telemetry name
+    project: alice-in-wonderland
+    # Specify which `polkadot` binary to install. Checksum is verified during execution.
+    polkadot_binary_url: 'https://github.com/paritytech/polkadot/releases/download/v0.8.8/polkadot'
+    polkadot_binary_checksum: 'sha256:360e339ab8c32b862bf21aca2bed1e20a90b44ed9cab1428d5e9f0ce1dad9502'
+    # Can be left as is.
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o ConnectTimeout=15'
+    build_dir: $HOME/.config/polkadot-secure-validator/build/w3f/ansible
+    # Specify the chain/network.
+    # For Kusama:
+    # ```
+    # chain: kusama
+    # polkadot_network_id: ksmcc3
+    # ```
+    # For Polkadot:
+    polkadot_network_id: polkadot
+    chain: polkadot
+    # Node exporter settings. Disabled by default.
+    node_exporter_enabled: 'false'
+    node_exporter_user: 'node_exporter_user'
+    node_exporter_password: 'node_exporter_password'
+    node_exporter_binary_url: 'https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz'
+    node_exporter_binary_checksum: 'sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424'
+    # Polkadot service restart settings. Enabled to restart every hour.
+    polkadot_restart_enabled: 'true'
+    polkadot_restart_minute: '0'
+    polkadot_restart_hour: '*'
+    polkadot_restart_day: '*'
+    polkadot_restart_month: '*'
+    polkadot_restart_weekday: '*'
+  children:
+    validator:
+      vars:
+        ansible_user: alice
+        vpnpeer_address: 10.0.0.1
+        vpnpeer_cidr_suffix: 24
+        telemetryUrl: wss://mi.private.telemetry.backend/
+        loggingFilter: 'sync=trace,afg=trace,babe=debug'
+      hosts:
+        validator-0:
+          ansible_host: 147.75.76.65
+    public:
+      vars:
+        ansible_user: alice
+        vpnpeer_cidr_suffix: 24
+        telemetryUrl: wss://mi.private.telemetry.backend/
+        loggingFilter: 'sync=trace,afg=trace,babe=debug'
+      hosts:
+        public-o:
+          ansible_host: 18.184.100.247
+          vpnpeer_address: 10.0.0.2
+          # Optional, custom location for the chain. Ensure the user `polkadot` has read/write access to this folder.
+          # base_path: '/mnt/volume01/polkadot/'
+        public-1:
+          ansible_host: 40.81.189.214
+          vpnpeer_address: 10.0.0.3
+        public-2:
+          ansible_host: 35.190.164.15
+          vpnpeer_address: 10.0.0.4
