@@ -6,16 +6,12 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
+  ansible-lint -v
   flake8
 platforms:
   - name: vpnpeer-setup-instance
     image: ubuntu:xenial
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8
