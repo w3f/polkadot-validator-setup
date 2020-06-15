@@ -1,5 +1,6 @@
+[validator]
 {{#each validators }}
-[validator-{{@index}}]
+validator-{{@index}}
 {{ this.ipAddress }}
 
 [validator-{{@index}}:vars]
@@ -11,14 +12,9 @@ loggingFilter='{{{ ../validatorLoggingFilter }}}'
 
 {{/each}}
 
-[validator:children]
-{{#each validators }}
-validator-{{@index}}
-{{/each}}
-
-
+[public]
 {{#each publicNodes }}
-[public-{{@index}}]
+public-{{@index}}
 {{ this.ipAddress }}
 
 [public-{{@index}}:vars]
@@ -28,11 +24,6 @@ vpnpeer_cidr_suffix=24
 telemetryUrl={{ ../publicTelemetryUrl }}
 loggingFilter='{{{ ../publicLoggingFilter }}}'
 
-{{/each}}
-
-[public:children]
-{{#each publicNodes }}
-public-{{@index}}
 {{/each}}
 
 [all:vars]
