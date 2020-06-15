@@ -7,9 +7,8 @@
 
 - name: install linux-headers
   apt:
-    name: linux-headers-{{ uname.stdout }}
+    name: linux-headers-generic
     update_cache: yes
-  when: not "+" in uname.stdout
 
 - name: add wireguard repo
   apt_repository:
