@@ -1,8 +1,8 @@
 {
   "project": "integration-test",
   "polkadotBinary": {
-    "url": "https://github.com/w3f/polkadot/releases/download/v0.8.0/polkadot",
-    "checksum": "sha256:775c036ebfa4bc535128148e40d09149599b10cee24e8bc51e72553a4eb2307b"
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.8.8/polkadot",
+    "checksum": "sha256:646bcf260338b0cf1fa9f5fd2de44303347f601a99578df107f7ceaa0112f70a"
   },
   "nodeExporter": {
     "enabled": true,

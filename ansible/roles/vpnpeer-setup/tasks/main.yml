@@ -1,15 +1,9 @@
 ---
 # tasks file for vpnpeer-setup
-- name: get linux version
-  command: uname -r
-  register: uname
-  changed_when: False
-
 - name: install linux-headers
   apt:
-    name: linux-headers-{{ uname.stdout }}
+    name: linux-headers-generic
     update_cache: yes
-  when: not "+" in uname.stdout
 
 - name: add wireguard repo
   apt_repository:
