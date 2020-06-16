@@ -1,10 +1,5 @@
 ---
 # tasks file for vpnpeer-setup
-- name: get linux version
-  command: uname -r
-  register: uname
-  changed_when: False
-
 - name: install linux-headers
   apt:
     name: linux-headers-generic
