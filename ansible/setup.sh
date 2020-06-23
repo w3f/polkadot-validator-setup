@@ -46,11 +46,11 @@ else
 fi
 
 echo -n ">> Testing connectivity to nodes... "
-out=$((ansible all -i inventory.yml -m ping --become --extra-vars "ansible_become_pass=$SUDO_PW") 2>&1)
+out=$((ansible all -i inventory.yml -m ping --become --extra-vars "ansible_become_pass='$SUDO_PW'") 2>&1)
 handle_error "$out"
 
 echo ">> Executing Ansible Playbook..."
 
-ansible-playbook -i inventory.yml main.yml --become --extra-vars "ansible_become_pass=$SUDO_PW"
+ansible-playbook -i inventory.yml main.yml --become --extra-vars "ansible_become_pass='$SUDO_PW'"
 
 echo ">> Done!"
