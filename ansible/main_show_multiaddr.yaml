@@ -1,0 +1,5 @@
+- hosts: all
+  become: yes
+  gather_facts: false
+  roles:
+  - show-multiaddr

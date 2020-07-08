@@ -1,0 +1,19 @@
+- name: save peerId
+  uri:
+    url: http://localhost:9933
+    method: "POST"
+    body_format: json
+    body: |
+      { "jsonrpc":"2.0", "method":"system_localPeerId", "params":[], "id":1 }
+  register: peerId
+  until: peerId.status == 200
+  retries: 10
+  delay: 5
+
+- name: set peer id as fact
+  set_fact:
+    p2p_peer_id: "{{ peerId.json.result }}"
+
+- name: result
+  debug:
+    msg: "/ip4/{{ hostvars[inventory_hostname].vpnpeer_address }}/tcp/30333/p2p/{{ p2p_peer_id }}"
