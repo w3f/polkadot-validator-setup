@@ -33,19 +33,18 @@ There are two ways of using this repository:
 
 ## Structure
 
-The secure validator setup is composed of a bare-metal machine that runs the
-actual validator and a set of cloud nodes connected to it. The validator is
-isolated from the internet and only has access to the Polkadot network through
-the cloud nodes, which are accessible from the internet and are connected to
-the rest of the Polkadot network.
+The secure validator setup is composed of one or more validators and a set of 
+public nodes nodes connected to it. The validators are isolated from the internet 
+and only have access to the Polkadot network through
+the public nodes.
 
-The connection between the validator node and the cloud nodes is performed
+The connection between the validator nodes and the public nodes is performed
 defining a VPN to which all these nodes belong. The Polkadot instance running in
-the validator node is configured to only listen on the VPN-attached interface,
-and uses the cloud node's VPN address in the `--reserved-nodes` parameter. It is
+the validator nodes are configured to only listen on the VPN-attached interface,
+and uses the public node's VPN address in the `--reserved-nodes` parameter. It is
 also protected by a firewall that only allows connections on the VPN port.
 
-This way, the only nodes allowed to connect to the validator are the public nodes
+This way, the only nodes allowed to connect to the validators are the public nodes
 through the VPN. Messages sent by other validators can still reach it through
 gossiping, and these validators can know the IP address of the secure validator
 because of this, but can't directly connect to it without being part of the VPN.
@@ -69,16 +68,13 @@ and the applications that run on top of it.
 
 ### Platform Layer
 
-Because of the different nature of the validator and the cloud nodes, the
-platform is hybrid, consisting of a bare-metal machine and cloud instances.
-However, we use terraform for creating both. The code for setting up the
-bare-metal machine is in the [terraform](/terraform) dir
-of this repository.
+Both validator and public nodes are created in a similar way using the terraform
+modules located at [terraform](/terraform) directory. We have created code for 
+several providers but it is possible to add new ones, please reach out if you 
+are interested in any provider currently not available.
 
-The cloud instances are created on 3 different cloud providers for increased
-resiliency, and the bare-metal machine on packet.com. As part of the creation
-process of the cloud instances we define a hardware firewall to only allow access
-on the VPN and p2p ports.
+Besides the actual machines the terraform modules create the minimum required networking
+infrastructure for adding firewall rules to protect the nodes.
 
 ### Application Layer
 
@@ -142,7 +138,7 @@ configuration applied depend on the type of node:
         WantedBy=multi-user.target
         ```
 
-* Private (validator) node:
+* Private (validator) nodes:
 
     * Start Polkadot service: the private (validator) node is started with the node's VPN address as part
     of the listen multiaddr and the multiaddr of the public nodes (with the peer id
