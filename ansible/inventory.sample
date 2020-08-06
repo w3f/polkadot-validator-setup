@@ -6,7 +6,7 @@ ansible_user=alice
 vpnpeer_address=10.0.0.1
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+loggingFilter='sync=info,afg=info,babe=info'
 
 [validator:children]
 validator-0
@@ -19,7 +19,7 @@ ansible_user=alice
 vpnpeer_address=10.0.0.2
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+loggingFilter='sync=info,afg=info,babe=info'
 # Optional, custom location for the chain. Ensure the user `polkadot` has read/write access to this folder.
 #base_path='/mnt/volume01/polkadot/'
 
@@ -31,7 +31,7 @@ ansible_user=alice
 vpnpeer_address=10.0.0.3
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+loggingFilter='sync=info,afg=info,babe=info'
 
 [public-2]
 35.190.164.158
@@ -41,7 +41,7 @@ ansible_user=alice
 vpnpeer_address=10.0.0.4
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+loggingFilter='sync=info,afg=info,babe=info'
 
 [public:children]
 public-0

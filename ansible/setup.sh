@@ -24,7 +24,7 @@ out=$((ansible --version) 2>&1)
 handle_error "$out"
 
 echo -n ">> Finding validator hosts... "
-out=$((ansible -i inventory.yml -l validator --list-hosts) 2>/dev/null)
+out=$((ansible -i inventory.yml validator --list-hosts) 2>/dev/null)
 if [[ $out == *"hosts (0)"* ]]; then
   out="No hosts found, exiting..."
   (exit 1)
@@ -35,7 +35,7 @@ else
 fi
 
 echo -n ">> Finding public hosts... "
-out=$((ansible -i inventory.yml -l public --list-hosts) 2>/dev/null)
+out=$((ansible -i inventory.yml public --list-hosts) 2>/dev/null)
 if [[ $out == *"hosts (0)"* ]]; then
   out="No hosts found, exiting..."
   (exit 1)

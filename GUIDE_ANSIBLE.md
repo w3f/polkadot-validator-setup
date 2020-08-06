@@ -38,8 +38,8 @@ access keys to the SSH agent.
 
 All required data is saved in a [Ansible
 inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html),
-which is placed under `/etc/ansible/hosts` and must only be configured once.
-Most default values from the [SAMPLE FILE](ansible/inventory.sample) can be copied. Only
+which by default is placed under `/etc/ansible/hosts` and must only be configured once.
+Most values from the [SAMPLE FILE](ansible/inventory.sample) can be copied. Only
 a handful of entries must be adjusted.
 
 For each node, the following information must be configured in the Ansible
@@ -51,6 +51,8 @@ inventory:
 * (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
 
 The other default values from the example file can be left as is.
+
+**NOTE**: This guide assumes that the inventory is places locally in `ansible/inventory.yml`.
 
 **NOTE**: VPN address should start at `10.0.0.1` for the validator and increment
 for each other (sentry) node: `10.0.0.2`, `10.0.0.3`, etc.
@@ -200,9 +202,12 @@ user@pc:~$ cd polkadot-secure-validator
 Once the inventory file is configured, simply run the setup script and specify
 the `sudo` password for the remote machines.
 
+**NOTE**: This script assumes that the inventory file is configured in
+`ansible/inventory.yml`.
+
 ```console
-user@pc:~$ chmod +x ansible/setup.sh
-user@pc:~$ ansible/setup.sh
+user@pc:~/polkadot-secure-validator$ chmod +x ansible/setup.sh
+user@pc:~/polkadot-secure-validator$ ansible/setup.sh
 Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
@@ -224,7 +229,7 @@ Alternatively, execute the Playbook manually ("become" implies `sudo`
 privileges).
 
 ```console
-user@pc:~$ ansible-playbook ansible/main.yml --become --ask-become
+user@pc:~/polkadot-secure-validator$ ansible-playbook -i ansible/inventory.yml ansible/main.yml --become --ask-become
 ```
 
 The `setup.sh` script handles some extra functionality, such as downloading the
