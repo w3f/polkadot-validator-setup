@@ -42,8 +42,6 @@ which by default is placed under `/etc/ansible/hosts` and must only be configure
 Most values from the [SAMPLE FILE](ansible/inventory.sample) can be copied. Only
 a handful of entries must be adjusted.
 
-This guide assumes that the inventory is places locally in `ansible/inventory.yml`.
-
 For each node, the following information must be configured in the Ansible
 inventory:
 
@@ -53,6 +51,8 @@ inventory:
 * (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
 
 The other default values from the example file can be left as is.
+
+**NOTE**: This guide assumes that the inventory is places locally in `ansible/inventory.yml`.
 
 **NOTE**: VPN address should start at `10.0.0.1` for the validator and increment
 for each other (sentry) node: `10.0.0.2`, `10.0.0.3`, etc.
