@@ -20,7 +20,7 @@ class Terraform {
     };
   }
 
-  async sync() {
+  async sync(method='apply') {
     this._initializeTerraform();
     try {
       await this._initState();
@@ -32,14 +32,14 @@ class Terraform {
 
     let validatorSyncPromises = [];
     try {
-      validatorSyncPromises = await this._create('validator', sshKeys.validatorPublicKey, this.config.validators.nodes);
+      validatorSyncPromises = await this._create('validator', sshKeys.validatorPublicKey, this.config.validators.nodes, method);
     } catch(e) {
       console.log(`Could not get validator sync promises: ${e.message}`);
     }
 
     let publicNodeSyncPromises = [];
     try {
-      publicNodeSyncPromises = await this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes);
+      publicNodeSyncPromises = await this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes, method);
     } catch(e) {
       console.log(`Could not get publicNodes sync promises: ${e.message}`);
     }
@@ -76,7 +76,7 @@ class Terraform {
     return this._cmd(`output -json ${outputField}`, options);
   }
 
-  async _create(type, sshKey, nodes) {
+  async _create(type, sshKey, nodes, method='apply') {
     const createPromises = [];
 
     for (let counter = 0; counter < nodes.length; counter++) {
@@ -89,7 +89,12 @@ class Terraform {
 
         this._createVarsFile(cwd, nodes[counter], sshKey, nodeName);
 
-        await this._cmd(`apply -auto-approve`, options);
+        let cmd = method;
+        if (method === 'apply'){
+          cmd += ' -auto-approve';
+        }
+
+        await this._cmd(cmd, options);
 
         resolve(true);
       }));
