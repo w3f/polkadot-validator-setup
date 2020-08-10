@@ -3,22 +3,6 @@ resource "aws_key_pair" "key-{{ name }}" {
   public_key = var.public_key
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-${var.image}-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
 resource "aws_vpc" "main-{{ name }}" {
   cidr_block = "172.26.0.0/16"
 
@@ -123,7 +107,7 @@ resource "aws_security_group_rule" "allow_all-{{ name }}" {
 }
 
 resource "aws_instance" "main-{{ name }}" {
-  ami           = "${data.aws_ami.ubuntu.id}"
+  ami           = var.image
   instance_type = var.machine_type
   key_name      = var.name
   count         = var.node_count
