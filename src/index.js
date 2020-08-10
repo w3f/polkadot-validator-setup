@@ -8,6 +8,7 @@ require('dotenv').config({path: path.resolve(process.cwd(), 'config/.env')});
 
 const clean = require('./lib/actions/clean');
 const sync = require('./lib/actions/sync');
+const plan = require('./lib/actions/plan');
 const version = require('./lib/version');
 
 
@@ -25,6 +26,12 @@ program
   .description('Removes all the resources.')
   .option('-c, --config [path]', 'Path to config file.', './config/main.json')
   .action(clean.do);
+
+program
+  .command('plan')
+  .description('Shows changes in the infrastructure layer that would be performed by sync.')
+  .option('-c, --config [path]', 'Path to config file.', './config/main.json')
+  .action(plan.do);
 
 
 program.allowUnknownOption(false);
