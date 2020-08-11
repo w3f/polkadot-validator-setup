@@ -54,7 +54,7 @@ validators.
 You can easily create and add them to your ssh-agent as follows:
 
 ```bash
-$ ssh-keygen -f <path>
+$ ssh-keygen -m PEM -f <path>
 $ ssh-add <path>
 ```
 
