@@ -1,6 +1,6 @@
 {
   "name": "polkadot-secure-validator",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "src/index.js",
   "repository": "https://github.com/w3f/polkadot-secure-validator",
   "author": "W3F Infrastructure Team <devops@web3.foundation>",
@@ -9,6 +9,7 @@
     "test": "mocha --reporter spec --recursive",
     "sync": "node . sync",
     "clean": "node . clean",
+    "plan": "node . plan",
     "lint": "eslint .",
     "pretest": "yarn lint"
   },
