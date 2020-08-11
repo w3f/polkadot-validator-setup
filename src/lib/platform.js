@@ -18,7 +18,7 @@ class Platform {
     return { validatorIpAddresses, publicNodesIpAddresses };
   }
 
-  async platform() {
+  async plan() {
     return this.tf.sync('plan');
   }
 
