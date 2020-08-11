@@ -1,8 +1,8 @@
 {
   "project": "w3f",
   "polkadotBinary": {
-    "url": "https://github.com/w3f/polkadot/releases/download/v0.7.29/polkadot",
-    "checksum": "sha256:e229f984c89e2d40a1786ea634d3eae167c30bb0a5b742cfd800a067a4ed146d"
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.8.22/polkadot",
+    "checksum": "sha256:7bfe10a0e46385dfb488dcc05ecffbb3075dcbd1d469e44b67a0f5d870185a05"
   },
   "nodeExporter": {
     "enabled": true,
