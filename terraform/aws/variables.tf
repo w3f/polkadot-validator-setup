@@ -35,5 +35,5 @@ variable "name" {
 }
 
 variable "image" {
-  default = "bionic-18.04"
+  default = "ami-0e6273fe5a9a1ad93"
 }
