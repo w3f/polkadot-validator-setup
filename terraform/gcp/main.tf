@@ -38,7 +38,7 @@ resource "google_compute_firewall" "node-exporter-{{ name }}" {
 }
 
 resource "google_compute_instance" "main-{{ name }}" {
-  name         = "${var.name}-${count.index}"
+  name         = "{{name}}"
   machine_type = var.machine_type
   zone         = var.zone
   tags         = ["{{ name }}"]

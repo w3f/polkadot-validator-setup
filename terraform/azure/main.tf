@@ -46,7 +46,7 @@ resource "azurerm_public_ip" "main-{{ name }}" {
 }
 
 resource "azurerm_virtual_machine" "main-{{ name }}" {
-  name                  = "${var.name}-${count.index}"
+  name                  = "{{name}}"
   location              = "${azurerm_resource_group.main-{{ name }}.location}"
   resource_group_name   = "${azurerm_resource_group.main-{{ name }}.name}"
   network_interface_ids = ["${azurerm_network_interface.main-{{ name }}[count.index].id}"]
