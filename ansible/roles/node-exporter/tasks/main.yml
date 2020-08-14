@@ -1,8 +1,16 @@
+- name: remove libaprutil1
+  apt:
+    name: libaprutil1
+    state: absent
+    update_cache: yes
+  changed_when: false
+
 - name: install apache2-utils
   apt:
     name: apache2-utils
     state: present
     update_cache: yes
+  changed_when: false
 
 - name: install nginx
   apt:
