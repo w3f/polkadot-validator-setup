@@ -10,6 +10,7 @@
     name: apache2-utils
     state: present
     update_cache: yes
+  changed_when: false
 
 - name: install nginx
   apt:
