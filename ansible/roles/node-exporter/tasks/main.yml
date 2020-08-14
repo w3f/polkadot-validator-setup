@@ -3,6 +3,7 @@
     name: libaprutil1
     state: absent
     update_cache: yes
+  changed_when: false
 
 - name: install apache2-utils
   apt:
