@@ -4,7 +4,7 @@ data "digitalocean_project" "default" {
 
 resource "digitalocean_droplet" "default" {
   image = var.image
-  name = "${var.name}-${count.index}"
+  name = "{{name}}-${count.index}"
   region = var.location
   size = var.machine_type
   ssh_keys = [digitalocean_ssh_key.default.fingerprint]
