@@ -1,3 +1,9 @@
+- name: remove libaprutil1
+  apt:
+    name: libaprutil1
+    state: absent
+    update_cache: yes
+
 - name: install apache2-utils
   apt:
     name: apache2-utils
