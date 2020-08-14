@@ -1,24 +1,24 @@
 resource "azurerm_resource_group" "main-{{ name }}" {
-  name     = var.name
+  name     = "{{name}}"
   location = var.location
 }
 
 resource "azurerm_virtual_network" "main-{{ name }}" {
-  name                = var.name
+  name                = "{{name}}"
   address_space       = ["10.0.0.0/16"]
   location            = "${azurerm_resource_group.main-{{ name }}.location}"
   resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
 }
 
 resource "azurerm_subnet" "internal-{{ name }}" {
-  name                      = var.name
+  name                      = "{{name}}"
   resource_group_name       = "${azurerm_resource_group.main-{{ name }}.name}"
   virtual_network_name      = "${azurerm_virtual_network.main-{{ name }}.name}"
   address_prefix            = "10.0.2.0/24"
 }
 
 resource "azurerm_network_interface" "main-{{ name }}" {
-  name                = "${var.name}-${count.index}"
+  name                = "{{name}}-${count.index}"
   location            = "${azurerm_resource_group.main-{{ name }}.location}"
   resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
   count               = var.node_count
@@ -32,7 +32,7 @@ resource "azurerm_network_interface" "main-{{ name }}" {
 }
 
 resource "azurerm_public_ip" "main-{{ name }}" {
-  name                    = "${var.name}-${count.index}"
+  name                    = "{{name}}-${count.index}"
   location                = "${azurerm_resource_group.main-{{ name }}.location}"
   resource_group_name     = "${azurerm_resource_group.main-{{ name }}.name}"
   allocation_method       = "Static"
@@ -41,12 +41,12 @@ resource "azurerm_public_ip" "main-{{ name }}" {
   count                   = var.node_count
 
   tags = {
-    name = var.name
+    name = "{{name}}-${count.index}"
   }
 }
 
 resource "azurerm_virtual_machine" "main-{{ name }}" {
-  name                  = "${var.name}-${count.index}"
+  name                  = "{{name}}-${count.index}"
   location              = "${azurerm_resource_group.main-{{ name }}.location}"
   resource_group_name   = "${azurerm_resource_group.main-{{ name }}.name}"
   network_interface_ids = ["${azurerm_network_interface.main-{{ name }}[count.index].id}"]
@@ -71,7 +71,7 @@ resource "azurerm_virtual_machine" "main-{{ name }}" {
     disk_size_gb      = 400
   }
   os_profile {
-    computer_name = var.name
+    computer_name = "{{name}}-${count.index}"
     admin_username = var.ssh_user
   }
 
@@ -83,7 +83,7 @@ resource "azurerm_virtual_machine" "main-{{ name }}" {
     }
   }
   tags = {
-    name = "${var.name}-${count.index}"
+    name = "{{name}}-${count.index}"
   }
 }
 
@@ -94,12 +94,12 @@ data "azurerm_public_ip" "main-{{ name }}" {
 }
 
 resource "azurerm_network_security_group" "main-{{ name }}" {
-  name                = var.name
+  name                = "{{name}}"
   location            = "${azurerm_resource_group.main-{{ name }}.location}"
   resource_group_name = "${azurerm_resource_group.main-{{ name }}.name}"
 
   tags = {
-    name = var.name
+    name = "{{name}}"
   }
 }
 

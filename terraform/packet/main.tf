@@ -4,7 +4,7 @@
 #}
 
 resource "packet_device" "validator-{{ name }}" {
-  hostname         = "${var.name}-${count.index}"
+  hostname         = "{{name}}-${count.index}"
   plan             = var.machine_type
   facilities       = [var.location]
   operating_system = var.image
