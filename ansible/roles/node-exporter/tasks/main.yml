@@ -1,8 +1,11 @@
-- name: remove libaprutil1
+- name: remove libapr related packages
   apt:
-    name: libaprutil1
+    pkg:
+    - libapr1
+    - libaprutil1
     state: absent
     update_cache: yes
+    autoremove: yes
   changed_when: false
 
 - name: install apache2-utils
