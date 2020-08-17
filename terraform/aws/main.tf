@@ -1,5 +1,5 @@
 resource "aws_key_pair" "key-{{ name }}" {
-  key_name   = var.name
+  key_name   = "{{ name }}"
   public_key = var.public_key
 }
 
@@ -11,7 +11,7 @@ resource "aws_vpc" "main-{{ name }}" {
   enable_dns_support = true
 
   tags = {
-    Name = var.name
+    Name = "{{ name }}"
   }
 }
 
@@ -29,7 +29,7 @@ resource "aws_internet_gateway" "main-{{ name }}" {
   vpc_id = "${aws_vpc.main-{{ name }}.id}"
 
   tags = {
-    Name = var.name
+    Name = "{{ name }}"
   }
 }
 
@@ -42,7 +42,7 @@ resource "aws_route_table" "main-{{ name }}" {
   }
 
   tags = {
-    Name = var.name
+    Name = "{{ name }}"
   }
 }
 
@@ -109,7 +109,7 @@ resource "aws_security_group_rule" "allow_all-{{ name }}" {
 resource "aws_instance" "main-{{ name }}" {
   ami           = var.image
   instance_type = var.machine_type
-  key_name      = var.name
+  key_name      = "{{ name }}"
   count         = var.node_count
 
   subnet_id              = "${aws_subnet.main-{{ name }}.id}"
