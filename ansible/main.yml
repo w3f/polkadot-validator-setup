@@ -6,31 +6,18 @@
   - name: Wait for nodes to become reachable
     wait_for_connection:
 
-- name: node-exporter, vpnpeer-setup and polkadot-common
+- name: node-exporter
   hosts: all
   become: yes
   strategy: free
   roles:
   - { role: node-exporter, when: node_exporter_enabled|bool }
-  - vpnpeer-setup
-  - polkadot-common
-
-- name: vpnpeer and common
-  hosts: all
-  become: yes
-  roles:
-  - vpnpeer
-  - common
-
-- name: public node setup
-  hosts: public
-  become: yes
-  roles:
-  - polkadot-public
 
 - name: validator and session info
   hosts: validator
   become: yes
   roles:
+  - common
+  - polkadot-common
   - polkadot-validator
   - polkadot-validator-session-info
