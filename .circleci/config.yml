@@ -24,39 +24,9 @@ jobs:
           command: |
             yarn test
 
-  commonIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/roles/common
-    <<: *ansibleIntegrationTest
-
-  polkadotCommonIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/roles/polkadot-common
-    <<: *ansibleIntegrationTest
-
-  polkadotPublicIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/roles/polkadot-public
-    <<: *ansibleIntegrationTest
-
   polkadotValidatorIntegrationTest:
     environment:
       ROLE_PATH: ansible/roles/polkadot-validator
-    <<: *ansibleIntegrationTest
-
-  vpnpeerIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/roles/vpnpeer
-    <<: *ansibleIntegrationTest
-
-  vpnpeerSetupIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/roles/vpnpeer-setup
-    <<: *ansibleIntegrationTest
-
-  polkadotValidatorSessionInfoIntegrationTest:
-    environment:
-      ROLE_PATH: ansible/roles/polkadot-validator-session-info
     <<: *ansibleIntegrationTest
 
   nodeExporterIntegrationTest:
@@ -96,43 +66,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - commonIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - unitTests
-      - polkadotCommonIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - unitTests
-      - polkadotPublicIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - unitTests
       - polkadotValidatorIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - unitTests
-      - polkadotValidatorSessionInfoIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - unitTests
-      - vpnpeerIntegrationTest:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - unitTests
-      - vpnpeerSetupIntegrationTest:
           filters:
             tags:
               only: /.*/
@@ -151,13 +85,7 @@ workflows:
             branches:
               ignore: /.*/
           requires:
-            - commonIntegrationTest
-            - polkadotCommonIntegrationTest
-            - polkadotPublicIntegrationTest
             - polkadotValidatorIntegrationTest
-            - polkadotValidatorSessionInfoIntegrationTest
-            - vpnpeerIntegrationTest
-            - vpnpeerSetupIntegrationTest
             - nodeExporterIntegrationTest
       - publishPackage:
           filters:
