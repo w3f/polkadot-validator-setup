@@ -1,0 +1,29 @@
+- name: install nginx package
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: create nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: create proxy service file
+  template:
+    src: proxy.conf.j2
+    dest: /etc/nginx/conf.d/polkadot-proxy.conf
+    mode: 0600
+
+- name: restart nginx service
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false
+
+- name: register public ip
+  uri:
+    url: https://ifconfig.me
+  register: public_ip
