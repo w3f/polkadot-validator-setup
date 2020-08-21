@@ -6,18 +6,15 @@
   - name: Wait for nodes to become reachable
     wait_for_connection:
 
+- name: validator
+  hosts: validator
+  become: yes
+  roles:
+  - polkadot-validator
+
 - name: node-exporter
   hosts: all
   become: yes
   strategy: free
   roles:
   - { role: node-exporter, when: node_exporter_enabled|bool }
-
-- name: validator and session info
-  hosts: validator
-  become: yes
-  roles:
-  - common
-  - polkadot-common
-  - polkadot-validator
-  - polkadot-validator-session-info
