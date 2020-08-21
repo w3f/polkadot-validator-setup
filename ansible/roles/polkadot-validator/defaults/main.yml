@@ -1,4 +1,6 @@
 ---
 # defaults file for polkadot-validator
+proxy_port: 80
+p2p_port: 30333
 chain: "kusama"
 polkadot_network_id: "ksmcc3"
