@@ -10,26 +10,16 @@ lint: |
   flake8
 platforms:
   - name: polkadot-validator-validator-node
-    image: ubuntu:bionic
+    image: ubuntu:focal
     groups:
       - validator
-  - name: polkadot-validator-public-node
-    image: ubuntu:bionic
-    groups:
-      - public
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
   inventory:
-
     host_vars:
       polkadot-validator-validator-node:
-        vpnpeer_address: 10.0.0.1
-        polkadot_network_id: ksmcc3
-      polkadot-validator-public-node:
-        vpnpeer_address: 10.0.0.2
-        p2p_peer_id: peerid
         polkadot_network_id: ksmcc3
 verifier:
   name: testinfra
