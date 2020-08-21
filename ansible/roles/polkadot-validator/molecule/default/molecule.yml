@@ -10,7 +10,7 @@ lint: |
   flake8
 platforms:
   - name: polkadot-validator-validator-node
-    image: ubuntu:focal
+    image: ubuntu:bionic
     groups:
       - validator
 provisioner:
