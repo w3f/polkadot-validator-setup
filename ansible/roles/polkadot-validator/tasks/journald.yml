@@ -1,3 +1,4 @@
+---
 - name: copy journald config
   copy:
     src: journald.conf

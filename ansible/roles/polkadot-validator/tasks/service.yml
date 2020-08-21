@@ -1,3 +1,4 @@
+---
 - name: download polkadot binary
   get_url:
     url: '{{ polkadot_binary_url | quote }}'
