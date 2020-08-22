@@ -23,8 +23,3 @@
     daemon_reload: yes
     enabled: yes
   changed_when: false
-
-- name: register public ip
-  uri:
-    url: https://ifconfig.me
-  register: public_ip
