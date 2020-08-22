@@ -21,8 +21,7 @@
 
 - name: register public ip
   uri:
-    url: https://ifconfig.me
-    return_content: yes
+    url: https://api.ipify.org?format=json
   register: public_ip
 
 - name: create polkadot service file
