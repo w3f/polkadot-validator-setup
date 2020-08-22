@@ -7,7 +7,6 @@ Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
   --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
   --validator \
-  --port {{ p2p_port }} \
   --public-addr /ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
   --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
   --rpc-methods=Unsafe \
