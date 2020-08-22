@@ -19,6 +19,12 @@
     job: "/bin/systemctl restart polkadot.service"
   when: "polkadot_restart_enabled|default(false)|bool"
 
+- name: register public ip
+  uri:
+    url: https://ifconfig.me
+    return_content: yes
+  register: public_ip
+
 - name: create polkadot service file
   template:
     src: polkadot.service.j2
