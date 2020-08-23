@@ -28,19 +28,5 @@
         "image": "2004"
       }
     ]
-  },
-  "publicNodes": {
-    "nodes": [
-      {
-        "provider": "gcp",
-        "machineType": "n1-standard-1",
-        "count": 2,
-        "location": "us-east1",
-        "zone": "us-east1-b",
-        "projectId": "development-252112",
-        "sshUser": "w3fadmin",
-        "image": "2004"
-      }
-    ]
   }
 }
