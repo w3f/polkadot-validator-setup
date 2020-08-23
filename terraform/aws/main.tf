@@ -76,6 +76,16 @@ resource "aws_security_group_rule" "p2p-{{ name }}" {
   security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
+resource "aws_security_group_rule" "p2p-proxy-{{ name }}" {
+  type            = "ingress"
+  from_port       = 80
+  to_port         = 80
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
+}
+
 resource "aws_security_group_rule" "vpn-{{ name }}" {
   type            = "ingress"
   from_port       = 51820
