@@ -39,8 +39,23 @@ class Ansible {
     const project = new Project(this.config);
     const buildDir = path.join(project.path(), 'ansible');
     const target = path.join(buildDir, inventoryFileName);
+
     const validators = this._genTplNodes(this.config.validators);
-    const publicNodes = this._genTplNodes(this.config.publicNodes, validators.length);
+    const validatorTelemetryUrl = this.config.validators.telemetryUrl;
+    const validatorLoggingFilter = this.config.validators.loggingFilter;
+    const polkadotAdditionalValidatorFlags = this.config.validators.additionalFlags;
+
+    let publicNodes = [];
+    let publicTelemetryUrl = '';
+    let publicLoggingFilter='';
+    let polkadotAdditionalPublicFlags = '';
+    if (this.config.publicNodes) {
+      publicNodes = this._genTplNodes(this.config.publicNodes, validators.length);
+      publicTelemetryUrl = this.config.publicNodes.telemetryUrl;
+      publicLoggingFilter = this.config.publicNodes.loggingFilter;
+      polkadotAdditionalPublicFlags = this.config.publicNodes.additionalFlags;
+    }
+
     const data = {
       project: this.config.project,
 
@@ -52,17 +67,17 @@ class Ansible {
       validators,
       publicNodes,
 
-      validatorTelemetryUrl: this.config.validators.telemetryUrl,
-      publicTelemetryUrl: this.config.publicNodes.telemetryUrl,
+      validatorTelemetryUrl,
+      publicTelemetryUrl,
 
-      validatorLoggingFilter: this.config.validators.loggingFilter,
-      publicLoggingFilter: this.config.publicNodes.loggingFilter,
+      validatorLoggingFilter,
+      publicLoggingFilter,
 
       buildDir,
 
       polkadotAdditionalCommonFlags: this.config.additionalFlags,
-      polkadotAdditionalValidatorFlags: this.config.validators.additionalFlags,
-      polkadotAdditionalPublicFlags: this.config.publicNodes.additionalFlags,
+      polkadotAdditionalValidatorFlags,
+      polkadotAdditionalPublicFlags,
     };
     if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
       data.nodeExporterEnabled = true;
