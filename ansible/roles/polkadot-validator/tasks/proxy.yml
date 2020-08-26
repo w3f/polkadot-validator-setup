@@ -10,10 +10,15 @@
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
 
+- name: create streams dir
+  file:
+    path: /etc/nginx/streams-enabled
+    state: directory
+
 - name: create proxy service file
   template:
     src: proxy.conf.j2
-    dest: /etc/nginx/conf.d/polkadot-proxy.conf
+    dest: /etc/nginx/streams-enabled/polkadot-proxy.conf
     mode: 0600
 
 - name: restart nginx service
