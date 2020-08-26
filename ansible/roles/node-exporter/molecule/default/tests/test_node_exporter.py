@@ -19,7 +19,7 @@ def test_htpasswd(host):
 
 
 def test_nginx_config(host):
-    cfg = host.file("/etc/nginx/nginx.conf")
+    cfg = host.file("/etc/nginx/sites-enabled/node-exporter.conf")
     assert cfg.exists
     assert cfg.user == 'root'
     assert cfg.group == 'root'
