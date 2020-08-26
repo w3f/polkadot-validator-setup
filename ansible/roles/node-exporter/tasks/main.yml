@@ -33,7 +33,7 @@
 - name: create nginx config
   copy:
     src: nginx.conf
-    dest: /etc/nginx/conf.d/node-exporter.conf
+    dest: /etc/nginx/sites-enabled/node-exporter.conf
 
 - name: restart nginx service
   systemd:
