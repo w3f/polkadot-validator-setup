@@ -13,7 +13,7 @@ def test_polkadot_binary(host):
     assert binary.exists
     assert binary.user == 'polkadot'
     assert binary.group == 'polkadot'
-    assert binary.mode == 0o700
+    assert binary.mode == 0o755
 
 
 def test_polkadot_service_file(host):
