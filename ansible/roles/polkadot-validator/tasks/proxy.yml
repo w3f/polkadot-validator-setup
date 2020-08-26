@@ -15,6 +15,11 @@
     path: /etc/nginx/streams-enabled
     state: directory
 
+- name: remove nginx default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
 - name: create proxy service file
   template:
     src: proxy.conf.j2
