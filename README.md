@@ -67,3 +67,14 @@ enabled, node-exporter ports.
 * Setup polkadot service, including binary download.
 * Polkadot session management, create session keys if they are not present.
 * Setup node-exporter if the configuration includes it.
+
+# Note about upgrades from the sentries setup
+
+The current version of polkadot-secure-validator doesn't allow to create and configure
+sentry nodes. However, the terraform files and ansible roles of this latest version
+can be applied on setups created with previous versions, the validators would be configured
+to work without sentries and to connect to the network using the local reverse proxy instead.
+
+If you created the sentries with this tool through terraform using the complete workflow
+then the sentries will not be deleted if you run the tool with the new version, but the
+validators will no longer use them. It's up to you to remove the old sentries manually.
