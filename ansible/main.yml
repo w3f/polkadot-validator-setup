@@ -13,7 +13,7 @@
   - polkadot-validator
 
 - name: node-exporter
-  hosts: all
+  hosts: validator
   become: yes
   strategy: free
   roles:
