@@ -31,7 +31,7 @@ There are two ways of using this repository:
 ## Structure
 
 The secure validator setup is composed of one or more validators that run a local
-instance of NginX as a reverse TCP proxy. The validators are instructed to:
+instance of NGINX as a reverse TCP proxy. The validators are instructed to:
 * advertise themselves with the public IP of the node and the port where the
 reverse proxy is listening.
 * bind to the localhost interface, so that they only allow connections from the
@@ -63,6 +63,7 @@ This is done through the ansible playbook and polkadot-validator role located at
 enabled, node-exporter ports.
 * Configure journald to tune log storage.
 * Create polkadot user and group.
-* Configure NginX proxy
+* Configure NGINX proxy
 * Setup polkadot service, including binary download.
 * Polkadot session management, create session keys if they are not present.
+* Setup node-exporter if the configuration includes it.
