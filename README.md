@@ -47,7 +47,7 @@ and the applications that run on top of it.
 
 ### Platform Layer
 
-Validatorsare created using the terraform modules located at [terraform](/terraform)
+Validators are created using the terraform modules located at [terraform](/terraform)
 directory. We have created code for several providers but it is possible to add new
 ones, please reach out if you are interested in any provider currently not available.
 
@@ -57,7 +57,7 @@ infrastructure for adding firewall rules to protect the nodes.
 ### Application Layer
 
 This is done through the ansible playbook and polkadot-validator role located at
-[ansible](/ansible), basically the role performs this actions:
+[ansible](/ansible), basically the role performs these actions:
 
 * Software firewall setup, for the validator we only allow the proxy, SSH and, if
 enabled, node-exporter ports.
@@ -71,10 +71,11 @@ enabled, node-exporter ports.
 # Note about upgrades from the sentries setup
 
 The current version of polkadot-secure-validator doesn't allow to create and configure
-sentry nodes. However, the terraform files and ansible roles of this latest version
+sentry nodes. Although the terraform files and ansible roles of this latest version
 can be applied on setups created with previous versions, the validators would be configured
 to work without sentries and to connect to the network using the local reverse proxy instead.
 
-If you created the sentries with this tool through terraform using the complete workflow
-then the sentries will not be deleted if you run the tool with the new version, but the
-validators will no longer use them. It's up to you to remove the old sentries manually.
+If you created the sentries with a previous version of this tool through terraform following
+the complete workflow, then they will not be deleted automatically when running this new version.
+In short, the old sentries will no longer be used by the validators and it will be up to you to
+remove them manually.
