@@ -3,7 +3,7 @@
 # Polkadot Secure Validator Setup
 
 This repo describes a potential setup for a Polkadot validator that aims to
-prevent some types of potential attacks at the TCP layer.
+prevent some types of potential attacks at the TCP layer and below.
 The [Workflow](#workflow) section describes the [Platform Layer](#platform-layer)
 and the [Application Layer](#application-layer) in more detail.
 
