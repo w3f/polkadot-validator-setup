@@ -34,7 +34,7 @@ The secure validator setup is composed of one or more validators that run a loca
 instance of NGINX as a reverse TCP proxy. The validators are instructed to:
 * advertise themselves with the public IP of the node and the port where the
 reverse proxy is listening.
-* bind to the localhost interface, so that they only allow connections from the
+* bind to the localhost interface, so that they only allow incoming connections from the
 proxy.
 
 The setup also configures a firewall in which the default p2p ports are closed for
