@@ -30,8 +30,8 @@ There are two ways of using this repository:
 
 ## Structure
 
-The secure validator setup is composed of one or more validators that run a local
-instance of NGINX as a reverse TCP proxy. The validators are instructed to:
+The secure validator setup is composed of one or more validators that run with a local
+instance of NGINX as a reverse TCP proxy in front of them. The validators are instructed to:
 * advertise themselves with the public IP of the node and the port where the
 reverse proxy is listening.
 * bind to the localhost interface, so that they only allow incoming connections from the
