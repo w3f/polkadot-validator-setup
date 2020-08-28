@@ -3,7 +3,7 @@
 # Polkadot Secure Validator Setup
 
 This repo describes a potential setup for a Polkadot validator that aims to
-prevent some types of potential attacks at the TCP layer.
+prevent some types of potential attacks at the TCP layer and below.
 The [Workflow](#workflow) section describes the [Platform Layer](#platform-layer)
 and the [Application Layer](#application-layer) in more detail.
 
@@ -30,14 +30,14 @@ There are two ways of using this repository:
 
 ## Structure
 
-The secure validator setup is composed of one or more validators that run a local
-instance of NGINX as a reverse TCP proxy. The validators are instructed to:
+The secure validator setup is composed of one or more validators that run with a local
+instance of NGINX as a reverse TCP proxy in front of them. The validators are instructed to:
 * advertise themselves with the public IP of the node and the port where the
 reverse proxy is listening.
-* bind to the localhost interface, so that they only allow connections from the
+* bind to the localhost interface, so that they only allow incoming connections from the
 proxy.
 
-The setup also configures a firewall in which the default p2p ports are closed for
+The setup also configures a firewall in which the default p2p port is closed for
 incoming connections and only the proxy port is open.
 
 ## Workflow
