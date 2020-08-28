@@ -37,7 +37,7 @@ reverse proxy is listening.
 * bind to the localhost interface, so that they only allow incoming connections from the
 proxy.
 
-The setup also configures a firewall in which the default p2p ports are closed for
+The setup also configures a firewall in which the default p2p port is closed for
 incoming connections and only the proxy port is open.
 
 ## Workflow
