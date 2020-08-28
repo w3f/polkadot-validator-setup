@@ -18,6 +18,7 @@ RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
   test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl && \
   rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
 
+# mock several system binaries in the docker test image to allow the role converge
 RUN echo "#!/bin/sh\nsleep 1" > /bin/modprobe && \
   chmod a+x /bin/modprobe && \
   rm -f /sbin/sysctl && \
