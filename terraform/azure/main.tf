@@ -145,6 +145,20 @@ resource "azurerm_network_security_rule" "p2pIn-{{ name }}" {
   network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
 }
 
+resource "azurerm_network_security_rule" "p2pIn-proxy-{{ name }}" {
+  name                        = "p2pIn-proxy"
+  priority                    = 101
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.main-{{ name }}.name}"
+  network_security_group_name = "${azurerm_network_security_group.main-{{ name }}.name}"
+}
+
 resource "azurerm_network_security_rule" "vpnIn-{{ name }}" {
   name                        = "vpnIn"
   priority                    = 102

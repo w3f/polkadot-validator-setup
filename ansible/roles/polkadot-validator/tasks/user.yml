@@ -1,0 +1,11 @@
+---
+- name: create polkadot group
+  group:
+    name: polkadot
+    state: present
+
+- name: add polkadot user
+  user:
+    name: polkadot
+    group: polkadot
+    append: yes

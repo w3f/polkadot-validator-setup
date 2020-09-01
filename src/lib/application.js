@@ -9,8 +9,10 @@ class Application {
       ansibleCfg.validators.nodes[counter].ipAddresses = platformResult.validatorIpAddresses[counter];
     }
 
-    for (let counter = 0; counter < ansibleCfg.publicNodes.nodes.length; counter++) {
-      ansibleCfg.publicNodes.nodes[counter].ipAddresses = platformResult.publicNodesIpAddresses[counter];
+    if(ansibleCfg.publicNodes) {
+      for (let counter = 0; counter < ansibleCfg.publicNodes.nodes.length; counter++) {
+        ansibleCfg.publicNodes.nodes[counter].ipAddresses = platformResult.publicNodesIpAddresses[counter];
+      }
     }
 
     this.ansible = new Ansible(ansibleCfg);

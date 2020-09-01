@@ -1,3 +1,8 @@
+- name: check if .htpasswd file already exists
+  stat:
+    path: /etc/nginx/.htpasswd
+  register: htpasswd_file
+
 - name: remove libapr related packages
   apt:
     pkg:
@@ -6,25 +11,14 @@
     state: absent
     update_cache: yes
     autoremove: yes
-  changed_when: false
+  when: not htpasswd_file.stat.exists
 
 - name: install apache2-utils
   apt:
     name: apache2-utils
     state: present
     update_cache: yes
-  changed_when: false
-
-- name: install nginx
-  apt:
-    name: nginx
-    state: present
-    update_cache: yes
-
-- name: check if .htpasswd file already exists
-  stat:
-    path: /etc/nginx/.htpasswd
-  register: htpasswd_file
+  when: not htpasswd_file.stat.exists
 
 - name: generate .htpasswd file
   shell: |
@@ -39,9 +33,9 @@
 - name: create nginx config
   copy:
     src: nginx.conf
-    dest: /etc/nginx/nginx.conf
+    dest: /etc/nginx/sites-enabled/node-exporter.conf
 
-- name: start nginx service
+- name: restart nginx service
   systemd:
     name: nginx
     state: restarted

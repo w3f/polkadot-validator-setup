@@ -13,8 +13,10 @@ class Platform {
     await this.tf.sync('apply');
 
     const validatorIpAddresses = await this._extractOutput('validator', this.config.validators.nodes);
-    const publicNodesIpAddresses = await this._extractOutput('publicNode', this.config.publicNodes.nodes);
-
+    let publicNodesIpAddresses = [];
+    if(this.config.publicNodes){
+      publicNodesIpAddresses = await this._extractOutput('publicNode', this.config.publicNodes.nodes);
+    }
     return { validatorIpAddresses, publicNodesIpAddresses };
   }
 

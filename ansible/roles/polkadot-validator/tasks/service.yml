@@ -1,0 +1,49 @@
+---
+- name: download polkadot binary
+  get_url:
+    url: '{{ polkadot_binary_url | quote }}'
+    checksum: '{{ polkadot_binary_checksum | quote }}'
+    dest: /usr/local/bin/polkadot-new
+    mode: '0700'
+    owner: 'polkadot'
+    group: 'polkadot'
+
+- name: cronjob for restarting polkadot service
+  cron:
+    name: "restart polkadot"
+    minute: "{{ polkadot_restart_minute }}"
+    hour: "{{ polkadot_restart_hour }}"
+    day: "{{ polkadot_restart_day }}"
+    month: "{{ polkadot_restart_month }}"
+    weekday: "{{ polkadot_restart_weekday }}"
+    job: "/bin/systemctl restart polkadot.service"
+  when: "polkadot_restart_enabled|default(false)|bool"
+
+- name: register public ip
+  uri:
+    url: https://api.ipify.org?format=json
+  register: public_ip
+
+- name: create polkadot service file
+  template:
+    src: polkadot.service.j2
+    dest: /etc/systemd/system/polkadot.service
+    owner: root
+    group: root
+    mode: 0600
+
+- name: restart polkadot service
+  shell: |
+    set -o pipefail
+    systemctl stop polkadot.service || true
+
+    if [ -f /usr/local/bin/polkadot-new ]; then
+      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
+      chown polkadot:polkadot /usr/local/bin/polkadot
+      chmod a+x /usr/local/bin/polkadot
+    fi
+    systemctl daemon-reload
+    systemctl enable --now polkadot.service
+  args:
+    executable: /bin/bash
+  changed_when: False

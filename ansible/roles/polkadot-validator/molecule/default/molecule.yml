@@ -13,24 +13,16 @@ platforms:
     image: ubuntu:bionic
     groups:
       - validator
-  - name: polkadot-validator-public-node
-    image: ubuntu:bionic
-    groups:
-      - public
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
   inventory:
-
     host_vars:
       polkadot-validator-validator-node:
-        vpnpeer_address: 10.0.0.1
         polkadot_network_id: ksmcc3
-      polkadot-validator-public-node:
-        vpnpeer_address: 10.0.0.2
-        p2p_peer_id: peerid
-        polkadot_network_id: ksmcc3
+        polkadot_binary_url: 'https://github.com/w3f/polkadot/releases/download/v0.8.22/polkadot'
+        polkadot_binary_checksum: 'sha256:7bfe10a0e46385dfb488dcc05ecffbb3075dcbd1d469e44b67a0f5d870185a05'
 verifier:
   name: testinfra
   lint:

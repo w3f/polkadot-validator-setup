@@ -38,10 +38,12 @@ class Terraform {
     }
 
     let publicNodeSyncPromises = [];
-    try {
-      publicNodeSyncPromises = await this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes, method);
-    } catch(e) {
-      console.log(`Could not get publicNodes sync promises: ${e.message}`);
+    if(this.config.publicNodes){
+      try {
+        publicNodeSyncPromises = await this._create('publicNode', sshKeys.publicNodePublicKey, this.config.publicNodes.nodes, method);
+      } catch(e) {
+        console.log(`Could not get publicNodes sync promises: ${e.message}`);
+      }
     }
     const syncPromises = validatorSyncPromises.concat(publicNodeSyncPromises)
 
@@ -57,13 +59,14 @@ class Terraform {
       console.log(`Could not get validator clean promises: ${e.message}`);
     }
 
-    let publicNodesCleanPromises = []
-    try {
-      publicNodesCleanPromises = await this._destroy('publicNode', this.config.publicNodes.nodes);
-    } catch(e) {
-      console.log(`Could not get publicNodes clean promises: ${e.message}`);
+    let publicNodesCleanPromises = [];
+    if(this.config.publicNodes){
+      try {
+        publicNodesCleanPromises = await this._destroy('publicNode', this.config.publicNodes.nodes);
+      } catch(e) {
+        console.log(`Could not get publicNodes clean promises: ${e.message}`);
+      }
     }
-
     const cleanPromises = validatorCleanPromises.concat(publicNodesCleanPromises);
 
     return Promise.all(cleanPromises);
@@ -166,8 +169,10 @@ class Terraform {
       this._copyTerraformFiles('validator', counter, this.config.validators.nodes[counter].provider);
     }
 
-    for (let counter = 0; counter < this.config.publicNodes.nodes.length; counter++) {
-      this._copyTerraformFiles('publicNode', counter, this.config.publicNodes.nodes[counter].provider);
+    if (this.config.publicNodes){
+      for (let counter = 0; counter < this.config.publicNodes.nodes.length; counter++) {
+        this._copyTerraformFiles('publicNode', counter, this.config.publicNodes.nodes[counter].provider);
+      }
     }
   }
 

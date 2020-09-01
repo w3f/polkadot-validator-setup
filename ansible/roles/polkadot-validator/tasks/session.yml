@@ -1,0 +1,36 @@
+---
+- name: check if keys already exist
+  shell: |
+    set -o pipefail
+    if [ -d /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore ]; then
+      ls /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/keystore -1U | wc -l
+    else
+      mkdir -p /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/
+      chown -R polkadot:polkadot /home/polkadot/.local/share/polkadot
+      echo 0
+    fi
+  args:
+    executable: /bin/bash
+  register: keystore_files
+  changed_when: False
+
+- name: initialize server keys
+  uri:
+    url: http://localhost:9933
+    method: "POST"
+    body_format: json
+    body: |
+      { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
+  when: keystore_files.stdout == "0"
+  register: rotate_keys
+
+- name: show rotateKeys output
+  debug:
+    var: rotate_keys
+  when: keystore_files.stdout == "0"
+
+- name: save rotateKeys output
+  copy:
+    content: "{{ rotate_keys.json }}"
+    dest: /home/polkadot/rotate_keys.log
+  when: keystore_files.stdout == "0"

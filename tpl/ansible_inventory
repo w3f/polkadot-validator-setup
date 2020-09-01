@@ -4,8 +4,6 @@
 
 [validator-{{@index}}:vars]
 ansible_user={{ this.sshUser }}
-vpnpeer_address={{ this.vpnAddress }}
-vpnpeer_cidr_suffix=24
 telemetryUrl={{ ../validatorTelemetryUrl }}
 loggingFilter='{{{ ../validatorLoggingFilter }}}'
 
@@ -16,24 +14,6 @@ loggingFilter='{{{ ../validatorLoggingFilter }}}'
 validator-{{@index}}
 {{/each}}
 
-
-{{#each publicNodes }}
-[public-{{@index}}]
-{{ this.ipAddress }}
-
-[public-{{@index}}:vars]
-ansible_user={{ this.sshUser }}
-vpnpeer_address={{ this.vpnAddress }}
-vpnpeer_cidr_suffix=24
-telemetryUrl={{ ../publicTelemetryUrl }}
-loggingFilter='{{{ ../publicLoggingFilter }}}'
-
-{{/each}}
-
-[public:children]
-{{#each publicNodes }}
-public-{{@index}}
-{{/each}}
 
 [all:vars]
 project={{ project }}

@@ -1,0 +1,13 @@
+---
+babe:
+  address: '5GeJbrGHZRnAWUzNR19UqtSkusSWf4VKzQW2nBcfuW1zJaSC'
+  public_key: '0xca90fe1aa661510c1d8d805cc8051a5fdc29f119913ace7d6b32d2b01198fc59'
+gran:
+  address: '5CH1MpYjcu7WoviS18P52kRD4XK5T7YXYVmWydhVoTornPJ5'
+  public_key: '0x0961dd29a35d9c520482c0f1c2693ecdacc94674a15bc9911431aa8361bcd583'
+imon:
+  address: '5HN1Ua1gMVX2D9mu7vMivg4FDKun5cHECqCh7EvfGNt1bAdk'
+  public_key: '0xea5fa6622c63f8cc140d3c7dcdca6ab6559d2f497198d384e04db97ced60bd44'
+para:
+  address: '5Gj5pmY7H8x68yLVKXfmsz8pVXxExaWhqUdTvVdoY5b3ZJ3M'
+  public_key: '0xce36351eb9bc59eecc4d84d240c62661a0f27a0cf24cdd12b5710736d1942930'
