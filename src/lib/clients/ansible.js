@@ -31,7 +31,7 @@ class Ansible {
 
   async updateBinary() {
     const inventoryPath = this._writeInventory();
-    return this._cmd(`main-update-binary.yml -f 30 -i "${inventoryPath}"`);
+    return this._cmd(`main_update_binary.yml -f 30 -i "${inventoryPath}"`);
   }
 
   async _cmd(command, options = {}) {

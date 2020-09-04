@@ -21,8 +21,8 @@ provisioner:
     host_vars:
       polkadot-validator-validator-node:
         polkadot_network_id: ksmcc3
-        polkadot_binary_url: 'https://github.com/w3f/polkadot/releases/download/v0.8.22/polkadot'
-        polkadot_binary_checksum: 'sha256:7bfe10a0e46385dfb488dcc05ecffbb3075dcbd1d469e44b67a0f5d870185a05'
+        polkadot_binary_url: 'https://github.com/w3f/polkadot/releases/download/v0.8.23/polkadot'
+        polkadot_binary_checksum: 'sha256:cdf31d39ed54e66489d1afe74ed7549d5bcdf8ff479759e8fc476d17d069901e'
 verifier:
   name: testinfra
   lint:

@@ -1,4 +1,4 @@
-- name: rstart polkadot service
+- name: restart polkadot service
   systemd:
     name: polkadot.service
     state: restarted

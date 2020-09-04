@@ -1,0 +1,24 @@
+- name: download polkadot binary
+  get_url:
+    url: '{{ polkadot_binary_url | quote }}'
+    checksum: '{{ polkadot_binary_checksum | quote }}'
+    dest: /usr/local/bin/polkadot-new
+    mode: '0700'
+    owner: 'polkadot'
+    group: 'polkadot'
+
+- name: stop polkadot service
+  systemd:
+    name: polkadot.service
+    state: stopped
+
+
+
+
+
+
+
+- name: start polkadot service
+  systemd:
+    name: polkadot.service
+    state: started
