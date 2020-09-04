@@ -29,6 +29,11 @@ class Ansible {
 
   }
 
+  async updateBinary() {
+    const inventoryPath = this._writeInventory();
+    return this._cmd(`main-update-binary.yml -f 30 -i "${inventoryPath}"`);
+  }
+
   async _cmd(command, options = {}) {
     const actualOptions = Object.assign({}, this.options, options);
     return cmd.exec(`ansible-playbook ${command}`, actualOptions);
@@ -77,7 +82,6 @@ class Ansible {
 
       polkadotAdditionalCommonFlags: this.config.additionalFlags,
       polkadotAdditionalValidatorFlags,
-      polkadotAdditionalPublicFlags,
     };
     if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
       data.nodeExporterEnabled = true;

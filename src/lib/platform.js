@@ -11,12 +11,15 @@ class Platform {
 
   async sync() {
     await this.tf.sync('apply');
+    const validatorIpAddresses = await this._getValidatorIpAddresses();
+    const publicNodesIpAddresses = await this._getPublicNodesIpAddresses();
+    return { validatorIpAddresses, publicNodesIpAddresses };
+  }
 
-    const validatorIpAddresses = await this._extractOutput('validator', this.config.validators.nodes);
-    let publicNodesIpAddresses = [];
-    if(this.config.publicNodes){
-      publicNodesIpAddresses = await this._extractOutput('publicNode', this.config.publicNodes.nodes);
-    }
+  async output() {
+    await this.tf.initializeTerraform();
+    const validatorIpAddresses = await this._getValidatorIpAddresses();
+    const publicNodesIpAddresses = await this._getPublicNodesIpAddresses();
     return { validatorIpAddresses, publicNodesIpAddresses };
   }
 
@@ -35,6 +38,17 @@ class Platform {
       output.push(JSON.parse(ipAddress.toString()));
     });
     return output;
+  }
+
+  async _getValidatorIpAddresses() {
+    return await this._extractOutput('validator', this.config.validators.nodes);
+  }
+
+  async _getPublicNodesIpAddresses() {
+    if(this.config.publicNodes){
+      return await this._extractOutput('publicNode', this.config.publicNodes.nodes);
+    }
+    return []
   }
 }
 

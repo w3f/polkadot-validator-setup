@@ -20,6 +20,10 @@ class Terraform {
     };
   }
 
+  async initializeTerraform() {
+    this._initializeTerraform();
+  }
+
   async sync(method='apply') {
     this._initializeTerraform();
     try {
@@ -88,8 +92,7 @@ class Terraform {
       const nodeName = this._nodeName(type, counter);
       createPromises.push(new Promise(async (resolve) => {
         const options = { cwd };
-        await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
+        await this._initCmd(backendConfig,options);
         this._createVarsFile(cwd, nodes[counter], sshKey, nodeName);
 
         let cmd = method;
@@ -113,8 +116,7 @@ class Terraform {
       const backendConfig = this._backendConfig(type, counter);
       destroyPromises.push(new Promise(async (resolve) => {
         const options = { cwd };
-        await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
+        await this._initCmd(backendConfig,options);
         await this._cmd('destroy -lock=false -auto-approve', options);
 
         resolve(true);
@@ -126,6 +128,10 @@ class Terraform {
   async _cmd(command, options = {}) {
     const actualOptions = Object.assign({}, this.options, options);
     return cmd.exec(`terraform ${command}`, actualOptions);
+  }
+
+  async _initCmd(backendConfig, options) {
+    await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
   }
 
   async _initState(){

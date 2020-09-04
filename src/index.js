@@ -10,6 +10,7 @@ const clean = require('./lib/actions/clean');
 const sync = require('./lib/actions/sync');
 const plan = require('./lib/actions/plan');
 const version = require('./lib/version');
+const updateBinary = require('./lib/actions/updateBinary');
 
 
 program
@@ -33,6 +34,11 @@ program
   .option('-c, --config [path]', 'Path to config file.', './config/main.json')
   .action(plan.do);
 
+program
+  .command('update-binary')
+  .description('Update the nodes binary.')
+  .option('-c, --config [path]', 'Path to config file.', './config/main.json')
+  .action(updateBinary.do);
 
 program.allowUnknownOption(false);
 
