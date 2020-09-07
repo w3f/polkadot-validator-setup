@@ -12,6 +12,12 @@
   roles:
   - polkadot-validator
 
+- name: validator
+  hosts: validator
+  become: yes
+  roles:
+  - polkadot-update-binary  
+
 - name: node-exporter
   hosts: validator
   become: yes
