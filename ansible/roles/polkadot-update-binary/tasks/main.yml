@@ -16,7 +16,7 @@
     if [ -f /usr/local/bin/polkadot-new ]; then
       cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
       chown polkadot:polkadot /usr/local/bin/polkadot
-      chmod a+x /usr/local/bin/polkadot
+      chmod 755 /usr/local/bin/polkadot
     fi
     systemctl daemon-reload
     systemctl enable --now polkadot.service
