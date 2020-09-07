@@ -33,6 +33,11 @@ jobs:
     environment:
       ROLE_PATH: ansible/roles/node-exporter
     <<: *ansibleIntegrationTest
+  
+  updateBinaryIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/polkadot-update-binary
+    <<: *ansibleIntegrationTest  
 
   integrationTest:
     docker:
@@ -78,6 +83,12 @@ workflows:
               only: /.*/
           requires:
             - unitTests
+      - updateBinaryIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - unitTests      
       - integrationTest:
           filters:
             tags:

@@ -1,0 +1,25 @@
+- name: download polkadot binary
+  get_url:
+    url: '{{ polkadot_binary_url | quote }}'
+    checksum: '{{ polkadot_binary_checksum | quote }}'
+    dest: /usr/local/bin/polkadot-new
+    force: true
+    mode: '0700'
+    owner: 'polkadot'
+    group: 'polkadot'
+
+- name: restart polkadot service
+  shell: |
+    set -o pipefail
+    systemctl stop polkadot.service || true
+
+    if [ -f /usr/local/bin/polkadot-new ]; then
+      cp /usr/local/bin/polkadot-new /usr/local/bin/polkadot
+      chown polkadot:polkadot /usr/local/bin/polkadot
+      chmod 755 /usr/local/bin/polkadot
+    fi
+    systemctl daemon-reload
+    systemctl enable --now polkadot.service
+  args:
+    executable: /bin/bash
+  changed_when: False

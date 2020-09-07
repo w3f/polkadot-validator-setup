@@ -20,6 +20,11 @@ class Terraform {
     };
   }
 
+  async initNodes() {
+    await this._initNodes('validator',this.config.validators.nodes)
+    this.config.publicNodes && await this._initNodes('publicNode',this.config.publicNodes.nodes)
+  }
+
   async sync(method='apply') {
     this._initializeTerraform();
     try {
@@ -88,8 +93,7 @@ class Terraform {
       const nodeName = this._nodeName(type, counter);
       createPromises.push(new Promise(async (resolve) => {
         const options = { cwd };
-        await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
+        await this._initCmd(backendConfig,options);
         this._createVarsFile(cwd, nodes[counter], sshKey, nodeName);
 
         let cmd = method;
@@ -113,8 +117,7 @@ class Terraform {
       const backendConfig = this._backendConfig(type, counter);
       destroyPromises.push(new Promise(async (resolve) => {
         const options = { cwd };
-        await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
-
+        await this._initCmd(backendConfig,options);
         await this._cmd('destroy -lock=false -auto-approve', options);
 
         resolve(true);
@@ -126,6 +129,10 @@ class Terraform {
   async _cmd(command, options = {}) {
     const actualOptions = Object.assign({}, this.options, options);
     return cmd.exec(`terraform ${command}`, actualOptions);
+  }
+
+  async _initCmd(backendConfig, options) {
+    await this._cmd(`init -var state_project=${this.config.state.project} -backend-config=bucket=${backendConfig.bucket} -backend-config=prefix=${backendConfig.prefix}`, options);
   }
 
   async _initState(){
@@ -173,6 +180,15 @@ class Terraform {
       for (let counter = 0; counter < this.config.publicNodes.nodes.length; counter++) {
         this._copyTerraformFiles('publicNode', counter, this.config.publicNodes.nodes[counter].provider);
       }
+    }
+  }
+
+  async _initNodes(type,nodes,){
+    for (let counter = 0; counter < nodes.length; counter++) {
+      const cwd = this._terraformNodeDirPath(type, counter);
+      const backendConfig = this._backendConfig(type, counter);
+      const options = { cwd };
+      await this._initCmd(backendConfig,options);
     }
   }
 

@@ -15,5 +15,9 @@
 - name: service setup
   import_tasks: service.yml
 
+- name: install binary
+  import_role:
+    name: polkadot-update-binary
+
 - name: session management
   import_tasks: session.yml

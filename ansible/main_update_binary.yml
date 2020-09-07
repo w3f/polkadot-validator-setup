@@ -1,0 +1,13 @@
+---
+- name: Wait for system ready
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: Wait for nodes to become reachable
+    wait_for_connection:
+
+- name: validator update binary
+  hosts: validator
+  become: yes
+  roles:
+  - polkadot-update-binary

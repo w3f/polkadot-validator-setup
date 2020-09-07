@@ -22,6 +22,10 @@ class Application {
     return this.ansible.sync();
   }
 
+  async updateBinary() {
+    return this.ansible.updateBinary();
+  }
+
   async clean() {
     return this.ansible.clean();
   }
