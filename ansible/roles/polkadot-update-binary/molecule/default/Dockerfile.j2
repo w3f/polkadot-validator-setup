@@ -42,6 +42,6 @@ RUN echo IyEvdXNyL2Jpbi9lbnYgcHl0aG9uCmZyb20gQmFzZUhUVFBTZXJ2ZXIgaW1wb3J0IEJhc2V
 
 RUN useradd -m -u 1000 -U -s /bin/sh polkadot
 
-COPY template.service /etc/systemd/system/polkadot.service
+RUN echo "[Unit]\nDescription=My Script\n[Service]\nType=forking\nExecStart=/bin/echo svc\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/polkadot.service
 
 RUN echo 'echo 0' > /usr/local/bin/journalctl && chmod a+x /usr/local/bin/journalctl

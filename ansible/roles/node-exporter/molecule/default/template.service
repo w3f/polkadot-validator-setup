@@ -1,0 +1,9 @@
+[Unit]
+Description=Example systemd service.
+
+[Service]
+Type=simple
+ExecStart=/bin/bash echo 'echo 0'
+
+[Install]
+WantedBy=multi-user.target
