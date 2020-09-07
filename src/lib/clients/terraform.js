@@ -20,8 +20,9 @@ class Terraform {
     };
   }
 
-  async initializeTerraform() {
-    this._initializeTerraform();
+  async initNodes() {
+    await this._initNodes('validator',this.config.validators.nodes)
+    this.config.publicNodes && await this._initNodes('publicNode',this.config.publicNodes.nodes)
   }
 
   async sync(method='apply') {
@@ -179,6 +180,15 @@ class Terraform {
       for (let counter = 0; counter < this.config.publicNodes.nodes.length; counter++) {
         this._copyTerraformFiles('publicNode', counter, this.config.publicNodes.nodes[counter].provider);
       }
+    }
+  }
+
+  async _initNodes(type,nodes,){
+    for (let counter = 0; counter < nodes.length; counter++) {
+      const cwd = this._terraformNodeDirPath(type, counter);
+      const backendConfig = this._backendConfig(type, counter);
+      const options = { cwd };
+      await this._initCmd(backendConfig,options);
     }
   }
 

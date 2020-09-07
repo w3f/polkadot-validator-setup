@@ -82,6 +82,7 @@ class Ansible {
 
       polkadotAdditionalCommonFlags: this.config.additionalFlags,
       polkadotAdditionalValidatorFlags,
+      polkadotAdditionalPublicFlags
     };
     if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
       data.nodeExporterEnabled = true;

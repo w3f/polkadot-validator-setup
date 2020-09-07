@@ -17,7 +17,7 @@ class Platform {
   }
 
   async output() {
-    await this.tf.initializeTerraform();
+    await this.tf.initNodes();
     const validatorIpAddresses = await this._getValidatorIpAddresses();
     const publicNodesIpAddresses = await this._getPublicNodesIpAddresses();
     return { validatorIpAddresses, publicNodesIpAddresses };

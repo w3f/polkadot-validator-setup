@@ -10,6 +10,7 @@
     "sync": "node . sync",
     "clean": "node . clean",
     "plan": "node . plan",
+    "update-binary": "node . update-binary",
     "lint": "eslint .",
     "pretest": "yarn lint"
   },
