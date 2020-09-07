@@ -30,4 +30,3 @@ def test_polkadot_running_and_enabled(host):
     if host.ansible.get_variables()['inventory_hostname'] == 'validator':
         polkadot = host.service("polkadot.service")
         assert polkadot.is_running
-        # assert polkadot.is_enabled

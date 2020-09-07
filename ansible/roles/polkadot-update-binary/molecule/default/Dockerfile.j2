@@ -26,5 +26,7 @@ RUN wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement
   test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl && \
   rm -f /sbin/init && touch /sbin/systemd && ln -sf /sbin/systemd /sbin/init
 
+RUN useradd -m -u 1000 -U -s /bin/sh polkadot    
+
 RUN echo "[Unit]\nDescription=My Script\n[Service]\nType=forking\nExecStart=/bin/echo svc\n[Install]\nWantedBy=multi-user.target" > /etc/systemd/system/polkadot.service
 

@@ -2,5 +2,4 @@
 - name: Converge
   hosts: validator
   roles:
-    - role: polkadot-validator
     - role: polkadot-update-binary
