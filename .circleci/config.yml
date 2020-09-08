@@ -98,6 +98,7 @@ workflows:
           requires:
             - polkadotValidatorIntegrationTest
             - nodeExporterIntegrationTest
+            - updateBinaryIntegrationTest
       - publishPackage:
           filters:
             tags:
