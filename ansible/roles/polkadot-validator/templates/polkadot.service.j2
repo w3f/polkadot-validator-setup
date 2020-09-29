@@ -30,6 +30,7 @@ ExecStart=/usr/local/bin/polkadot \
   {% endif %}
 
 Restart=always
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
