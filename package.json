@@ -1,6 +1,6 @@
 {
   "name": "polkadot-secure-validator",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "main": "src/index.js",
   "repository": "https://github.com/w3f/polkadot-secure-validator",
   "author": "W3F Infrastructure Team <devops@web3.foundation>",

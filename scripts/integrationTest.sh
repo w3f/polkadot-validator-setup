@@ -36,3 +36,6 @@ ssh-add -L
 # Install
 yarn plan -c scripts/test.json
 yarn sync -c scripts/test.json
+
+# Upgrade
+yarn update-binary -c scripts/binaryUpgradeTest.json
