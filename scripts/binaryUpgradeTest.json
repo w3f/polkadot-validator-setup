@@ -1,0 +1,32 @@
+{
+  "project": "integration-test",
+  "polkadotBinary": {
+    "url": "https://github.com/w3f/polkadot/releases/download/v0.8.25/polkadot",
+    "checksum": "sha256:500a355ca6e40333450e8b45a6d7146bd281b0445e4a45d9831836781d67e836"
+  },
+  "nodeExporter": {
+    "enabled": true,
+    "binary": {
+      "url": "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz",
+      "checksum": "sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424"
+    }
+  },
+  "polkadotNetworkId": "ksmcc3",
+  "state": {
+    "project": "development-252112"
+  },
+  "validators": {
+    "nodes": [
+      {
+        "provider": "gcp",
+        "machineType": "n1-standard-1",
+        "count": 1,
+        "location": "us-east1",
+        "zone": "us-east1-b",
+        "projectId": "development-252112",
+        "sshUser": "w3fadmin",
+        "image": "2004"
+      }
+    ]
+  }
+}
