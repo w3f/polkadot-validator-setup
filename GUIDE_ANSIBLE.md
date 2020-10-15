@@ -92,13 +92,6 @@ Example:
 ```ini
 [validator:children]
 validator-0
-```
-
-If multiple nodes should be setup, the grouping would look like this:
-
-```ini
-[validator:children]
-validator-0
 validator-1
 ```
 
