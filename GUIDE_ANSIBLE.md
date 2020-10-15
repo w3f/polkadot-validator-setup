@@ -6,12 +6,11 @@ all configured nodes. It automatically sets up the [Application
 Layer](README.md/#application-creation) and manages updates for Polkadot
 software releases.
 
-![Polkadot Secure Network Chart](secure_network_chart.svg)
-
-There is a main Ansible Playbook that orchestrates all the roles, it gets executed locally on your machine, then connects to the
-configured nodes and sets up the required tooling. Firewalls, VPN connections,
-Polkadot and all its dependencies are installed by issuing a single command. No
-manual intervention into the remote nodes is required.
+There is a main Ansible Playbook that orchestrates all the roles, it gets
+executed locally on your machine, then connects to the configured nodes and sets
+up the required tooling. Firewalls, Polkadot and all its dependencies are
+installed by issuing a single command. No manual intervention into the remote
+nodes is required.
 
 ## Prerequisites
 
@@ -24,9 +23,8 @@ manual intervention into the remote nodes is required.
 * Running Debian-based nodes
 
   The nodes require configured SSH access, but don't need any other preparatory
-  work. It's up to you on how many node you want to use. General advice is to
-  use one validator which connects to two or more sentry nodes. This setup
-  assumes the remote users have `sudo` privileges with the same `sudo` password.
+  work. It's up to you on how many node you want to use. This setup assumes the
+  remote users have `sudo` privileges with the same `sudo` password.
   Alternatively, [additional
   configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html)
   is required.
@@ -47,15 +45,12 @@ inventory:
 
 * IP address or URL.
 * SSH user (as `ansible_user`). It's encouraged NOT to use `root`.
-* A unique VPN address within the `10.0.0.0/24` network.
 * (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
+* (optional) The logging filter.
 
 The other default values from the example file can be left as is.
 
 **NOTE**: This guide assumes that the inventory is places locally in `ansible/inventory.yml`.
-
-**NOTE**: VPN address should start at `10.0.0.1` for the validator and increment
-for each other (sentry) node: `10.0.0.2`, `10.0.0.3`, etc.
 
 **NOTE**: Telemetry information exposes IP address, among other information. For
 this reason it's highly encouraged to use a [private telemetry
@@ -82,54 +77,25 @@ telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 ```
 
-### Setup Sentries
+### Grouping Validators
 
-Setup one or multiple sentry nodes by specifying a `[public-<NUM>]` host,
-including its required variables. `<NUM>` should start at `0` and increment for
-each other sentry.
-
-Example:
-
-```ini
-[public-0]
-18.184.100.247
-
-[public-0:vars]
-ansible_user=alice
-vpnpeer_address=10.0.0.2
-vpnpeer_cidr_suffix=24
-telemetryUrl=wss://mi.private.telemetry.backend/
-loggingFilter='sync=trace,afg=trace,babe=debug'
-
-[public-1]
-40.81.189.214
-
-[public-1:vars]
-ansible_user=alice
-vpnpeer_address=10.0.0.3
-vpnpeer_cidr_suffix=24
-telemetryUrl=wss://mi.private.telemetry.backend/
-loggingFilter='sync=trace,afg=trace,babe=debug'
-```
-
-### Grouping Validators and Sentries
-
-The Ansible scripts must know about all the nodes required for validation. Since
-Validators and Sentries must be configured differently, two specific groups must
-be created.
-
-Validators are grouped under `[validators:children]` and sentries under
-`[public:children]`.
+The Ansible scripts must know about all the nodes required for validation and
+are therefore grouped under `[validators:children]`.
 
 Example:
 
 ```ini
 [validator:children]
 validator-0
+```
 
-[public:children]
-public-0
-public-1
+If multiple nodes should be configured, the grouping would look like:
+
+```ini
+[validator:children]
+validator-0
+validator-1
+validator-2
 ```
 
 ### Specify common variables
@@ -196,7 +162,7 @@ Download the required files.
 
 ```console
 user@pc:~$ git clone https://github.com/w3f/polkadot-secure-validator.git
-user@pc:~$ cd polkadot-secure-validator
+user@pc:~$ cd polkadot-secure-validator/ansible
 ```
 
 Once the inventory file is configured, simply run the setup script and specify
@@ -206,20 +172,15 @@ the `sudo` password for the remote machines.
 `ansible/inventory.yml`.
 
 ```console
-user@pc:~/polkadot-secure-validator$ chmod +x ansible/setup.sh
-user@pc:~/polkadot-secure-validator$ ansible/setup.sh
+user@pc:~/polkadot-secure-validator$ chmod +x setup.sh
+user@pc:~/polkadot-secure-validator$ ./setup.sh
 Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
 >> Finding validator hosts... [OK]
   hosts (1):
     147.75.76.65
->> Finding public hosts... [OK]
-  hosts (3):
-    18.184.100.247
-    40.81.189.214
-    35.190.164.158
->> Testing connectivity to nodes... [OK]
+>> Testing connectivity to hosts... [OK]
 >> Executing Ansible Playbook...
 
 ...

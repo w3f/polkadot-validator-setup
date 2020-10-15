@@ -3,8 +3,6 @@
 
 [validator-0:vars]
 ansible_user=alice
-vpnpeer_address=10.0.0.1
-vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=info,afg=info,babe=info'
 
@@ -19,7 +17,7 @@ project=alice-in-wonderland
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
 build_dir=$HOME/.config/polkadot-secure-validator/build/w3f/ansible
 
-# Specify which `polkadot` binary to install. Checksum is verified during execution.
+# Specify which `polkadot` binary to install. Checksum is verified.
 polkadot_binary_url='https://github.com/paritytech/polkadot/releases/download/v0.8.2/polkadot'
 polkadot_binary_checksum='sha256:349b786476de9188b79817cab48fc6fc030908ac0e8e2a46a1600625b1990758'
 
