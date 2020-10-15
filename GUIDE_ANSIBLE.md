@@ -84,8 +84,7 @@ loggingFilter='sync=trace,afg=trace,babe=debug'
 
 ### Grouping Validators
 
-The Ansible scripts must know about all the nodes required to setup and are
-therefore grouped under `[validator:children]`.
+All nodes to be setup must be grouped under `[validator:children]`.
 
 Example:
 
