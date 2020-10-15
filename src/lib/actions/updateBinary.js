@@ -15,12 +15,12 @@ module.exports = {
     const platform = new Platform(cfg);
     let platformResult;
     try {
-      platformResult = await platform.sync();
+      platformResult = await platform.output();
     } catch (e) {
-      console.log(chalk.red(`Could not sync platform: ${e.message}`));
+      console.log(chalk.red(`Could not get output from platform: ${e.message}`));
       process.exit(-1);
     }
-    console.log(chalk.green('Done'));
+    console.log(chalk.yellow('Done'));
 
     console.log(chalk.yellow('Updating application binary...'));
     const app = new Application(cfg, platformResult);
