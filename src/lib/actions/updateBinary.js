@@ -7,16 +7,17 @@ const { Application } = require('../application.js');
 
 
 module.exports = {
+
   do: async (cmd) => {
     const cfg = config.read(cmd.config);
 
-    console.log(chalk.yellow('Updating binary...'));
+    console.log(chalk.yellow('Syncing platform...'));
     const platform = new Platform(cfg);
     let platformResult;
     try {
-      platformResult = await platform.output();
+      platformResult = await platform.sync();
     } catch (e) {
-      console.log(chalk.red(`Could not get output from platform: ${e.message}`));
+      console.log(chalk.red(`Could not sync platform: ${e.message}`));
       process.exit(-1);
     }
     console.log(chalk.green('Done'));
