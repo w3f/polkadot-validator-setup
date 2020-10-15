@@ -18,6 +18,7 @@ module.exports = {
       platformResult = await platform.output();
     } catch (e) {
       console.log(chalk.red(`Could not get output from platform: ${e.message}`));
+      console.log("ERROR:" + e.toString());
       process.exit(-1);
     }
     console.log(chalk.yellow('Done'));
@@ -28,6 +29,7 @@ module.exports = {
       await app.updateBinary();
     } catch (e) {
       console.log(chalk.red(`Could not update application binary: ${e.message}`));
+      console.log("ERROR:" + e.toString());
       process.exit(-1);
     }
     console.log(chalk.green('Done'));
