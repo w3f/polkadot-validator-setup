@@ -3,12 +3,12 @@
 This repo contains collections of Ansible scripts inside the [ansible/](ansible)
 directory, so called "Roles", which are responsible for the provisioning of
 all configured nodes. It automatically sets up the [Application
-Layer](README.md/#application-creation) and manages updates for Polkadot
+Layer](README.md/#application-layer) and manages updates for Polkadot
 software releases.
 
 There is a main Ansible Playbook that orchestrates all the roles, it gets
 executed locally on your machine, then connects to the configured nodes and sets
-up the required tooling. Firewalls, Polkadot and all its dependencies are
+up the required tooling. Firewalls, Polkadot nodes and all its dependencies are
 installed by issuing a single command. No manual intervention into the remote
 nodes is required.
 
@@ -23,7 +23,7 @@ nodes is required.
 * Running Debian-based nodes
 
   The nodes require configured SSH access, but don't need any other preparatory
-  work. It's up to you on how many node you want to use. This setup assumes the
+  work. It's up to you on how many nodes you want to use. This setup assumes the
   remote users have `sudo` privileges with the same `sudo` password.
   Alternatively, [additional
   configuration](https://docs.ansible.com/ansible/latest/user_guide/become.html)
@@ -50,7 +50,7 @@ inventory:
 
 The other default values from the example file can be left as is.
 
-**NOTE**: This guide assumes that the inventory is places locally in `ansible/inventory.yml`.
+**NOTE**: This guide assumes that the inventory is placed locally in `ansible/inventory.yml`.
 
 **NOTE**: Telemetry information exposes IP address, among other information. For
 this reason it's highly encouraged to use a [private telemetry
@@ -75,12 +75,17 @@ vpnpeer_address=10.0.0.1
 vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
+
+[validator-1]
+162.12.35.55
+
+...
 ```
 
 ### Grouping Validators
 
-The Ansible scripts must know about all the nodes required for validation and
-are therefore grouped under `[validators:children]`.
+The Ansible scripts must know about all the nodes required to setup and are
+therefore grouped under `[validator:children]`.
 
 Example:
 
@@ -89,13 +94,12 @@ Example:
 validator-0
 ```
 
-If multiple nodes should be configured, the grouping would look like:
+If multiple nodes should be setup, the grouping would look like this:
 
 ```ini
 [validator:children]
 validator-0
 validator-1
-validator-2
 ```
 
 ### Specify common variables
