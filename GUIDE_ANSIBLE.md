@@ -71,8 +71,6 @@ Example:
 
 [validator-0:vars]
 ansible_user=alice
-vpnpeer_address=10.0.0.1
-vpnpeer_cidr_suffix=24
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
