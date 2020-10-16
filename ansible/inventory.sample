@@ -6,8 +6,17 @@ ansible_user=alice
 telemetryUrl=wss://mi.private.telemetry.backend/
 loggingFilter='sync=info,afg=info,babe=info'
 
+[validator-1]
+162.12.35.55
+
+[validator-1:vars]
+ansible_user=bob
+telemetryUrl=wss://mi.private.telemetry.backend/
+loggingFilter='sync=trace,afg=trace,babe=debug'
+
 [validator:children]
 validator-0
+validator-1
 
 [all:vars]
 # The name for how each node should be prefixed for the telemetry name
