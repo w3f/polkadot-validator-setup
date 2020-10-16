@@ -110,7 +110,7 @@ Important variables which should vary from the [sample inventory](ansible/invent
 * `polkadot_binary_checksum` - The SHA256 checksum of the Polkadot binary which
   Ansible verifies during execution. Must be prefixed with `sha256:`.
 * `chain` - The chain to work on, such as `kusama` or `polkadot`.
-* `polkadot_network_id` - The network identifier, such as `ksmcc2` (for Kusama)
+* `polkadot_network_id` - The network identifier, such as `ksmcc3` (for Kusama)
   or `polkadot`.
 * `node_exporter_enabled` - Enable or disable the setup of [Node
   Exporter](https://github.com/prometheus/node_exporter). It's up to you whether
