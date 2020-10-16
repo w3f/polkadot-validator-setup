@@ -17,10 +17,15 @@ class Platform {
   }
 
   async output() {
-    await this.tf.initNodes();
-    const validatorIpAddresses = await this._getValidatorIpAddresses();
-    const publicNodesIpAddresses = await this._getPublicNodesIpAddresses();
-    return { validatorIpAddresses, publicNodesIpAddresses };
+    console.log("Performing terraform init...");
+    try {
+      await this.tf.initNodes();
+      //const validatorIpAddresses = await this._getValidatorIpAddresses();
+      //const publicNodesIpAddresses = await this._getPublicNodesIpAddresses();
+      //return { validatorIpAddresses, publicNodesIpAddresses };
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   async plan() {
