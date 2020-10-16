@@ -77,7 +77,10 @@ loggingFilter='sync=trace,afg=trace,babe=debug'
 [validator-1]
 162.12.35.55
 
-...
+[validator-1:vars]
+ansible_user=bob
+telemetryUrl=wss://mi.private.telemetry.backend/
+loggingFilter='sync=trace,afg=trace,babe=debug'
 ```
 
 ### Grouping Validators
@@ -172,8 +175,9 @@ Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
 >> Finding validator hosts... [OK]
-  hosts (1):
+  hosts (2):
     147.75.76.65
+    162.12.35.55
 >> Testing connectivity to hosts... [OK]
 >> Executing Ansible Playbook...
 
@@ -184,7 +188,7 @@ Alternatively, execute the Playbook manually ("become" implies `sudo`
 privileges).
 
 ```console
-user@pc:~/polkadot-secure-validator$ ansible-playbook -i ansible/inventory.yml ansible/main.yml --become --ask-become
+user@pc:~/polkadot-secure-validator$ ansible-playbook -i inventory.yml main.yml --become --ask-become
 ```
 
 The `setup.sh` script handles some extra functionality, such as downloading the
