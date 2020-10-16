@@ -48,7 +48,7 @@ inventory:
 * (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
 * (optional) The logging filter.
 
-The other default values from the example file can be left as is.
+The other default values from the sample inventory can be left as is.
 
 **NOTE**: This guide assumes that the inventory is placed locally in `ansible/inventory.yml`.
 
@@ -99,7 +99,7 @@ validator-1
 
 Finally, define the common variables for all the nodes.
 
-Important variables which should vary from the example inventory:
+Important variables which should vary from the [sample inventory](ansible/inventory.sample):
 
 * `project` - The name for how each node should be prefixed for the telemetry
   name.
@@ -116,7 +116,7 @@ Important variables which should vary from the example inventory:
   Exporter](https://github.com/prometheus/node_exporter). It's up to you whether
   you want it or not.
 
-The other default values from the example file can be left as is.
+The other default values from the sample inventory can be left as is.
 
 Example:
 
