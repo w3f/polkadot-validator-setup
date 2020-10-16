@@ -45,7 +45,8 @@ inventory:
 
 * IP address or URL.
 * SSH user (as `ansible_user`). It's encouraged NOT to use `root`.
-* (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`).
+* (optional) The telemetry URL (e.g. `wss://telemetry.polkadot.io/submit/`,
+  where the info can then be seen under https://telemetry.polkadot.io).
 * (optional) The logging filter.
 
 The other default values from the sample inventory can be left as is.
@@ -71,7 +72,7 @@ Example:
 
 [validator-0:vars]
 ansible_user=alice
-telemetryUrl=wss://mi.private.telemetry.backend/
+telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [validator-1]
@@ -79,7 +80,7 @@ loggingFilter='sync=trace,afg=trace,babe=debug'
 
 [validator-1:vars]
 ansible_user=bob
-telemetryUrl=wss://mi.private.telemetry.backend/
+telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 ```
 
