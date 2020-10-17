@@ -42,4 +42,4 @@ echo ">> Executing Ansible Playbook..."
 
 ansible-playbook -i inventory.yml main.yml --become --extra-vars "ansible_become_pass='$SUDO_PW'"
 
-echo ">> Done!k
+echo ">> Done!"
