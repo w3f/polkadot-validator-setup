@@ -170,8 +170,8 @@ the `sudo` password for the remote machines.
 `ansible/inventory.yml`.
 
 ```console
-user@pc:~/polkadot-secure-validator$ chmod +x setup.sh
-user@pc:~/polkadot-secure-validator$ ./setup.sh
+user@pc:~/polkadot-secure-validator/ansible$ chmod +x setup.sh
+user@pc:~/polkadot-secure-validator/ansible$ ./setup.sh
 Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
@@ -189,7 +189,7 @@ Alternatively, execute the Playbook manually ("become" implies `sudo`
 privileges).
 
 ```console
-user@pc:~/polkadot-secure-validator$ ansible-playbook -i inventory.yml main.yml --become --ask-become
+user@pc:~/polkadot-secure-validator/ansible$ ansible-playbook -i inventory.yml main.yml --become --ask-become
 ```
 
 The `setup.sh` script handles some extra functionality, such as downloading the
