@@ -9,7 +9,7 @@
 ansible_user=alice
 # Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
-loggingFilter='sync=info,afg=info,babe=info'
+loggingFilter='sync=warn,afg=warn,babe=warn'
 
 
 # ## Validator 1
@@ -20,7 +20,7 @@ loggingFilter='sync=info,afg=info,babe=info'
 ansible_user=bob
 # Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+loggingFilter='sync=warn,afg=warn,babe=warn'
 
 
 # ## Group all nodes
