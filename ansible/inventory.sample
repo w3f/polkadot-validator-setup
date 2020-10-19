@@ -1,16 +1,35 @@
+# Specify the nodes to setup. You can add more or remove entries, as you wish.
+
+
+# ## Validator 0
 [validator-0]
 147.75.76.65
 
 [validator-0:vars]
 ansible_user=alice
-vpnpeer_address=10.0.0.1
-vpnpeer_cidr_suffix=24
-telemetryUrl=wss://mi.private.telemetry.backend/
+# Preferably use a private telemetry server
+telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=info,afg=info,babe=info'
 
+
+# ## Validator 1
+[validator-1]
+162.12.35.55
+
+[validator-1:vars]
+ansible_user=bob
+# Preferably use a private telemetry server
+telemetryUrl=wss://telemetry.polkadot.io/submit/
+loggingFilter='sync=trace,afg=trace,babe=debug'
+
+
+# ## Group all nodes
 [validator:children]
 validator-0
+validator-1
 
+
+# ## Common variables
 [all:vars]
 # The name for how each node should be prefixed for the telemetry name
 project=alice-in-wonderland
