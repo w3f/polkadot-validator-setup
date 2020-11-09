@@ -24,7 +24,7 @@ out=$((ansible --version) 2>&1)
 handle_error "$out"
 
 echo -n ">> Finding validator hosts... "
-out=$((ansible validator --list-hosts) 2>/dev/null)
+out=$((ansible validator -i inventory.yml --list-hosts) 2>/dev/null)
 if [[ $out == *"hosts (0)"* ]]; then
   out="No hosts found, exiting..."
   (exit 1)
@@ -35,7 +35,7 @@ else
 fi
 
 echo -n ">> Testing connectivity to hosts... "
-out=$((ansible all -m ping --become --extra-vars "ansible_become_pass='$SUDO_PW'") 2>&1)
+out=$((ansible all -i inventory.yml -m ping --become --extra-vars "ansible_become_pass='$SUDO_PW'") 2>&1)
 handle_error "$out"
 
 echo ">> Executing Ansible Playbook..."
