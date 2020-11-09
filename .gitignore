@@ -2,7 +2,9 @@ node_modules
 build/*
 ansible/inventory
 ansible/**/__pycache__
-config/main.json
+config/*
+!config/main.sample.json
+!config/main.template.json
 yarn-error.log
 .env
 public_keyfile
