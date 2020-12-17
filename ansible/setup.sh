@@ -12,9 +12,6 @@ function handle_error() {
 
 cd "$(dirname "$0")"
 
-echo "Sudo password for remote servers:"
-read -s SUDO_PW
-
 echo -n ">> Pulling upstream changes... "
 out=$((git pull origin master) 2>&1)
 handle_error "$out"
@@ -35,6 +32,13 @@ else
 fi
 
 echo -n ">> Testing connectivity to hosts... "
+out=$((ansible all -i inventory.yml -m ping) 2>&1)
+handle_error "$out"
+
+echo "Sudo password for remote servers:"
+read -s SUDO_PW
+
+echo -n ">> Testing sudo access... "
 out=$((ansible all -i inventory.yml -m ping --become --extra-vars "ansible_become_pass='$SUDO_PW'") 2>&1)
 handle_error "$out"
 
