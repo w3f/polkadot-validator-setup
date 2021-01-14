@@ -16,8 +16,6 @@ INVENTORY="${1:-${ANSIBLE_FILES_DIR}/inventory.yml}"
 echo -n ">> Checking inventory file (${INVENTORY}) exists and is readable... "
 [ -r "${INVENTORY}" ]; handle_error "Please check https://github.com/w3f/polkadot-secure-validator/blob/master/GUIDE_ANSIBLE.md#inventory"
 
-cd "${ANSIBLE_FILES_DIR}"
-
 echo -n ">> Pulling upstream changes... "
 out=$((git pull origin master) 2>&1)
 handle_error "$out"
@@ -50,6 +48,6 @@ handle_error "$out"
 
 echo ">> Executing Ansible Playbook..."
 
-ansible-playbook -i ${INVENTORY} main.yml --become --extra-vars "ansible_become_pass='$SUDO_PW'"
+ansible-playbook -i ${INVENTORY} ${ANSIBLE_FILES_DIR}/main.yml --become --extra-vars "ansible_become_pass='$SUDO_PW'"
 
 echo ">> Done!"
