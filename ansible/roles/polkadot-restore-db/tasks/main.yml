@@ -4,13 +4,23 @@
     state: present
     update_cache: yes
 
+- name: db_dest_path as fact
+  set_fact:
+    db_dest_path: "{{ base-path }}/chains/{{ polkadot_network_id }}"
+  when: base-path is defined
+
+- name: db_dest_path as fact
+  set_fact:
+    db_dest_path: "/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}"
+  when: base-path is undefined  
+
 - name: download db
   get_url:
     url: "{{ polkadot_db_snapshot_url }}"
-    dest: "/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/db.new.7z"
+    dest: "{{ db_dest_path }}/db.new.7z"
     mode: '0700'
     owner: 'polkadot'
-    group: 'polkadot'
+    group: 'polkadot'  
 
 - name: stop polkadot service
   systemd:
@@ -20,7 +30,7 @@
 - name: unpack db
   shell: |
     set -o pipefail
-    cd /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/
+    cd {{ db_dest_path }}
     mv db db.back
     7z x db.new.7z
     rm db.new.7z
