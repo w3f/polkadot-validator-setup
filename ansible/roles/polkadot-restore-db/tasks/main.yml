@@ -6,18 +6,19 @@
 
 - name: db_dest_path as fact
   set_fact:
-    db_dest_path: "{{ base_path }}/chains/{{ polkadot_network_id }}"
+    db_dest_path: '{{ base_path }}/chains/{{ polkadot_network_id }}'
   when: base_path is defined
 
 - name: db_dest_path as fact
   set_fact:
-    db_dest_path: "/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}"
+    db_dest_path: '/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}'
   when: base_path is undefined  
 
 - name: download db
   get_url:
-    url: "{{ polkadot_db_snapshot_url }}"
-    dest: "{{ db_dest_path }}/db.new.7z"
+    url: '{{ polkadot_db_snapshot_url }}'
+    checksum: '{ polkadot_db_snapshot_checksum | quote }}'
+    dest: '{{ db_dest_path }}/db.new.7z'
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'  

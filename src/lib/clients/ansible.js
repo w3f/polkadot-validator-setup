@@ -44,7 +44,8 @@ class Ansible {
     const validatorLoggingFilter = this.config.validators.loggingFilter;
     const polkadotAdditionalValidatorFlags = this.config.validators.additionalFlags;
 
-    const dbSnapshotUrl = this.config.validators.dbSnapshotUrl;
+    const dbSnapshotUrl = this.config.validators.dbSnapshot.url;
+    const dbSnapshotChecksum = this.config.validators.dbSnapshot.checksum;
 
     let publicNodes = [];
     let publicTelemetryUrl = '';
@@ -75,6 +76,7 @@ class Ansible {
       publicLoggingFilter,
 
       dbSnapshotUrl,
+      dbSnapshotChecksum,
 
       buildDir,
 
