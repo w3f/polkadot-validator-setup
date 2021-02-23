@@ -106,6 +106,16 @@ resource "aws_security_group_rule" "node-exporter-{{ name }}" {
   security_group_id = "${aws_security_group.main-{{ name }}.id}"
 }
 
+resource "aws_security_group_rule" "node-metrics-{{ name }}" {
+  type            = "ingress"
+  from_port       = 9616
+  to_port         = 9616
+  protocol        = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.main-{{ name }}.id}"
+}
+
 resource "aws_security_group_rule" "allow_all-{{ name }}" {
   type            = "egress"
   from_port       = 0
@@ -126,7 +136,7 @@ resource "aws_instance" "main-{{ name }}" {
   vpc_security_group_ids = ["${aws_security_group.main-{{ name }}.id}"]
 
   root_block_device {
-    volume_size = 400
+    volume_size = 150
   }
 
   tags = {

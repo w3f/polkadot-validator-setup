@@ -28,12 +28,16 @@
     chown www-data:www-data /etc/nginx/.htpasswd
   args:
     executable: /bin/bash
-  when: not htpasswd_file.stat.exists
 
-- name: create nginx config
+- name: create nginx config for node exporter
   copy:
     src: nginx.conf
     dest: /etc/nginx/sites-enabled/node-exporter.conf
+
+- name: create nginx config for polkadot metrics
+  copy:
+    src: polkadot.nginx.conf
+    dest: /etc/nginx/sites-enabled/polkadot-metrics.conf 
 
 - name: restart nginx service
   systemd:
@@ -41,7 +45,7 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
-  changed_when: false
+  changed_when: true
 
 - name: create node_exporter download dir
   file:

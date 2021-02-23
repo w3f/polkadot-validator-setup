@@ -19,19 +19,13 @@ class Ansible {
     };
   }
 
-  async sync() {
+  async runCommonPlaybook(playbookName) {
     const inventoryPath = this._writeInventory();
-    //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
-    return this._cmd(`main.yml -f 30 -i "${inventoryPath}"`);
+    return this._cmd(`${playbookName} -f 30 -i "${inventoryPath}"`);
   }
 
   async clean() {
 
-  }
-
-  async updateBinary() {
-    const inventoryPath = this._writeInventory();
-    return this._cmd(`main_update_binary.yml -f 30 -i "${inventoryPath}"`);
   }
 
   async _cmd(command, options = {}) {
@@ -49,6 +43,8 @@ class Ansible {
     const validatorTelemetryUrl = this.config.validators.telemetryUrl;
     const validatorLoggingFilter = this.config.validators.loggingFilter;
     const polkadotAdditionalValidatorFlags = this.config.validators.additionalFlags;
+
+    const dbSnapshotUrl = this.config.validators.dbSnapshotUrl;
 
     let publicNodes = [];
     let publicTelemetryUrl = '';
@@ -77,6 +73,8 @@ class Ansible {
 
       validatorLoggingFilter,
       publicLoggingFilter,
+
+      dbSnapshotUrl,
 
       buildDir,
 
@@ -120,8 +118,11 @@ class Ansible {
         const item = {
           ipAddress,
           sshUser: node.sshUser,
-          vpnAddress: `${vpnAddressBase}.${counter}`
+          vpnAddress: `${vpnAddressBase}.${counter}`,
         };
+        if(node.nodeName){
+          item.nodeName=node.nodeName
+        }
         output.push(item);
       });
     });

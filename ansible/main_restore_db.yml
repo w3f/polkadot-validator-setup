@@ -1,4 +1,4 @@
-- hosts: new_validator
+- hosts: all
   become: yes
   strategy: free
   roles:

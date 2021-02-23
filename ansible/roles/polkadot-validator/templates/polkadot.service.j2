@@ -5,7 +5,11 @@ Description=Polkadot Node
 User=polkadot
 Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
+  {% if hostvars[inventory_hostname].nodeName is defined and hostvars[inventory_hostname].nodeName|length %}
+  --name {{ hostvars[inventory_hostname].nodeName }} \
+  {% else %}
   --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
+  {% endif %}
   --validator \
   --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
   --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
