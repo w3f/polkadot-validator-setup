@@ -1,7 +1,7 @@
 #!/bin/sh
 
 eval $(ssh-agent)
-for key in $SSH_ID_RSA_PUBLIC $SSH_ID_RSA_VALIDATOR; do
+for key in $SSH_ID_ED25519_PUBLIC $SSH_ID_ED25519_VALIDATOR; do
     chmod 600 "$key"
     ssh-add "$key"
 done

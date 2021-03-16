@@ -45,16 +45,16 @@ potential incidents in the respective cloud providers.
 You need two additional environment variables to allow ansible to connect to the
 created machines:
 
-* `SSH_ID_RSA_PUBLIC`: path to private SSH key you want to use for the public
+* `SSH_ID_ED25519_PUBLIC`: path to private SSH key you want to use for the public
 nodes.
 
-* `SSH_ID_RSA_VALIDATOR`: path to private SSH key you want to use for the
+* `SSH_ID_ED25519_VALIDATOR`: path to private SSH key you want to use for the
 validators.
 
 You can easily create and add them to your ssh-agent as follows:
 
 ```bash
-$ ssh-keygen -m PEM -f <path>
+$ ssh-keygen -o -a 10000 -t ed25519 -f ~/.ssh/id_ed25519_<project> -C "yo@e.mail"
 $ ssh-add <path>
 ```
 
