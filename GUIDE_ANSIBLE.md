@@ -138,10 +138,12 @@ polkadot_binary_checksum='sha256:349b786476de9188b79817cab48fc6fc030908ac0e8e2a4
 polkadot_network_id=polkadot
 chain=polkadot
 
+# Nginx authentication settings.
+nginx_user='nginx_user'
+nginx_password='nginx_password'
+
 # Node exporter settings. Disabled by default.
 node_exporter_enabled='false'
-node_exporter_user='node_exporter_user'
-node_exporter_password='node_exporter_password'
 node_exporter_binary_url='https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz'
 node_exporter_binary_checksum='sha256:b2503fd932f85f4e5baf161268854bf5d22001869b84f00fd2d1f57b51b72424'
 
