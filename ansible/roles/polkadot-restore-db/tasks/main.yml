@@ -17,7 +17,7 @@
 - name: download db
   get_url:
     url: '{{ polkadot_db_snapshot_url }}'
-    checksum: '{ polkadot_db_snapshot_checksum | quote }}'
+    checksum: '{{ polkadot_db_snapshot_checksum | quote }}'
     dest: '{{ db_dest_path }}/db.new.7z'
     mode: '0700'
     owner: 'polkadot'
