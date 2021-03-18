@@ -139,7 +139,7 @@ polkadot_network_id=polkadot
 chain=polkadot
 
 # Nginx authentication settings.
-nginx_user='nginx_user'
+nginx_user='prometheus'
 nginx_password='nginx_password'
 
 # Node exporter settings. Disabled by default.
