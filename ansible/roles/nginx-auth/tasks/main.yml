@@ -28,12 +28,14 @@
     chown www-data:www-data /etc/nginx/.htpasswd
   args:
     executable: /bin/bash
+  changed_when: true
+  tags: molecule-idempotence-notest
 
 - name: create nginx config for node exporter
   copy:
     src: node_exporter.nginx.conf
     dest: /etc/nginx/sites-enabled/node-exporter.conf
-  when: node_exporter_enabled|bool  
+  when: node_exporter_enabled|bool
 
 - name: create nginx config for polkadot metrics
   copy:
@@ -46,3 +48,4 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
+  tags: molecule-idempotence-notest

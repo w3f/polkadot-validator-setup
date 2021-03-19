@@ -39,6 +39,11 @@ jobs:
       ROLE_PATH: ansible/roles/polkadot-update-binary
     <<: *ansibleIntegrationTest  
 
+  nginxAuthIntegrationTest:
+    environment:
+      ROLE_PATH: ansible/roles/nginx-auth
+    <<: *ansibleIntegrationTest    
+
   integrationTest:
     docker:
       - image: web3f/secure-validator-ci:v1.1.1
@@ -88,7 +93,13 @@ workflows:
             tags:
               only: /.*/
           requires:
-            - unitTests      
+            - unitTests  
+      - nginxAuthIntegrationTest:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - unitTests            
       - integrationTest:
           filters:
             tags:

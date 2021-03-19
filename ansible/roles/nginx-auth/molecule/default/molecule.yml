@@ -9,12 +9,18 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: instance
+  - name: nginx-auth-validator-node
     image: ubuntu:bionic
+    groups:
+      - validator
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      nginx-auth-validator-node:
+        node_exporter_enabled: 'true'
 verifier:
   name: testinfra
   lint:
