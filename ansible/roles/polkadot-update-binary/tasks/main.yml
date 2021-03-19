@@ -12,8 +12,9 @@
   systemd:
     name: polkadot.service
     state: stopped
+  tags: molecule-idempotence-notest
 
-- name: sobstitute new polkadot binary 
+- name: sobstitute new polkadot binary
   shell: |
     set -o pipefail
 
@@ -28,4 +29,4 @@
 
 - name: restart polkadot service
   import_role:
-    name: polkadot-restart-service  
+    name: polkadot-restart-service
