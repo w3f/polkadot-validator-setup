@@ -15,7 +15,7 @@ version: 2
 jobs:
   unitTests:
     docker:
-      - image: web3f/node:v0.1.0
+      - image: web3f/node:v0.1.2
     steps:
       - checkout
       - run: yarn
@@ -61,7 +61,7 @@ jobs:
 
   publishPackage:
     docker:
-      - image: web3f/node:v0.1.0
+      - image: web3f/node:v0.1.2
     steps:
       - checkout
       - run:
@@ -103,17 +103,16 @@ workflows:
       - integrationTest:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
+              only: /.*/
           requires:
             - polkadotValidatorIntegrationTest
             - nodeExporterIntegrationTest
             - updateBinaryIntegrationTest
+            - nginxAuthIntegrationTest
       - publishPackage:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
             branches:
               ignore: /.*/
           requires:
