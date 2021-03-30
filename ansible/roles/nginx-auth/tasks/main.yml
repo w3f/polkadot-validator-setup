@@ -1,0 +1,51 @@
+- name: check if .htpasswd file already exists
+  stat:
+    path: /etc/nginx/.htpasswd
+  register: htpasswd_file
+
+- name: remove libapr related packages
+  apt:
+    pkg:
+    - libapr1
+    - libaprutil1
+    state: absent
+    update_cache: yes
+    autoremove: yes
+  when: not htpasswd_file.stat.exists
+
+- name: install apache2-utils
+  apt:
+    name: apache2-utils
+    state: present
+    update_cache: yes
+  when: not htpasswd_file.stat.exists
+
+- name: generate .htpasswd file
+  shell: |
+    set -o pipefail
+    htpasswd -bc /etc/nginx/.htpasswd {{ nginx_user }} {{ nginx_password }}
+    chmod 600 /etc/nginx/.htpasswd
+    chown www-data:www-data /etc/nginx/.htpasswd
+  args:
+    executable: /bin/bash
+  changed_when: true
+  tags: molecule-idempotence-notest
+
+- name: create nginx config for node exporter
+  copy:
+    src: node_exporter.nginx.conf
+    dest: /etc/nginx/sites-enabled/node-exporter.conf
+  when: node_exporter_enabled|bool
+
+- name: create nginx config for polkadot metrics
+  copy:
+    src: polkadot_metrics.nginx.conf
+    dest: /etc/nginx/sites-enabled/polkadot-metrics.conf
+
+- name: restart nginx service
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  tags: molecule-idempotence-notest

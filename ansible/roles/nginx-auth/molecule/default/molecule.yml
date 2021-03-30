@@ -1,0 +1,27 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
+platforms:
+  - name: nginx-auth-validator-node
+    image: ubuntu:bionic
+    groups:
+      - validator
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  inventory:
+    host_vars:
+      nginx-auth-validator-node:
+        node_exporter_enabled: 'true'
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

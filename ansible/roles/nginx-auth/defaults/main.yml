@@ -1,0 +1,2 @@
+nginx_user: prometheus
+nginx_password: nginx_password

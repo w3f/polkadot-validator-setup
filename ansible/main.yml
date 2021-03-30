@@ -12,6 +12,13 @@
   roles:
   - polkadot-validator
 
+- name: nginx-auth
+  hosts: validator
+  become: yes
+  strategy: free
+  roles:
+  - nginx-auth  
+
 - name: node-exporter
   hosts: validator
   become: yes

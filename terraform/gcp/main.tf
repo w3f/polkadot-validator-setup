@@ -30,7 +30,7 @@ resource "google_compute_firewall" "node-exporter-{{ name }}" {
 
   allow {
     protocol = "tcp"
-    ports    = ["9100"]
+    ports    = ["9100","9616"]
   }
 
   source_ranges = ["0.0.0.0/0"]
@@ -43,6 +43,7 @@ resource "google_compute_instance" "main-{{ name }}" {
   zone         = var.zone
   tags         = ["{{ name }}"]
   count        = var.node_count
+  allow_stopping_for_update        = false
 
   boot_disk {
     initialize_params {
