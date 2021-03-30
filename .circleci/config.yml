@@ -7,6 +7,7 @@ ansibleIntegrationTest: &ansibleIntegrationTest
       - run:
           description: execute molecule tests for the ansible role at $ROLE_PATH
           command: |
+            pip3 install molecule-docker
             cd $ROLE_PATH
             molecule test
 
