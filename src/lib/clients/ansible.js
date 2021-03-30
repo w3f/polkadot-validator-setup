@@ -44,9 +44,6 @@ class Ansible {
     const validatorLoggingFilter = this.config.validators.loggingFilter;
     const polkadotAdditionalValidatorFlags = this.config.validators.additionalFlags;
 
-    const dbSnapshotUrl = this.config.validators.dbSnapshot.url;
-    const dbSnapshotChecksum = this.config.validators.dbSnapshot.checksum;
-
     let publicNodes = [];
     let publicTelemetryUrl = '';
     let publicLoggingFilter='';
@@ -75,25 +72,25 @@ class Ansible {
       validatorLoggingFilter,
       publicLoggingFilter,
 
-      dbSnapshotUrl,
-      dbSnapshotChecksum,
-
       buildDir,
 
       polkadotAdditionalCommonFlags: this.config.additionalFlags,
       polkadotAdditionalValidatorFlags,
-      polkadotAdditionalPublicFlags
+      polkadotAdditionalPublicFlags,
+
+      nginxUsername: nginxUsername,
+      nginxPassword: nginxPassword
     };
-    if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
+
+    if (this.config.nodeExporter?.enabled) {
       data.nodeExporterEnabled = true;
-      data.nginxUsername = nginxUsername;
-      data.nginxPassword = nginxPassword;
       data.nodeExporterBinaryUrl = this.config.nodeExporter.binary.url;
       data.nodeExporterBinaryChecksum = this.config.nodeExporter.binary.checksum;
     } else {
       data.nodeExporterEnabled = false;
     }
-    if (this.config.polkadotRestart && this.config.polkadotRestart.enabled) {
+
+    if (this.config.polkadotRestart?.enabled) {
       data.polkadotRestartEnabled = true;
       data.polkadotRestartMinute = this.config.polkadotRestart.minute || '*';
       data.polkadotRestartHour = this.config.polkadotRestart.hour || '*';
@@ -102,6 +99,11 @@ class Ansible {
       data.polkadotRestartWeekDay = this.config.polkadotRestart.weekDay || '*';
     } else {
       data.polkadotRestartEnabled = false;
+    }
+
+    if(this.config.validators.dbSnapshot?.url != undefined && this.config.validators.dbSnapshot?.checksum != undefined){
+      data.dbSnapshotUrl = this.config.validators.dbSnapshot.url;
+      data.dbSnapshotChecksum = this.config.validators.dbSnapshot.checksum;
     }
 
     tpl.create(origin, target, data);

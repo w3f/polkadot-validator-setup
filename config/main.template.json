@@ -29,35 +29,5 @@
         "sshUser": "root"
       }
     ]
-  },
-  "publicNodes": {
-    "telemetryUrl": "<your-telemetry-endpoint>",
-    "loggingFilter": "babe=debug",
-    "nodes": [
-      {
-        "provider": "aws",
-        "machineType": "m4.large",
-        "count": 1,
-        "location": "<aws-server-location>",
-        "zone": "<aws-server-zone>",
-        "sshUser": "ubuntu"
-      },
-      {
-        "provider": "azure",
-        "machineType": "Standard_D2s_v3",
-        "count": 1,
-        "location": "<azure-server-location>",
-        "sshUser": "<whatever-azure-ssh-username-you-want>"
-      },      
-      {
-        "provider": "gcp",
-        "machineType": "n1-standard-2",
-        "count": 1,
-        "location": "<gcp-server-location>",
-        "zone": "<gcp-server-zone>",
-        "projectId": "<gcp-project-id>",
-        "sshUser": "<whatever-gcp-ssh-username-you-want>"
-      }
-    ]
   }
 }

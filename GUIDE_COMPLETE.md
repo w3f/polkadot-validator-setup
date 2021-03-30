@@ -8,7 +8,7 @@ NodeJS, Yarn and Git installed.
 
 Before using polkadot-secure-validator you need to have installed:
 
-* NodeJS (we recommend using [nvm](https://github.com/nvm-sh/nvm))
+* NodeJS v14 or above (we recommend using [nvm](https://github.com/nvm-sh/nvm))
 
 * [Yarn](https://yarnpkg.com/lang/en/docs/install)
 
