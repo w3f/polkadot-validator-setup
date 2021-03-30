@@ -11,10 +11,11 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 2020
   },
   "rules": {
     "no-console": 0,
-    "no-useless-escape": 0
+    "no-useless-escape": 0,
+    "no-async-promise-executor": 0
   }
 }

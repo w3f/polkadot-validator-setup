@@ -1,12 +1,13 @@
 ansibleIntegrationTest: &ansibleIntegrationTest
     docker:
-      - image: web3f/secure-validator-ci:v1.1.1
+      - image: web3f/secure-validator-ci:v1.2.6
     steps:
       - checkout
       - setup_remote_docker
       - run:
           description: execute molecule tests for the ansible role at $ROLE_PATH
           command: |
+            pip3 install molecule-docker
             cd $ROLE_PATH
             molecule test
 
@@ -15,7 +16,7 @@ version: 2
 jobs:
   unitTests:
     docker:
-      - image: web3f/node:v0.1.0
+      - image: web3f/node:v0.1.2
     steps:
       - checkout
       - run: yarn
@@ -46,7 +47,7 @@ jobs:
 
   integrationTest:
     docker:
-      - image: web3f/secure-validator-ci:v1.1.1
+      - image: web3f/secure-validator-ci:v1.2.6
     steps:
       - checkout
       - run:
@@ -61,7 +62,7 @@ jobs:
 
   publishPackage:
     docker:
-      - image: web3f/node:v0.1.0
+      - image: web3f/node:v0.1.2
     steps:
       - checkout
       - run:
@@ -103,17 +104,16 @@ workflows:
       - integrationTest:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
-            branches:
-              ignore: /.*/
+              only: /.*/
           requires:
             - polkadotValidatorIntegrationTest
             - nodeExporterIntegrationTest
             - updateBinaryIntegrationTest
+            - nginxAuthIntegrationTest
       - publishPackage:
           filters:
             tags:
-              only: /v[0-9]+(\.[0-9]+)*/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/
             branches:
               ignore: /.*/
           requires:

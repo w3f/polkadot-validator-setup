@@ -6,7 +6,6 @@ driver:
 lint: |
   set -e
   yamllint .
-  ansible-lint
   flake8
 platforms:
   - name: polkadot-update-binary-validator-node

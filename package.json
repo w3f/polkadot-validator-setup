@@ -1,6 +1,6 @@
 {
   "name": "polkadot-secure-validator",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "main": "src/index.js",
   "repository": "https://github.com/w3f/polkadot-secure-validator",
   "author": "W3F Infrastructure Team <devops@web3.foundation>",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "5.16.0",
+    "eslint": "^6.6.0",
     "mocha": "^6.2.3",
     "tmp": "^0.1.0"
   }

@@ -10,5 +10,5 @@ validator_keyfile
 validator_keyfile.pub
 credentials.json
 config/*
-!config/main.template.json
-!config/main.sample.json
+!config/*template*
+!config/*sample*
