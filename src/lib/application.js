@@ -19,11 +19,19 @@ class Application {
   }
 
   async sync() {
-    return this.ansible.sync();
+    return this.ansible.runCommonPlaybook("main.yml")
   }
 
   async updateBinary() {
-    return this.ansible.updateBinary();
+    return this.ansible.runCommonPlaybook("main_update_binary.yml")
+  }
+
+  async restoreDB() {
+    return this.ansible.runCommonPlaybook("main_restore_db.yml")
+  }
+
+  async rotateKeys() {
+    return this.ansible.runCommonPlaybook("main_rotate_keys.yml")
   }
 
   async clean() {

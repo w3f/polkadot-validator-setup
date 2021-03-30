@@ -15,22 +15,6 @@
   changed_when: False
 
 - name: initialize server keys
-  uri:
-    url: http://localhost:9933
-    method: "POST"
-    body_format: json
-    body: |
-      { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
-  when: keystore_files.stdout == "0"
-  register: rotate_keys
-
-- name: show rotateKeys output
-  debug:
-    var: rotate_keys
-  when: keystore_files.stdout == "0"
-
-- name: save rotateKeys output
-  copy:
-    content: "{{ rotate_keys.json }}"
-    dest: /home/polkadot/rotate_keys.log
+  import_role:
+    name: polkadot-rotate-keys
   when: keystore_files.stdout == "0"

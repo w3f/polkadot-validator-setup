@@ -3,7 +3,7 @@ const path = require('path');
 const cmd = require('../cmd');
 const { Project } = require('../project');
 const tpl = require('../tpl');
-const { nodeExporterUsername, nodeExporterPassword } = require('../env');
+const { nginxUsername, nginxPassword } = require('../env');
 
 const inventoryFileName = 'inventory'
 
@@ -19,19 +19,13 @@ class Ansible {
     };
   }
 
-  async sync() {
+  async runCommonPlaybook(playbookName) {
     const inventoryPath = this._writeInventory();
-    //return this._cmd(`all -b -m ping -i ${inventoryFileName}`, this.options);
-    return this._cmd(`main.yml -f 30 -i "${inventoryPath}"`);
+    return this._cmd(`${playbookName} -f 30 -i "${inventoryPath}"`);
   }
 
   async clean() {
 
-  }
-
-  async updateBinary() {
-    const inventoryPath = this._writeInventory();
-    return this._cmd(`main_update_binary.yml -f 30 -i "${inventoryPath}"`);
   }
 
   async _cmd(command, options = {}) {
@@ -49,6 +43,9 @@ class Ansible {
     const validatorTelemetryUrl = this.config.validators.telemetryUrl;
     const validatorLoggingFilter = this.config.validators.loggingFilter;
     const polkadotAdditionalValidatorFlags = this.config.validators.additionalFlags;
+
+    const dbSnapshotUrl = this.config.validators.dbSnapshot.url;
+    const dbSnapshotChecksum = this.config.validators.dbSnapshot.checksum;
 
     let publicNodes = [];
     let publicTelemetryUrl = '';
@@ -78,6 +75,9 @@ class Ansible {
       validatorLoggingFilter,
       publicLoggingFilter,
 
+      dbSnapshotUrl,
+      dbSnapshotChecksum,
+
       buildDir,
 
       polkadotAdditionalCommonFlags: this.config.additionalFlags,
@@ -86,8 +86,8 @@ class Ansible {
     };
     if (this.config.nodeExporter && this.config.nodeExporter.enabled) {
       data.nodeExporterEnabled = true;
-      data.nodeExporterUsername = nodeExporterUsername;
-      data.nodeExporterPassword = nodeExporterPassword;
+      data.nginxUsername = nginxUsername;
+      data.nginxPassword = nginxPassword;
       data.nodeExporterBinaryUrl = this.config.nodeExporter.binary.url;
       data.nodeExporterBinaryChecksum = this.config.nodeExporter.binary.checksum;
     } else {
@@ -120,8 +120,11 @@ class Ansible {
         const item = {
           ipAddress,
           sshUser: node.sshUser,
-          vpnAddress: `${vpnAddressBase}.${counter}`
+          vpnAddress: `${vpnAddressBase}.${counter}`,
         };
+        if(node.nodeName){
+          item.nodeName=node.nodeName
+        }
         output.push(item);
       });
     });

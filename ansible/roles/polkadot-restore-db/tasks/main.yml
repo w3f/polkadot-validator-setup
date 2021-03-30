@@ -1,10 +1,27 @@
+- name: Install 7z  
+  apt:
+    name: p7zip-full
+    state: present
+    update_cache: yes
+
+- name: db_dest_path as fact
+  set_fact:
+    db_dest_path: '{{ base_path }}/chains/{{ polkadot_network_id }}'
+  when: base_path is defined
+
+- name: db_dest_path as fact
+  set_fact:
+    db_dest_path: '/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}'
+  when: base_path is undefined  
+
 - name: download db
   get_url:
-    url: "https://storage.googleapis.com/{{ chain }}-db/db.tar.gz"
-    dest: "/home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}//"
+    url: '{{ polkadot_db_snapshot_url }}'
+    checksum: '{{ polkadot_db_snapshot_checksum | quote }}'
+    dest: '{{ db_dest_path }}/db.new.7z'
     mode: '0700'
     owner: 'polkadot'
-    group: 'polkadot'
+    group: 'polkadot'  
 
 - name: stop polkadot service
   systemd:
@@ -14,10 +31,10 @@
 - name: unpack db
   shell: |
     set -o pipefail
-    cd /home/polkadot/.local/share/polkadot/chains/{{ polkadot_network_id }}/
+    cd {{ db_dest_path }}
     mv db db.back
-    tar xzf db.tar.gz
-    rm db.tar.gz
+    7z x db.new.7z
+    rm db.new.7z
     chown -R polkadot:polkadot db/
   args:
     executable: /bin/bash

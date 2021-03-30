@@ -1,0 +1,18 @@
+#curl -H "Content-Type: application/json" -d '{"id":1, "jsonrpc":"2.0", "method": "author_rotateKeys", "params":[]}' http://localhost:9933  
+- name: rotate server keys
+  uri:
+    url: http://localhost:9933
+    method: "POST"
+    body_format: json
+    body: |
+      { "jsonrpc":"2.0", "method":"author_rotateKeys", "params":[], "id":1 }
+  register: rotate_keys
+
+- name: show rotateKeys output
+  debug:
+    var: rotate_keys
+
+- name: save rotateKeys output
+  copy:
+    content: "{{ rotate_keys.json }}"
+    dest: /home/polkadot/rotate_keys.log

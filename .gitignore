@@ -2,7 +2,6 @@ node_modules
 build/*
 ansible/inventory
 ansible/**/__pycache__
-config/main.json
 yarn-error.log
 .env
 public_keyfile
@@ -10,3 +9,6 @@ public_keyfile.pub
 validator_keyfile
 validator_keyfile.pub
 credentials.json
+config/*
+!config/main.template.json
+!config/main.sample.json

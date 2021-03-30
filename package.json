@@ -10,6 +10,8 @@
     "sync": "node . sync",
     "clean": "node . clean",
     "plan": "node . plan",
+    "restore-db": "node . restore-db",
+    "rotate-keys": "node . rotate-keys",
     "update-binary": "node . update-binary",
     "lint": "eslint .",
     "pretest": "yarn lint"
@@ -29,13 +31,13 @@
     "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",
     "handlebars": "^4.7.6",
-    "node-forge": "^0.9.0",
+    "node-forge": "^0.10.0",
     "ospath": "^1.2.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "5.16.0",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.3",
     "tmp": "^0.1.0"
   }
 }

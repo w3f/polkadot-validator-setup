@@ -78,6 +78,38 @@ The `sync` command is idempotent, unless there are errors it will always have
 the same results. You can execute it as much as you want, it will only make
 changes when the actual infrastructure state doesn't match the desired state.
 
+### Restore db
+
+```
+$ yarn restore-db -c config/main.json
+```
+
+A possibile configuration can be:
+
+```json
+...
+"validators": {
+    "additionalFlags": "--unsafe-pruning --pruning 1000",
+    "dbSnapshot": {
+      "url": "https://ksm-rocksdb.polkashots.io/kusama-6658753.RocksDb.7z",
+      "checksum": "sha256:4f61a99e4b00acb335aff52f2383880d53b30617c0ae67ac47c611e7bf6971ff"
+    },
+    ...
+}    
+```
+
+### Update Binary
+
+```
+$ yarn update-binary -c config/main.json
+```
+
+### Rotate Keys
+
+```
+$ yarn rotate-keys -c config/main.json
+```
+
 ### Cleaning up
 
 You can remove all the created infrastructure with:

@@ -6,6 +6,8 @@
 ansible_user={{ this.sshUser }}
 telemetryUrl={{ ../validatorTelemetryUrl }}
 loggingFilter='{{{ ../validatorLoggingFilter }}}'
+nodeName={{ this.nodeName }}
+polkadotAdditionalCustomFlags={{this.polkadotAdditionalCustomFlags}}
 
 {{/each}}
 
@@ -23,9 +25,9 @@ polkadot_binary_checksum='{{ polkadotBinaryChecksum }}'
 chain='{{ chain }}'
 polkadot_network_id='{{ polkadotNetworkId }}'
 build_dir={{ buildDir }}
+nginx_user='{{ nginxUsername }}'
+nginx_password='{{ nginxPassword }}'
 node_exporter_enabled='{{ nodeExporterEnabled }}'
-node_exporter_user='{{ nodeExporterUsername }}'
-node_exporter_password='{{ nodeExporterPassword }}'
 node_exporter_binary_url='{{ nodeExporterBinaryUrl }}'
 node_exporter_binary_checksum='{{ nodeExporterBinaryChecksum }}'
 polkadot_restart_enabled='{{ polkadotRestartEnabled }}'
@@ -37,3 +39,5 @@ polkadot_restart_weekday='{{ polkadotRestartWeekDay }}'
 polkadot_additional_common_flags='{{{ polkadotAdditionalCommonFlags }}}'
 polkadot_additional_validator_flags='{{{ polkadotAdditionalValidatorFlags }}}'
 polkadot_additional_public_flags='{{{ polkadotAdditionalPublicFlags }}}'
+polkadot_db_snapshot_url='{{{ dbSnapshotUrl }}}'
+polkadot_db_snapshot_checksum='{{{ dbSnapshotChecksum }}}'
