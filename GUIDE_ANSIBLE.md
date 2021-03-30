@@ -75,6 +75,7 @@ ansible_user=alice
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
+
 [validator-1]
 162.12.35.55
 
@@ -154,6 +155,20 @@ polkadot_restart_hour='*'
 polkadot_restart_day='*'
 polkadot_restart_month='*'
 polkadot_restart_weekday='*'
+```
+
+### Specify custom variables per node
+
+Custom variables per node can be specified by using the `polkadotAdditionalCustomFlags` in the inventory file
+
+Example:
+
+```
+[validator-0:vars]
+ansible_user=alice
+telemetryUrl=wss://telemetry.polkadot.io/submit/
+loggingFilter='sync=trace,afg=trace,babe=debug'
+polkadotAdditionalCustomFlags= --in-peers 5 
 ```
 
 ## Execution
