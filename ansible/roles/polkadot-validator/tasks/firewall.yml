@@ -24,7 +24,7 @@
   command: ufw allow 9616/tcp
   when:
     - node_exporter_enabled|default(false)|bool
-    - not ufw_status_result.stdout is search("9616/tcp.*ALLOW IN.*Anywhere")    
+    - not ufw_status_result.stdout is search("9616/tcp.*ALLOW IN.*Anywhere")
 
 - name: open proxy port
   command: ufw allow {{ proxy_port }}/tcp
