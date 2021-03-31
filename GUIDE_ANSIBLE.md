@@ -75,6 +75,7 @@ ansible_user=alice
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
+
 [validator-1]
 162.12.35.55
 
@@ -158,6 +159,20 @@ polkadot_restart_weekday='*'
 # Optional: Restore the chain db from a .7z snapshot
 polkadot_db_snapshot_url='https://ksm-rocksdb.polkashots.io/kusama-6658753.RocksDb.7z'
 polkadot_db_snapshot_checksum='sha256:4f61a99e4b00acb335aff52f2383880d53b30617c0ae67ac47c611e7bf6971ff'
+```
+
+### Specify custom variables per node
+
+Custom variables per node can be specified by using the `polkadotAdditionalCustomFlags` in the inventory file
+
+Example:
+
+```
+[validator-0:vars]
+ansible_user=alice
+telemetryUrl=wss://telemetry.polkadot.io/submit/
+loggingFilter='sync=trace,afg=trace,babe=debug'
+polkadotAdditionalCustomFlags= --in-peers 5 
 ```
 
 ## Execution
