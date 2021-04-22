@@ -1,8 +1,8 @@
 [![CircleCI](https://circleci.com/gh/w3f/polkadot-secure-validator.svg?style=svg)](https://circleci.com/gh/w3f/polkadot-secure-validator)
 
-# Polkadot Secure Validator Setup
+# Polkadot Validator Setup
 
-This repo describes a potential setup for a Polkadot validator that aims to
+This repo describes a potential setup for a Polkadot or Kusama validator that aims to
 prevent some types of potential attacks at the TCP layer and below.
 The [Workflow](#workflow) section describes the [Platform Layer](#platform-layer)
 and the [Application Layer](#application-layer) in more detail.
