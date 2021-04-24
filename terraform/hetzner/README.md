@@ -2,12 +2,16 @@
 
 ### Ansible user setup
 
-The included script `setup_users.sh` will create an `ansible` user with the specified password. This password can also be used when applying the ansible playbook with:
+The included script `setup_users.sh` will create an `ansible` user with the specified password hash. This password can also be used when applying the ansible playbook with:
 
 `ansible-playbook main.yml --become --extra-vars "ansible_become_pass='$SUDO_PW'"`
 
 The password hash can be obtained by running:
-`openssl passwd -6` on linux machines
+`openssl passwd -6` on linux machines (input should be SUDO_PW)
+
+### Hcloud token
+
+You need to create a Hetzner API token to be able to use their service. Follow the [official docs](https://docs.hetzner.cloud/).
 
 ### SSH Keys
 Hetzner won't let you deploy the same key twice (no override), which becomes problematic during re-applying the state.
