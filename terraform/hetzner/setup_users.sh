@@ -2,7 +2,7 @@
 
 # TODO Change to -M and nologin?
 useradd -Ds /bin/bash
-useradd -m -G sudo ${user} -p '${password}' | true
+useradd -m -G sudo ${user} -p '${password_hash}' | true
 
 mkdir -p /home/${user}/.ssh
 

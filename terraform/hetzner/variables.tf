@@ -2,11 +2,7 @@ variable "hcloud_token" {
   default = "your token"
 }
 
-variable "public_key_validator" {
-  default = "<your key>"
-}
-
-variable "public_key_prometheus" {
+variable "public_key" {
   default = "<your key>"
 }
 
@@ -35,6 +31,6 @@ variable "image" {
   default = "ubuntu-20.04"
 }
 
-variable "password" {
-  default = ""
+variable "password_hash" {
+  default = "$6$Y.TqqXVTsCf91DQl$u72Gkgnb5gLkVjwNLhznzf/j740mfhhtVaH.6k0ghIkBEoQqXi0uSI8iYjiC486LpMM16c0GD8mmPwsfRq5NC1"
 }
