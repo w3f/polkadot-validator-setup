@@ -85,4 +85,13 @@ polkadot_restart_weekday='1'
 polkadot_db_snapshot_url='https://ksm-rocksdb.polkashots.io/kusama-6658753.RocksDb.7z'
 polkadot_db_snapshot_checksum='sha256:4f61a99e4b00acb335aff52f2383880d53b30617c0ae67ac47c611e7bf6971ff'
 
+
 prometheus_enabled='false'
+
+[prometheus]
+123.45.678.90
+
+[prometheus:vars]
+ansible_user=ansible
+prometheus_binary_url="https://github.com/prometheus/prometheus/releases/download/v2.26.0/prometheus-2.26.0.linux-amd64.tar.gz"
+prometheus_binary_checksum="sha256:8dd6786c338dc62728e8891c13b62eda66c7f28a01398869f2b3712895b441b9"
