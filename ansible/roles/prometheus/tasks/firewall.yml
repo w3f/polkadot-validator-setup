@@ -1,0 +1,28 @@
+---
+- name: install packages
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: ufw already enabled
+  command: ufw status verbose
+  register: ufw_status_result
+  changed_when: False
+
+- name: open ssh port
+  command: ufw allow 22/tcp
+  when: not ufw_status_result.stdout is search("22/tcp.*ALLOW IN.*Anywhere")
+
+- name: open prometheus port
+  command: ufw allow {{ prometheus_port }}/tcp
+  when:
+    - not ufw_status_result.stdout is search(prometheus_port ~ "/tcp.*ALLOW IN.*Anywhere")
+
+- name: enable firewall
+  shell: |
+    set -o pipefail
+    echo "y" | ufw enable
+  args:
+    executable: /bin/bash
+  when: not ufw_status_result.stdout is search("Status.* active")

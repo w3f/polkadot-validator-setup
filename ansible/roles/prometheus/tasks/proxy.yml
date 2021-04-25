@@ -1,0 +1,35 @@
+---
+- name: install nginx package
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: create nginx config
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: create streams dir
+  file:
+    path: /etc/nginx/streams-enabled
+    state: directory
+
+- name: remove nginx default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: create proxy service file
+  template:
+    src: proxy.conf.j2
+    dest: /etc/nginx/streams-enabled/polkadot-proxy.conf
+    mode: 0600
+
+- name: restart nginx service
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false

@@ -1,0 +1,25 @@
+---
+# tasks file for prometheus
+- name: firewall setup
+  import_tasks: firewall.yml
+
+- name: journald config
+  import_tasks: journald.yml
+
+- name: user and group
+  import_tasks: user.yml
+
+- name: create_dirs
+  import_tasks: dir_setup.yml
+
+- name: prometheus config
+  import_tasks: prometheus-config.yml
+
+# - name: proxy setup
+#   import_tasks: proxy.yml
+
+- name: install binary
+  import_tasks: prometheus-binary.yml
+
+- name: service setup
+  import_tasks: service.yml

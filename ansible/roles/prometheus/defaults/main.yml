@@ -1,0 +1,3 @@
+---
+# defaults file for prometheus node
+prometheus_port: 9090

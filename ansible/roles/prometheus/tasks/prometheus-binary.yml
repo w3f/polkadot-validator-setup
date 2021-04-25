@@ -1,0 +1,49 @@
+- name: download prometheus binary
+  get_url:
+    url: '{{ prometheus_binary_url | quote }}'
+    checksum: '{{ prometheus_binary_checksum | quote }}'
+    dest: /tmp/prometheus.tar.gz
+    force: true
+
+- name: unpack binary
+  unarchive: 
+   src: /tmp/prometheus.tar.gz
+   dest: /tmp/
+   remote_src: yes
+   extra_opts:
+    - --gzip
+
+# TODO handle any binary version
+- name: copy prometheus binary
+  copy: 
+    src: /tmp/prometheus-2.26.0.linux-amd64/prometheus
+    dest: /usr/local/bin/
+    owner: prometheus
+    group: prometheus
+    mode: '700'
+    remote_src: yes
+
+- name: copy promtool binary
+  copy:
+    src: /tmp/prometheus-2.26.0.linux-amd64/promtool
+    dest: /usr/local/bin/
+    owner: prometheus
+    group: prometheus
+    mode: '700'
+    remote_src: yes
+
+- name: copy libs
+  copy:
+    src: /tmp/prometheus-2.26.0.linux-amd64/consoles
+    dest: /etc/prometheus
+    owner: prometheus
+    group: prometheus
+    remote_src: yes
+
+- name: copy libs 2
+  copy:
+    src: /tmp/prometheus-2.26.0.linux-amd64/console_libraries
+    dest: /etc/prometheus
+    owner: prometheus
+    group: prometheus
+    remote_src: yes

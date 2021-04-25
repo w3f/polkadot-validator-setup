@@ -1,0 +1,14 @@
+---
+- name: create prometheus service file
+  copy:
+    src: prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Make sure a service is running
+  systemd:
+    state: started
+    daemon_reload: yes
+    name: prometheus

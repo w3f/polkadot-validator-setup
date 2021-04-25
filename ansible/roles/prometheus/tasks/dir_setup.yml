@@ -1,0 +1,14 @@
+---
+- name: Create etc dir
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+
+- name: Create var dir
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus

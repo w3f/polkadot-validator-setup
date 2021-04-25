@@ -1,0 +1,13 @@
+---
+- name: copy journald config
+  copy:
+    src: journald.conf
+    dest: /etc/systemd/journald.conf
+
+- name: restart journald
+  systemd:
+    name: systemd-journald
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false
