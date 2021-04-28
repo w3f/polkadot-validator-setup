@@ -15,9 +15,6 @@
 - name: prometheus config
   import_tasks: prometheus-config.yml
 
-# - name: proxy setup
-#   import_tasks: proxy.yml
-
 - name: install binary
   import_tasks: prometheus-binary.yml
 
