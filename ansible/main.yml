@@ -30,8 +30,7 @@
   hosts: prometheus
   become: yes
   roles:
-  - prometheus
-  when: prometheus_enabled|bool
+  - { role: prometheus, when: prometheus_enabled|bool }
 
 # This is needed to break the circular dependency (validator needs to allow access to prometheus machine only on 9090, prometheus needs to configure the validator IP)
 - name: validator_allow_prometheus_port
@@ -40,5 +39,4 @@
   tasks:
     - include_vars:
         file: roles/polkadot-validator/defaults/main.yml
-    - include: roles/polkadot-validator/tasks/firewall_prometheus.yml
-  when: prometheus_enabled|bool
+    - { include: roles/polkadot-validator/tasks/firewall_prometheus.yml, when: prometheus_enabled|bool }
