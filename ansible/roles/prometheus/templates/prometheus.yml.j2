@@ -9,18 +9,19 @@ rule_files:
 # TODO any advantage of using 'ansible_default_ipv4' over just the output of groups['validator']?
 scrape_configs:
   - job_name: "prometheus"
-    scrape_interval: 5s
+    scrape_interval: 1m
     static_configs:
       - targets: ["localhost:9090"]
   - job_name: "substrate_node"
-    scrape_interval: 5s
+    scrape_interval: 10s
     basic_auth:
       username: "{{ nginx_user }}"
       password: "{{ nginx_password }}"
     static_configs:
       - targets: ["{{ groups['validator'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(':9616", "') }}:9616"]
   - job_name: "node_exporter"
-    scrape_interval: 30s
+    scrape_interval: 1m
+    scrape_timeout: 20s
     static_configs:
       - targets: ["{{ groups['validator'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(':9100", "') }}:9100"]
     basic_auth:
