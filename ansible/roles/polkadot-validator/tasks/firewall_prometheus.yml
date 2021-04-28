@@ -1,0 +1,47 @@
+---
+- name: install packages
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: ufw already enabled
+  command: ufw status verbose
+  register: ufw_status_result
+  changed_when: False
+
+# We could deny instead, it would look cleaner in code
+# But it would be messy in the ufw status output and potentially lead to errors
+# Better to delete the public rules completely
+- name: close polkadot_metrics to the world, v6
+  command: ufw status numbered | grep "{{ polkadot_metrics_port }}/tcp (v6)" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
+
+- name: close polkadot_metrics to the world
+  command: ufw status numbered | grep "{{ polkadot_metrics_port }}/tcp" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
+
+- name: close node_exporter_port to the world, v6
+  command: ufw status numbered | grep "{{ node_exporter_port }}/tcp (v6)" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
+
+- name: close node_exporter_port to the world
+  command: ufw status numbered | grep "{{ node_exporter_port }}/tcp" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
+
+# And now we can open the correct ones!
+- name: open polkadot_metrics port to prometheus node only
+  command: ufw allow from {{ groups['prometheus'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(" ") }} to any port {{ polkadot_metrics_port }}
+  when:
+    - not ufw_status_result.stdout is search(polkadot_metrics_port ~ "*ALLOW IN*")
+
+- name: open node_exporter port to prometheus node only
+  command: ufw allow from {{ groups['prometheus'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(" ") }} to any port {{ node_exporter_port }}
+  when:
+    - node_exporter_enabled|default(false)|bool
+    - not ufw_status_result.stdout is search(node_exporter_port ~ "*ALLOW IN*")
+
+# Should be NOOP
+- name: enable firewall
+  shell: |
+    set -o pipefail
+    echo "y" | ufw enable
+  args:
+    executable: /bin/bash
+  when: not ufw_status_result.stdout is search("Status.* active")
