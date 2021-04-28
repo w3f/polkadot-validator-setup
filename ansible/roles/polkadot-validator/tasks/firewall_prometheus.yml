@@ -11,12 +11,12 @@
   changed_when: False
 
 - name: close polkadot_metrics to the world
-  command: ufw delete {{ polkadot_metrics_port }}/tcp
+  command: ufw delete allow {{ polkadot_metrics_port }}/tcp
   when:
     - ufw_status_result.stdout is search(polkadot_metrics_port ~ "*ALLOW IN.*Anywhere")
 
 - name: close node_exporter_port to the world
-  command: ufw delete {{ node_exporter_port }}/tcp
+  command: ufw delete allow {{ node_exporter_port }}/tcp
   when:
     - ufw_status_result.stdout is search(node_exporter_port ~ "*ALLOW IN.*Anywhere")
 
