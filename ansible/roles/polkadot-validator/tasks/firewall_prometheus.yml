@@ -13,24 +13,24 @@
 - name: close polkadot_metrics to the world
   command: ufw delete allow {{ polkadot_metrics_port }}/tcp
   when:
-    - ufw_status_result.stdout is search(polkadot_metrics_port ~ "*ALLOW IN.*Anywhere")
+    - ufw_status_result.stdout is search(polkadot_metrics_port ~ ".*ALLOW IN.*Anywhere")
 
 - name: close node_exporter_port to the world
   command: ufw delete allow {{ node_exporter_port }}/tcp
   when:
-    - ufw_status_result.stdout is search(node_exporter_port ~ "*ALLOW IN.*Anywhere")
+    - ufw_status_result.stdout is search(node_exporter_port ~ ".*ALLOW IN.*Anywhere")
 
 # And now we can open the correct ones!
 - name: open polkadot_metrics port to prometheus node only
   command: ufw allow from {{ groups['prometheus'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(" ") }} to any port {{ polkadot_metrics_port }}
   when:
-    - not ufw_status_result.stdout is search(polkadot_metrics_port ~ "*ALLOW IN*")
+    - not ufw_status_result.stdout is search(polkadot_metrics_port ~ ".*ALLOW IN.*")
 
 - name: open node_exporter port to prometheus node only
   command: ufw allow from {{ groups['prometheus'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(" ") }} to any port {{ node_exporter_port }}
   when:
     - node_exporter_enabled|default(false)|bool
-    - not ufw_status_result.stdout is search(node_exporter_port ~ "*ALLOW IN*")
+    - not ufw_status_result.stdout is search(node_exporter_port ~ ".*ALLOW IN.*")
 
 # Should be NOOP
 - name: enable firewall
