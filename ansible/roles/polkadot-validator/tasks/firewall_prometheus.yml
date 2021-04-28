@@ -10,20 +10,15 @@
   register: ufw_status_result
   changed_when: False
 
-# We could deny instead, it would look cleaner in code
-# But it would be messy in the ufw status output and potentially lead to errors
-# Better to delete the public rules completely
-- name: close polkadot_metrics to the world, v6
-  command: ufw status numbered | grep "{{ polkadot_metrics_port }}/tcp (v6)" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
-
 - name: close polkadot_metrics to the world
-  command: ufw status numbered | grep "{{ polkadot_metrics_port }}/tcp" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
-
-- name: close node_exporter_port to the world, v6
-  command: ufw status numbered | grep "{{ node_exporter_port }}/tcp (v6)" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
+  command: ufw delete {{ polkadot_metrics_port }}/tcp
+  when:
+    - ufw_status_result.stdout is search(polkadot_metrics_port ~ "*ALLOW IN.*Anywhere")
 
 - name: close node_exporter_port to the world
-  command: ufw status numbered | grep "{{ node_exporter_port }}/tcp" | grep -o -E '[0-9]+' | head -1 | xargs ufw --force delete || /bin/true
+  command: ufw delete {{ node_exporter_port }}/tcp
+  when:
+    - ufw_status_result.stdout is search(node_exporter_port ~ "*ALLOW IN.*Anywhere")
 
 # And now we can open the correct ones!
 - name: open polkadot_metrics port to prometheus node only
