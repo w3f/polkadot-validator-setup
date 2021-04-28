@@ -15,16 +15,16 @@
   when: not ufw_status_result.stdout is search("22/tcp.*ALLOW IN.*Anywhere")
 
 - name: open node_exporter port
-  command: ufw allow 9100/tcp
+  command: ufw allow {{ node_exporter_port }}/tcp
   when:
     - node_exporter_enabled|default(false)|bool
-    - not ufw_status_result.stdout is search("9100/tcp.*ALLOW IN.*Anywhere")
+    - not ufw_status_result.stdout is search(node_exporter_port ~ "/tcp.*ALLOW IN.*Anywhere")
 
 - name: open polkadot_metrics port
-  command: ufw allow 9616/tcp
+  command: ufw allow {{ polkadot_metrics_port }}/tcp
   when:
     - node_exporter_enabled|default(false)|bool
-    - not ufw_status_result.stdout is search("9616/tcp.*ALLOW IN.*Anywhere")
+    - not ufw_status_result.stdout is search(polkadot_metrics_port ~ "/tcp.*ALLOW IN.*Anywhere")
 
 - name: open p2p port
   command: ufw allow {{ p2p_port }}/tcp
