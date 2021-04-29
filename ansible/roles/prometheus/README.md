@@ -1,38 +1,32 @@
-Role Name
+Prometheus
 =========
 
-A brief description of the role goes here.
+Deploy a prometheus instance for monitoring your node stats.
+Later you can link it up as a source in Grafana for better visualisation.
 
 Requirements
 ------------
 
-No  pre-requisites.
+- polkadot node with an open port to prometheus
+- node_exporter installed and running for collection of machine metrics
 
 Role Variables
 --------------
 
-Chain to use for the validator, example `kusama` which is an early, unaudited and unrefined release of Polkadot. Kusama will serve as a proving ground, allowing teams and developers to build and deploy a parachain or try out Polkadot’s governance, staking, nomination and validation functionality in a real environment.
+The url and the checksum for the prometheus binary. Can be found on the official release page: https://github.com/prometheus/prometheus/releases
 
 ```
-chain: kusama
+prometheus_binary_url
+prometheus_binary_checksum
 ```
-
-Project specified to start in the service file, if not set, defaults to `project`.
-
-```
- project
-```
-
-Dependencies
-------------
 
 Example Playbook
 ----------------
 
-    - hosts: validator
+    - hosts: prometheus
       become: yes
       roles:
-      - polkadot-validator
+      - prometheus
 
 License
 -------
@@ -42,5 +36,5 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+Marcin Górny
+https://github.com/mmagician
