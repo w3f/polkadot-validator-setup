@@ -14,7 +14,7 @@
     state: stopped
   tags: molecule-idempotence-notest
 
-- name: sobstitute new polkadot binary
+- name: substitute new polkadot binary
   shell: |
     set -o pipefail
 
