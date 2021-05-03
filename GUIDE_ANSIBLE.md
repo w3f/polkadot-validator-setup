@@ -59,25 +59,25 @@ validator to a public server.
 
 ### Setup Validator
 
-Setup the validator node by specifying a `[validator-<NUM>]` host, including its
+Setup the validator node by specifying a `[validator_<NUM>]` host, including its
 required variables. `<NUM>` should start at `0` and increment for each other
 validator (assuming you have more than one validator).
 
 Example:
 
 ```ini
-[validator-0]
+[validator_0]
 147.75.76.65
 
-[validator-0:vars]
+[validator_0:vars]
 ansible_user=alice
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
-[validator-1]
+[validator_1]
 162.12.35.55
 
-[validator-1:vars]
+[validator_1:vars]
 ansible_user=bob
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
@@ -91,8 +91,8 @@ Example:
 
 ```ini
 [validator:children]
-validator-0
-validator-1
+validator_0
+validator_1
 ```
 
 ### Specify common variables
