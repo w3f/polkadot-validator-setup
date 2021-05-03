@@ -2,10 +2,10 @@
 
 
 # ## Validator 0
-[validator-0]
+[validator_0]
 147.75.76.65
 
-[validator-0:vars]
+[validator_0:vars]
 ansible_user=alice
 # Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
@@ -13,10 +13,10 @@ loggingFilter='sync=warn,afg=warn,babe=warn'
 
 
 # ## Validator 1
-[validator-1]
+[validator_1]
 162.12.35.55
 
-[validator-1:vars]
+[validator_1:vars]
 ansible_user=bob
 # Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
@@ -25,8 +25,8 @@ loggingFilter='sync=warn,afg=warn,babe=warn'
 
 # ## Group all nodes
 [validator:children]
-validator-0
-validator-1
+validator_0
+validator_1
 
 
 # ## Common variables
