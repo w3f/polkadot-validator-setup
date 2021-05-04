@@ -1,8 +1,8 @@
 {{#each validators }}
-[validator-{{@index}}]
+[validator_{{@index}}]
 {{ this.ipAddress }}
 
-[validator-{{@index}}:vars]
+[validator_{{@index}}:vars]
 ansible_user={{ this.sshUser }}
 telemetryUrl={{ ../validatorTelemetryUrl }}
 loggingFilter='{{{ ../validatorLoggingFilter }}}'
@@ -13,7 +13,7 @@ polkadotAdditionalCustomFlags={{this.polkadotAdditionalCustomFlags}}
 
 [validator:children]
 {{#each validators }}
-validator-{{@index}}
+validator_{{@index}}
 {{/each}}
 
 
