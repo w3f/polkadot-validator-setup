@@ -74,12 +74,7 @@ ansible_user=alice
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
-<<<<<<< HEAD
-
-[validator-1]
-=======
 [validator_1]
->>>>>>> upstream/master
 162.12.35.55
 
 [validator_1:vars]
