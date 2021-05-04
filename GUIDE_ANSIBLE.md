@@ -36,9 +36,10 @@ access keys to the SSH agent.
 
 All required data is saved in a [Ansible
 inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html),
-which by default is placed under `/etc/ansible/hosts` and must only be configured once.
-Most values from the [SAMPLE FILE](ansible/inventory.sample) can be copied. Only
-a handful of entries must be adjusted.
+which by default is placed under `/etc/ansible/hosts` (but you can create it
+anywhere you want) and must only be configured once. Most values from the
+[SAMPLE FILE](ansible/inventory.sample) can be copied. Only a handful of entries
+must be adjusted.
 
 For each node, the following information must be configured in the Ansible
 inventory:
@@ -51,8 +52,6 @@ inventory:
 
 The other default values from the sample inventory can be left as is.
 
-**NOTE**: This guide assumes that the inventory is placed locally in `ansible/inventory.yml`.
-
 **NOTE**: Telemetry information exposes IP address, among other information. For
 this reason it's highly encouraged to use a [private telemetry
 server](https://github.com/paritytech/substrate-telemetry) and not to expose the
@@ -60,26 +59,25 @@ validator to a public server.
 
 ### Setup Validator
 
-Setup the validator node by specifying a `[validator-<NUM>]` host, including its
+Setup the validator node by specifying a `[validator_<NUM>]` host, including its
 required variables. `<NUM>` should start at `0` and increment for each other
 validator (assuming you have more than one validator).
 
 Example:
 
 ```ini
-[validator-0]
+[validator_0]
 147.75.76.65
 
-[validator-0:vars]
+[validator_0:vars]
 ansible_user=alice
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
 
-
-[validator-1]
+[validator_1]
 162.12.35.55
 
-[validator-1:vars]
+[validator_1:vars]
 ansible_user=bob
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=trace,afg=trace,babe=debug'
@@ -93,8 +91,8 @@ Example:
 
 ```ini
 [validator:children]
-validator-0
-validator-1
+validator_0
+validator_1
 ```
 
 ### Specify common variables
@@ -187,12 +185,12 @@ user@pc:~$ cd polkadot-secure-validator/ansible
 Once the inventory file is configured, simply run the setup script and specify
 the `sudo` password for the remote machines.
 
-**NOTE**: This script assumes that the inventory file is configured in
-`ansible/inventory.yml`.
+**NOTE**: If no inventory path is specified, it will try to look for
+`ansible/inventory.yml` by default.
 
 ```console
 user@pc:~/polkadot-secure-validator/ansible$ chmod +x setup.sh
-user@pc:~/polkadot-secure-validator/ansible$ ./setup.sh
+user@pc:~/polkadot-secure-validator/ansible$ ./setup.sh my_inventory.yml
 Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
@@ -210,7 +208,7 @@ Alternatively, execute the Playbook manually ("become" implies `sudo`
 privileges).
 
 ```console
-user@pc:~/polkadot-secure-validator/ansible$ ansible-playbook -i inventory.yml main.yml --become --ask-become
+user@pc:~/polkadot-secure-validator/ansible$ ansible-playbook -i my_inventory.yml main.yml --become --ask-become
 ```
 
 The `setup.sh` script handles some extra functionality, such as downloading the
