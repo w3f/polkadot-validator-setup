@@ -4,6 +4,7 @@ Description=Polkadot Node
 [Service]
 User=polkadot
 Group=polkadot
+LimitNOFILE=10000
 ExecStart=/usr/local/bin/polkadot \
   {% if hostvars[inventory_hostname].nodeName is defined and hostvars[inventory_hostname].nodeName|length %}
   --name {{ hostvars[inventory_hostname].nodeName }} \
