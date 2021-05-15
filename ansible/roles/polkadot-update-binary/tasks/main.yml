@@ -21,8 +21,9 @@
   systemd:
     name: polkadot.service
     state: stopped
+    daemon_reload: yes
   tags: molecule-idempotence-notest
-  when: polkadot_sha256.stdout != polkadot_binary_checksum
+  
 
 
 - name: substitute new polkadot binary
@@ -43,5 +44,3 @@
 - name: restart polkadot service
   import_role:
     name: polkadot-restart-service
-  when: polkadot_sha256.stdout != polkadot_binary_checksum
-
