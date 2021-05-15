@@ -39,8 +39,8 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ConnectTimeout=15'
 build_dir=$HOME/.config/polkadot-secure-validator/build/w3f/ansible
 
 # Specify which `polkadot` binary to install. Checksum is verified during execution.
-polkadot_binary_url='https://github.com/paritytech/polkadot/releases/download/v0.9.0/polkadot'
-polkadot_binary_checksum='sha256:9283f01be7970b9189b96766d576e76592fdb63553168f043e4fc75bc8509b81'
+polkadot_binary_url='https://github.com/paritytech/polkadot/releases/download/v0.9.1/polkadot'
+polkadot_binary_checksum='sha256:00185307376ca0bacf28504e76d4c61ebf84abfba6c31780c9966325add83e1e'
 
 # Specify the chain/network.
 #
