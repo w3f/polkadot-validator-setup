@@ -25,6 +25,8 @@
     src: proxy.conf.j2
     dest: /etc/nginx/streams-enabled/polkadot-proxy.conf
     mode: 0600
+  when:
+    - enableReverseProxy|default(false)|bool
 
 - name: restart nginx service
   systemd:
