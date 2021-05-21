@@ -48,7 +48,7 @@
   command: ufw deny {{ proxy_port }}/tcp
   when:
     - not enableReverseProxy|default(false)|bool
-    - not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*DENY IN.*Anywhere")
+    - not ufw_status_result.stdout is search(proxy_port ~ "/tcp.*DENY IN.*Anywhere")
 
 - name: enable firewall
   shell: |
