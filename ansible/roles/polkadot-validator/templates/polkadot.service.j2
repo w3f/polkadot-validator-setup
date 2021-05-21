@@ -11,7 +11,9 @@ ExecStart=/usr/local/bin/polkadot \
   --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
   {% endif %}
   --validator \
+  {% if hostvars[inventory_hostname].enableReverseProxy is defined and hostvars[inventory_hostname].enableReverseProxy is true %}
   --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
+  {% endif %}
   --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
   --rpc-methods=Unsafe \
   {% if hostvars[inventory_hostname].polkadot_additional_common_flags is defined and hostvars[inventory_hostname].polkadot_additional_common_flags|length %}
