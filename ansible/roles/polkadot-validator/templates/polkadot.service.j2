@@ -12,7 +12,9 @@ ExecStart=/usr/local/bin/polkadot \
   --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
   {% endif %}
   --validator \
+  {% if hostvars[inventory_hostname].enableReverseProxy is defined and hostvars[inventory_hostname].enableReverseProxy %}
   --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
+  {% endif %}
   --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
   --rpc-methods=Unsafe \
   {% if hostvars[inventory_hostname].polkadotAdditionalCustomFlags is defined and hostvars[inventory_hostname].polkadotAdditionalCustomFlags|length %}
@@ -31,6 +33,7 @@ ExecStart=/usr/local/bin/polkadot \
   {% if hostvars[inventory_hostname].base_path is defined and hostvars[inventory_hostname].base_path|length %}
   --base-path '{{ hostvars[inventory_hostname].base_path }}' \
   {% endif %}
+  --wasm-execution Compiled \
   {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
   --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
   {% else %}
