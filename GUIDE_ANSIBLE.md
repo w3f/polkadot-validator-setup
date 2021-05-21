@@ -165,7 +165,7 @@ Custom variables per node can be specified by using the `polkadotAdditionalCusto
 
 Example:
 
-```
+```ini
 [validator-0:vars]
 ansible_user=alice
 telemetryUrl=wss://telemetry.polkadot.io/submit/
