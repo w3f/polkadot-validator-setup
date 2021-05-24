@@ -1,3 +1,18 @@
+{# --- PREPARE VARIABLES #}
+{% set nodeName = hostvars[inventory_hostname].nodeName|default(project|default('project')+'-sv-validator-'+groups['validator'].index(inventory_hostname)) %}
+{% set execution = hostvars[inventory_hostname].execution|default(None) %}
+{% set wasmExecution = hostvars[inventory_hostname].wasmExecution|default('Compiled') %}
+{% set telemetryUrl = hostvars[inventory_hostname].telemetryUrl|default(None) %}
+{% set enableReverseProxy = hostvars[inventory_hostname].enableReverseProxy|default(false) %}
+{% set loggingFilter = hostvars[inventory_hostname].loggingFilter|default(None) %}
+{% set basePath = hostvars[inventory_hostname].basePath|default(None) %}
+{% set additionalFlags = hostvars[inventory_hostname].additionalFlags|default(None) %}
+{# ## Legacy/deprecated flags #}
+{% set wasmExecution = hostvars[inventory_hostname].wasm_execution|default('Compiled') %}
+{% set basePath = hostvars[inventory_hostname].base_path|default(None) %}
+{% set polkadotAdditionalCommonFlags = hostvars[inventory_hostname].polkadot_additional_common_flags|default(None) %}
+{% set polkadotAdditionalValidatorFlags = hostvars[inventory_hostname].polkadot_additional_validator_flags|default(None) %}
+{# --- #}
 [Unit]
 Description=Polkadot Node
 
@@ -9,91 +24,34 @@ ExecStart=/usr/local/bin/polkadot \
   --chain={{ chain }} \
   --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
   --rpc-methods=Unsafe \
-  {#
-  ## NODE NAME
-  #}
-  {% if hostvars[inventory_hostname].nodeName is defined and hostvars[inventory_hostname].nodeName|length %}
-  --name {{ hostvars[inventory_hostname].nodeName }} \
+  --name {{ nodeName }} \
+  --execution {{ execution }} \
+  --wasm-execution {{ wasmExecution }} \
+  {% if telemetryUrl is defined %}
+  --telemetry-url '{{ telemetryUrl }} 1' \
   {% else %}
-  --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
+  --no-telemetry \
   {% endif %}
-  {#
-  ## (RUNTIME) EXECUTION
-  #}
-  {% if hostvars[inventory_hostname].execution is defined and hostvars[inventory_hostname].execution|length %}
-  --execution {{ hostvars[inventory_hostname].execution }} \
-  {% endif %}
-  {#
-  ## WASM EXECUTION
-  #}
-  {% if hostvars[inventory_hostname].wasmExecution is defined and hostvars[inventory_hostname].wasmExecution|length %}
-  --wasm-execution {{ hostvars[inventory_hostname].wasmExecution }} \
-  {% else %}
-  --wasm-execution Compiled \
-  {% endif %}
-  {#
-  ## TELEMETRY
-  #}
-  {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
-  --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
-  {% else %}
-  --no-telemetry
-  {% endif %}
-  {#
-  ## REVERSE PROXY
-  #}
-  {% if hostvars[inventory_hostname].enableReverseProxy is defined and hostvars[inventory_hostname].enableReverseProxy %}
+  {% if enableReverseProxy %}
   --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
   {% endif %}
-  {#
-  ## LOGGING FILTER
-  #}
-  {% if hostvars[inventory_hostname].loggingFilter is defined and hostvars[inventory_hostname].loggingFilter|length %}
-  -l{{ hostvars[inventory_hostname].loggingFilter }} \
+  {% if loggingFilter is defined %}
+  -l{{ loggingFilter }} \
   {% endif %}
-  {#
-  ## BASE/DB PATH
-  #}
-  {% if hostvars[inventory_hostname].basePath is defined and hostvars[inventory_hostname].basePath|length %}
-  --base-path '{{ hostvars[inventory_hostname].basePath }}' \
+  {% if basePath is defined %}
+  --base-path '{{ basePath }}' \
   {% endif %}
-  {#
-  ## ADDITIONAL FLAGS
-  #}
-  {% if hostvars[inventory_hostname].additionalFlags is defined and hostvars[inventory_hostname].additionalFlags|length %}
-  {{ hostvars[inventory_hostname].additionalFlags }} \
+  {% if additionalFlags is defined %}
+  {{ additionalFlags }} \
   {% endif %}
-  {#
-  #
-  # --- DEPRECATED flags after this line. Used for backwards compatibility ---
-  #
-  #}
-  {#
-  ## WASM EXECUTION
-  #}
-  {% if hostvars[inventory_hostname].wasm_execution is defined and hostvars[inventory_hostname].wasm_execution|length %}
-  --wasm-execution {{ hostvars[inventory_hostname].wasm_execution }} \
-  {% else %}
-  --wasm-execution Compiled \
+  {# --- DEPRECATED --- #}
+  {% if polkadotAdditionalCommonFlags is defined %}
+  {{ polkadotAdditionalCommonFlags }} \
   {% endif %}
-  {#
-  ## BASE/DB PATH
-  #}
-  {% if hostvars[inventory_hostname].base_path is defined and hostvars[inventory_hostname].base_path|length %}
-  --base-path '{{ hostvars[inventory_hostname].base_path }}' \
+  {% if polkadotAdditionalValidatorFlags is defined %}
+  {{ polkadotAdditionalValidatorFlags }} \
   {% endif %}
-  {#
-  ## ADDITIONAL COMMON FLAGS
-  #}
-  {% if hostvars[inventory_hostname].polkadot_additional_common_flags is defined and hostvars[inventory_hostname].polkadot_additional_common_flags|length %}
-  {{ hostvars[inventory_hostname].polkadot_additional_common_flags }} \
-  {% endif %}
-  {#
-  ## ADDITIONAL FLAGS
-  #}
-  {% if hostvars[inventory_hostname].polkadot_additional_validator_flags is defined and hostvars[inventory_hostname].polkadot_additional_validator_flags|length %}
-  {{ hostvars[inventory_hostname].polkadot_additional_validator_flags }} \
-  {% endif %}
+  {# --- #}
 
 Restart=always
 RestartSec=60
