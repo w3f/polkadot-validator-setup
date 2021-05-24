@@ -1,6 +1,5 @@
 # Specify the nodes to setup. You can add more or remove entries, as you wish.
 
-
 # ## Validator 0
 [validator_0]
 147.75.76.65
@@ -10,7 +9,7 @@ ansible_user=alice
 # Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=warn,afg=warn,babe=warn'
-
+enableReverseProxy = false
 
 # ## Validator 1
 [validator_1]
@@ -21,13 +20,12 @@ ansible_user=bob
 # Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=warn,afg=warn,babe=warn'
-
+enableReverseProxy = false
 
 # ## Group all nodes
 [validator:children]
 validator_0
 validator_1
-
 
 # ## Common variables
 [all:vars]
