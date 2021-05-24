@@ -27,7 +27,14 @@ ExecStart=/usr/local/bin/polkadot \
   {% if hostvars[inventory_hostname].base_path is defined and hostvars[inventory_hostname].base_path|length %}
   --base-path '{{ hostvars[inventory_hostname].base_path }}' \
   {% endif %}
+  {% if hostvars[inventory_hostname].execution is defined and hostvars[inventory_hostname].execution|length %}
+  --execution {{ hostvars[inventory_hostname].execution }} \
+  {% endif %}
+  {% if hostvars[inventory_hostname].wasmExecution is defined and hostvars[inventory_hostname].wasmExecution|length %}
+  --wasm-execution {{ hostvars[inventory_hostname].wasmExecution }} \
+  {% else %}
   --wasm-execution Compiled \
+  {% endif %}
   {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
   --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
   {% else %}
