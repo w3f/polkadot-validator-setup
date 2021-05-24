@@ -12,3 +12,6 @@ credentials.json
 config/*
 !config/*template*
 !config/*sample*
+.idea
+*.swp
+DS_Store
