@@ -30,8 +30,8 @@ ExecStart=/usr/local/bin/polkadot \
   {% if hostvars[inventory_hostname].execution is defined and hostvars[inventory_hostname].execution|length %}
   --execution {{ hostvars[inventory_hostname].execution }} \
   {% endif %}
-  {% if hostvars[inventory_hostname].wasmExecution is defined and hostvars[inventory_hostname].wasmExecution|length %}
-  --wasm-execution {{ hostvars[inventory_hostname].wasmExecution }} \
+  {% if hostvars[inventory_hostname].wasm_execution is defined and hostvars[inventory_hostname].wasm_execution|length %}
+  --wasm-execution {{ hostvars[inventory_hostname].wasm_execution }} \
   {% else %}
   --wasm-execution Compiled \
   {% endif %}
