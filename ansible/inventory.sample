@@ -1,35 +1,40 @@
 # Specify the nodes to setup. You can add more or remove entries, as you wish.
 
-# ## Validator 0
+# Validator 0
 [validator_0]
 147.75.76.65
 
 [validator_0:vars]
 ansible_user=alice
-# Preferably use a private telemetry server
-telemetryUrl=wss://telemetry.polkadot.io/submit/
-loggingFilter='sync=warn,afg=warn,babe=warn'
-enableReverseProxy = false
+#nodeName='Alice Validator'
+#telemetryUrl=wss://telemetry.polkadot.io/submit/
+## Only log warnings:
+#loggingFilter='sync=warn,afg=warn,babe=warn'
+## Location for database, keys, etc:
+#basePath='/mnt/volume'
+## Setup a nginx reverse proxy in front of the binary:
+#enableReverseProxy = false
+## Any additional flags passed on to the 'polkadot' binary:
+#additionalFlags = '--unsafe-pruning --no-mdns'
 
-# ## Validator 1
+# Validator 1
 [validator_1]
 162.12.35.55
 
 [validator_1:vars]
 ansible_user=bob
-# Preferably use a private telemetry server
 telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=warn,afg=warn,babe=warn'
-enableReverseProxy = false
 
 # ## Group all nodes
 [validator:children]
 validator_0
 validator_1
 
-# ## Common variables
+# Common variables
 [all:vars]
-# The name for how each node should be prefixed for the telemetry name
+# Project name. Will be used as a prefix for the auto-generated node names
+# if an individual `nodeName` is not specified.
 project=alice-in-wonderland
 
 # Can be left as is.
@@ -56,7 +61,7 @@ polkadot_binary_checksum='sha256:00185307376ca0bacf28504e76d4c61ebf84abfba6c3178
 polkadot_network_id=polkadot
 chain=polkadot
 
-# Nginx authentication settings.
+# Nginx authentication settings (for Prometheus).
 nginx_user='prometheus'
 nginx_password='nginx_password'
 
