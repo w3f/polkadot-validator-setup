@@ -14,7 +14,7 @@ telemetryUrl=wss://telemetry.polkadot.io/submit/
 loggingFilter='sync=warn,afg=warn,babe=warn'
 # Location for database, keys, etc (optional)
 basePath='/mnt/volume'
-# Setup a nginx reverse proxy in front of the binary (optional)
+# Setup a nginx reverse proxy in front of the binary (optional). Disabled by default.
 enableReverseProxy = false
 # Any additional flags passed on to the 'polkadot' binary (optional)
 additionalFlags = '--unsafe-pruning --no-mdns'
