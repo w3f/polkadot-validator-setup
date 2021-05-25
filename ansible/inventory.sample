@@ -10,7 +10,7 @@ ansible_user=alice
 nodeName='Alice Validator'
 # Setup telemetry endpoint (optional)
 telemetryUrl=wss://telemetry.polkadot.io/submit/
-# Only log warnings (optional)
+# Only log specify levels, e.g. warnings (optional)
 loggingFilter='sync=warn,afg=warn,babe=warn'
 # Location for database, keys, etc (optional)
 basePath='/mnt/volume'
