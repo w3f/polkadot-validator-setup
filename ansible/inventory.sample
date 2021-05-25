@@ -6,16 +6,18 @@
 
 [validator_0:vars]
 ansible_user=alice
-#nodeName='Alice Validator'
-#telemetryUrl=wss://telemetry.polkadot.io/submit/
-## Only log warnings:
-#loggingFilter='sync=warn,afg=warn,babe=warn'
-## Location for database, keys, etc:
-#basePath='/mnt/volume'
-## Setup a nginx reverse proxy in front of the binary:
-#enableReverseProxy = false
-## Any additional flags passed on to the 'polkadot' binary:
-#additionalFlags = '--unsafe-pruning --no-mdns'
+# Set an individual node name (optional)
+nodeName='Alice Validator'
+# Setup telemetry endpoint (optional)
+telemetryUrl=wss://telemetry.polkadot.io/submit/
+# Only log warnings (optional)
+loggingFilter='sync=warn,afg=warn,babe=warn'
+# Location for database, keys, etc (optional)
+basePath='/mnt/volume'
+# Setup a nginx reverse proxy in front of the binary (optional)
+enableReverseProxy = false
+# Any additional flags passed on to the 'polkadot' binary (optional)
+additionalFlags = '--unsafe-pruning --no-mdns'
 
 # Validator 1
 [validator_1]
