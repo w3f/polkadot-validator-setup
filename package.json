@@ -5,6 +5,11 @@
   "repository": "https://github.com/w3f/polkadot-secure-validator",
   "author": "W3F Infrastructure Team <devops@web3.foundation>",
   "license": "GPL-3.0",
+  "engines": {
+    "node": "14.16"
+  },
+  "main": "./src/index.ts",
+  "type": "module",
   "scripts": {
     "test": "mocha --reporter spec --recursive",
     "sync": "node . sync",
