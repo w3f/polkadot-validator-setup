@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "createDefaultProgram": true
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-console": 0,
+    "semi": [2, "always"],
+    "react/prop-types": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "object-curly-spacing": ["error", "always"],
+    "@typescript-eslint/ban-types": [0],
+    "@typescript-eslint/explicit-module-boundary-types": [0],
+    "@typescript-eslint/no-unused-vars": [0],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single", { "avoidEscape": true }]
+  }
+}
