@@ -1,23 +1,33 @@
 {
   "name": "polkadot-secure-validator",
-  "version": "3.4.2",
-  "main": "src/index.js",
+  "version": "3.5.0",
   "repository": "https://github.com/w3f/polkadot-secure-validator",
   "author": "W3F Infrastructure Team <devops@web3.foundation>",
   "license": "GPL-3.0",
+  "engines": {
+    "node": "14.17"
+  },
+  "main": "./src/index.ts",
+  "type": "module",
   "scripts": {
-    "test": "mocha --reporter spec --recursive",
-    "sync": "node . sync",
-    "clean": "node . clean",
-    "plan": "node . plan",
-    "restore-db": "node . restore-db",
-    "rotate-keys": "node . rotate-keys",
-    "update-binary": "node . update-binary",
-    "lint": "eslint .",
-    "pretest": "yarn lint"
+    "test": "jest --runInBand --detectOpenHandles --verbose --colors --reporters=default",
+    "sync": "node --loader ts-node/esm.mjs --experimental-specifier-resolution=node . sync",
+    "clean": "node --loader ts-node/esm.mjs --experimental-specifier-resolution=node . clean",
+    "plan": "node --loader ts-node/esm.mjs --experimental-specifier-resolution=node . plan",
+    "restore-db": "node --loader ts-node/esm.mjs --experimental-specifier-resolution=node . restore-db",
+    "rotate-keys": "node --loader ts-node/esm.mjs --experimental-specifier-resolution=node . rotate-keys",
+    "update-binary": "node --loader ts-node/esm.mjs --experimental-specifier-resolution=node . update-binary",
+    "lint": "eslint 'src/**/*.{js,ts}'",
+    "pretest": "yarn lint",
+    "format": "prettier --loglevel warn --write \"src/**/*.{js,ts}\""
+  },
+  "directories": {
+    "dist": "./dist",
+    "src": "./src",
+    "test": "./src"
   },
   "bin": {
-    "polkadot-secure-validator": "src/index.js"
+    "polkadot-secure-validator": "src/index.ts"
   },
   "files": [
     "/ansible",
@@ -32,12 +42,24 @@
     "fs-extra": "^8.1.0",
     "handlebars": "^4.7.6",
     "node-forge": "^0.10.0",
-    "ospath": "^1.2.2"
+    "ospath": "^1.2.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "@types/fs-extra": "^9.0.11",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.6.1",
+    "@types/node-forge": "^0.9.9",
+    "@types/tmp": "^0.2.0",
+    "@types/yup": "^0.29.11",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
     "eslint": "^6.6.0",
-    "mocha": "^6.2.3",
-    "tmp": "^0.1.0"
+    "jest": "^27.0.1",
+    "prettier": "^2.3.0",
+    "tmp": "^0.1.0",
+    "ts-jest": "^27.0.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4"
   }
 }
