@@ -44,8 +44,8 @@ ExecStart=/usr/local/bin/polkadot \
   --wasm-execution Compiled \
   {% endif %}
   {% if telemetry_url is not none and telemetry_url|length %}
-    {% set urls = telemetry_url.split(',') -%}
-    {% for url in urls -%}
+    {% set urls = telemetry_url.split(',') %}
+    {% for url in urls %}
   --telemetry-url '{{ url }} 1' \
     {% endfor %}
   {% else %}

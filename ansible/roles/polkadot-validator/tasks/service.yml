@@ -14,8 +14,6 @@
   uri:
     url: https://api.ipify.org?format=json
   register: public_ip
-  when:
-    - enableReverseProxy|default(false)|bool
 
 - name: create polkadot service file
   template:

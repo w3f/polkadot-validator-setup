@@ -29,19 +29,19 @@
 - name: open p2p port
   command: ufw allow {{ p2p_port }}/tcp
   when:
-    - not enableReverseProxy|default(false)|bool
+    - not enable_reverse_proxy|default(false)|bool or not enableReverseProxy|default(false)|bool
     - not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*ALLOW IN.*Anywhere")
 
 - name: close p2p port
   command: ufw deny {{ p2p_port }}/tcp
   when:
-    - enableReverseProxy|default(false)|bool
+    - enable_reverse_proxy|default(false)|bool or enableReverseProxy|default(false)|bool
     - not ufw_status_result.stdout is search(p2p_port ~ "/tcp.*DENY IN.*Anywhere")
 
 - name: open proxy port
   command: ufw allow {{ proxy_port }}/tcp
   when:
-    - enableReverseProxy|default(false)|bool
+    - enable_reverse_proxy|default(false)|bool or enableReverseProxy|default(false)|bool
     - not ufw_status_result.stdout is search(proxy_port ~ "/tcp.*ALLOW IN.*Anywhere")
 
 - name: enable firewall
