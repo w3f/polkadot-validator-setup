@@ -4,20 +4,21 @@
 [validator_0]
 147.75.76.65
 
+# NOTE: optional variables can just be removed.
 [validator_0:vars]
 ansible_user=alice
 # Set an individual node name (optional)
-nodeName='Alice Validator'
+node_name='Alice Validator'
 # Setup telemetry endpoint (optional)
-telemetryUrl=wss://telemetry.polkadot.io/submit/
+telemetry_url=wss://telemetry.polkadot.io/submit/
 # Only log specify levels, e.g. warnings (optional)
-loggingFilter='sync=warn,afg=warn,babe=warn'
+logging_filter='sync=warn,afg=warn,babe=warn'
 # Location for database, keys, etc (optional)
-basePath='/mnt/volume'
+base_path='/mnt/volume'
 # Setup a nginx reverse proxy in front of the binary (optional). Disabled by default.
-enableReverseProxy = false
+enable_reverse_proxy = false
 # Any additional flags passed on to the 'polkadot' binary (optional)
-additionalFlags = '--no-prometheus --no-mdns'
+additional_flags = '--no-prometheus --no-mdns'
 
 # Validator 1
 [validator_1]
@@ -25,8 +26,8 @@ additionalFlags = '--no-prometheus --no-mdns'
 
 [validator_1:vars]
 ansible_user=bob
-telemetryUrl=wss://telemetry.polkadot.io/submit/
-loggingFilter='sync=warn,afg=warn,babe=warn'
+telemetry_url=wss://telemetry.polkadot.io/submit/
+logging_filter='sync=warn,afg=warn,babe=warn'
 
 # ## Group all nodes
 [validator:children]
