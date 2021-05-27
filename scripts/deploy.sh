@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+set -o pipefail
 
 eval $(ssh-agent)
 for key in $SSH_ID_RSA_PUBLIC $SSH_ID_RSA_VALIDATOR; do
