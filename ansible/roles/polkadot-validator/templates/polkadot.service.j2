@@ -1,3 +1,28 @@
+{# --- PREPARE VARIABLES #}
+{% set node_name = hostvars[inventory_hostname].node_name|default(None) %}
+{% set execution = hostvars[inventory_hostname].execution|default(None) %}
+{% set wasm_execution = hostvars[inventory_hostname].wasm_execution|default(None) %}
+{% set telemetry_url = hostvars[inventory_hostname].telemetry_url|default(None) %}
+{% set enable_reverse_proxy = hostvars[inventory_hostname].enable_reverse_proxy|default(None) %}
+{% set logging_filter = hostvars[inventory_hostname].logging_filter|default(None) %}
+{% set base_path = hostvars[inventory_hostname].base_path|default(None) %}
+{% set additional_flags = hostvars[inventory_hostname].additional_flags|default(None) %}
+{# ## Legacy/deprecated flags #}
+{% if node_name is none %}
+  {% set node_name = hostvars[inventory_hostname].nodeName|default(None) %}
+{% endif %}
+{% if telemetry_url is none %}
+  {% set telemetry_url = hostvars[inventory_hostname].telemetryUrl|default(None) %}
+{% endif %}
+{% if enable_reverse_proxy is none %}
+  {% set enable_reverse_proxy = hostvars[inventory_hostname].enableReverseProxy|default(None) %}
+{% endif %}
+{% if logging_filter is none %}
+  {% set logging_filter = hostvars[inventory_hostname].loggingFilter|default(None) %}
+{% endif %}
+{% set additionalCommonFlags = hostvars[inventory_hostname].polkadot_additional_common_flags|default(None) %}
+{% set additionalValidatorFlags = hostvars[inventory_hostname].polkadot_additional_validator_flags|default(None) %}
+{# --- #}
 [Unit]
 Description=Polkadot Node
 
@@ -5,43 +30,48 @@ Description=Polkadot Node
 User=polkadot
 Group=polkadot
 ExecStart=/usr/local/bin/polkadot \
-  {% if hostvars[inventory_hostname].nodeName is defined and hostvars[inventory_hostname].nodeName|length %}
-  --name {{ hostvars[inventory_hostname].nodeName }} \
+  {% if execution is not none and execution|length %}
+  --execution {{ execution }} \
+  {% endif %}
+  {% if node_name is not none and node_name|length %}
+  --name {{ node_name }} \
   {% else %}
   --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
   {% endif %}
-  --validator \
-  {% if hostvars[inventory_hostname].enableReverseProxy is defined and hostvars[inventory_hostname].enableReverseProxy %}
-  --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
-  {% endif %}
-  --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
-  --rpc-methods=Unsafe \
-  {% if hostvars[inventory_hostname].polkadot_additional_common_flags is defined and hostvars[inventory_hostname].polkadot_additional_common_flags|length %}
-  {{ hostvars[inventory_hostname].polkadot_additional_common_flags }} \
-  {% endif %}
-  {% if hostvars[inventory_hostname].polkadot_additional_validator_flags is defined and hostvars[inventory_hostname].polkadot_additional_validator_flags|length %}
-  {{ hostvars[inventory_hostname].polkadot_additional_validator_flags }} \
-  {% endif %}
-  {% if hostvars[inventory_hostname].loggingFilter is defined and hostvars[inventory_hostname].loggingFilter|length %}
-  -l{{ hostvars[inventory_hostname].loggingFilter }} \
-  {% endif %}
-  --chain={{ chain }} \
-  {% if hostvars[inventory_hostname].base_path is defined and hostvars[inventory_hostname].base_path|length %}
-  --base-path '{{ hostvars[inventory_hostname].base_path }}' \
-  {% endif %}
-  {% if hostvars[inventory_hostname].execution is defined and hostvars[inventory_hostname].execution|length %}
-  --execution {{ hostvars[inventory_hostname].execution }} \
-  {% endif %}
-  {% if hostvars[inventory_hostname].wasm_execution is defined and hostvars[inventory_hostname].wasm_execution|length %}
-  --wasm-execution {{ hostvars[inventory_hostname].wasm_execution }} \
+  {% if wasm_execution is not none and wasm_execution|length %}
+  --wasm-execution {{ wasm_execution }} \
   {% else %}
   --wasm-execution Compiled \
   {% endif %}
-  {% if hostvars[inventory_hostname].telemetryUrl is defined and hostvars[inventory_hostname].telemetryUrl|length %}
-  --telemetry-url '{{ hostvars[inventory_hostname].telemetryUrl }} 1'
+  {% if telemetry_url is not none and telemetry_url|length %}
+  --telemetry-url '{{ telemetry_url }} 1' \
   {% else %}
-  --no-telemetry
+  --no-telemetry \
   {% endif %}
+  {% if enable_reverse_proxy is not none and enable_reverse_proxy %}
+  --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
+  {% endif %}
+  {% if logging_filter is not none and logging_filter|length %}
+  -l{{ logging_filter }} \
+  {% endif %}
+  {% if base_path is not none and base_path|length %}
+  --base-path '{{ base_path }}' \
+  {% endif %}
+  {% if additional_flags is not none and additional_flags|length %}
+  {{ additional_flags }} \
+  {% endif %}
+  {# --- DEPRECATED --- #}
+  {% if additionalCommonFlags is not none and additionalCommonFlags|length %}
+  {{ additionalCommonFlags }} \
+  {% endif %}
+  {% if additionalValidatorFlags is not none and additionalValidatorFlags|length %}
+  {{ additionalValidatorFlags }} \
+  {% endif %}
+  {# --- #}
+  --validator \
+  --chain={{ chain }} \
+  --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
+  --rpc-methods=Unsafe
 
 Restart=always
 RestartSec=60

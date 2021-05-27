@@ -71,16 +71,16 @@ Example:
 
 [validator_0:vars]
 ansible_user=alice
-telemetryUrl=wss://telemetry.polkadot.io/submit/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+telemetry_url=wss://telemetry.polkadot.io/submit/
+logging_filter='sync=trace,afg=trace,babe=debug'
 
 [validator_1]
 162.12.35.55
 
 [validator_1:vars]
 ansible_user=bob
-telemetryUrl=wss://telemetry.polkadot.io/submit/
-loggingFilter='sync=trace,afg=trace,babe=debug'
+telemetry_url=wss://telemetry.polkadot.io/submit/
+logging_filter='sync=trace,afg=trace,babe=debug'
 ```
 
 ### Grouping Validators
