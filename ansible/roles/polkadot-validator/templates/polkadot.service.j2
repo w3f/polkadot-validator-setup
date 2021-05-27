@@ -45,8 +45,8 @@ ExecStart=/usr/local/bin/polkadot \
   {% endif %}
   {% if telemetry_url is not none and telemetry_url|length %}
     {% set urls = telemetry_url.split(',') -%}
-    {% for url in url -%}
-  --telemetry-url '{{ telemetryUrl }} 1' \
+    {% for url in urls -%}
+  --telemetry-url '{{ url }} 1' \
     {% endfor %}
   {% else %}
   --no-telemetry \
