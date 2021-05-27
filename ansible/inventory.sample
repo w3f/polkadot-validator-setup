@@ -17,7 +17,7 @@ basePath='/mnt/volume'
 # Setup a nginx reverse proxy in front of the binary (optional). Disabled by default.
 enableReverseProxy = false
 # Any additional flags passed on to the 'polkadot' binary (optional)
-additionalFlags = '--unsafe-pruning --no-mdns'
+additionalFlags = '--no-prometheus --no-mdns'
 
 # Validator 1
 [validator_1]

@@ -1,18 +1,24 @@
 {# --- PREPARE VARIABLES #}
-{% set nodeName = hostvars[inventory_hostname].nodeName|default(None) %}
+{% set node_name = hostvars[inventory_hostname].node_name|default(None) %}
 {% set execution = hostvars[inventory_hostname].execution|default(None) %}
-{% set wasmExecution = hostvars[inventory_hostname].wasmExecution|default(None) %}
-{% set telemetryUrl = hostvars[inventory_hostname].telemetryUrl|default(None) %}
-{% set enableReverseProxy = hostvars[inventory_hostname].enableReverseProxy|default(None) %}
-{% set loggingFilter = hostvars[inventory_hostname].loggingFilter|default(None) %}
-{% set basePath = hostvars[inventory_hostname].basePath|default(None) %}
-{% set additionalFlags = hostvars[inventory_hostname].additionalFlags|default(None) %}
+{% set wasm_execution = hostvars[inventory_hostname].wasm_execution|default(None) %}
+{% set telemetry_url = hostvars[inventory_hostname].telemetry_url|default(None) %}
+{% set enable_reverse_proxy = hostvars[inventory_hostname].enable_reverse_proxy|default(None) %}
+{% set logging_filter = hostvars[inventory_hostname].logging_filter|default(None) %}
+{% set base_path = hostvars[inventory_hostname].base_path|default(None) %}
+{% set additional_flags = hostvars[inventory_hostname].additional_flags|default(None) %}
 {# ## Legacy/deprecated flags #}
-{% if wasmExecution is none %}
-  {% set wasmExecution = hostvars[inventory_hostname].wasm_execution|default(None) %}
+{% if node_name is none %}
+  {% set node_name = hostvars[inventory_hostname].nodeName|default(None) %}
 {% endif %}
-{% if basePath is none %}
-  {% set basePath = hostvars[inventory_hostname].base_path|default(None) %}
+{% if telemetry_url is none %}
+  {% set telemetry_url = hostvars[inventory_hostname].telemetryUrl|default(None) %}
+{% endif %}
+{% if enable_reverse_proxy is none %}
+  {% set enable_reverse_proxy = hostvars[inventory_hostname].enableReverseProxy|default(None) %}
+{% endif %}
+{% if logging_filter is none %}
+  {% set logging_filter = hostvars[inventory_hostname].loggingFilter|default(None) %}
 {% endif %}
 {% set additionalCommonFlags = hostvars[inventory_hostname].polkadot_additional_common_flags|default(None) %}
 {% set additionalValidatorFlags = hostvars[inventory_hostname].polkadot_additional_validator_flags|default(None) %}
@@ -27,32 +33,32 @@ ExecStart=/usr/local/bin/polkadot \
   {% if execution is not none and execution|length %}
   --execution {{ execution }} \
   {% endif %}
-  {% if nodeName is not none and nodeName|length %}
-  --name {{ nodeName }} \
+  {% if node_name is not none and node_name|length %}
+  --name {{ node_name }} \
   {% else %}
   --name {{ project|default('project') }}-sv-validator-{{ groups['validator'].index(inventory_hostname) }} \
   {% endif %}
-  {% if wasmExecution is not none and wasmExecution|length %}
-  --wasm-execution {{ wasmExecution }} \
+  {% if wasm_execution is not none and wasm_execution|length %}
+  --wasm-execution {{ wasm_execution }} \
   {% else %}
   --wasm-execution Compiled \
   {% endif %}
-  {% if telemetryUrl is not none and telemetryUrl|length %}
-  --telemetry-url '{{ telemetryUrl }} 1' \
+  {% if telemetry_url is not none and telemetry_url|length %}
+  --telemetry-url '{{ telemetry_url }} 1' \
   {% else %}
   --no-telemetry \
   {% endif %}
-  {% if enableReverseProxy is not none and enableReverseProxy %}
+  {% if enable_reverse_proxy is not none and enable_reverse_proxy %}
   --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
   {% endif %}
-  {% if loggingFilter is not none and loggingFilter|length %}
-  -l{{ loggingFilter }} \
+  {% if logging_filter is not none and logging_filter|length %}
+  -l{{ logging_filter }} \
   {% endif %}
-  {% if basePath is not none and basePath|length %}
-  --base-path '{{ basePath }}' \
+  {% if base_path is not none and base_path|length %}
+  --base-path '{{ base_path }}' \
   {% endif %}
-  {% if additionalFlags is not none and additionalFlags|length %}
-  {{ additionalFlags }} \
+  {% if additional_flags is not none and additional_flags|length %}
+  {{ additional_flags }} \
   {% endif %}
   {# --- DEPRECATED --- #}
   {% if additionalCommonFlags is not none and additionalCommonFlags|length %}
