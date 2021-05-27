@@ -172,11 +172,11 @@ Once the inventory file is configured, simply run the setup script and specify
 the `sudo` password for the remote machines.
 
 **NOTE**: If no inventory path is specified, it will try to look for
-`ansible/inventory.yml` by default.
+`ansible/inventory.ini` by default.
 
 ```console
 user@pc:~/polkadot-secure-validator/ansible$ chmod +x setup.sh
-user@pc:~/polkadot-secure-validator/ansible$ ./setup.sh my_inventory.yml
+user@pc:~/polkadot-secure-validator/ansible$ ./setup.sh inventory.ini
 Sudo password for remote servers:
 >> Pulling upstream changes... [OK]
 >> Testing Ansible availability... [OK]
@@ -194,7 +194,7 @@ Alternatively, execute the Playbook manually ("become" implies `sudo`
 privileges).
 
 ```console
-user@pc:~/polkadot-secure-validator/ansible$ ansible-playbook -i my_inventory.yml main.yml --become --ask-become
+user@pc:~/polkadot-secure-validator/ansible$ ansible-playbook -i inventory.ini main.yml --become --ask-become
 ```
 
 The `setup.sh` script handles some extra functionality, such as downloading the

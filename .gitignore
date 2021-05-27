@@ -1,6 +1,6 @@
 node_modules
 build/*
-ansible/inventory
+ansible/inventory.ini
 ansible/**/__pycache__
 yarn-error.log
 .env
