@@ -1,3 +1,10 @@
+- name: get currently polkadot sha256
+  shell: |
+    sha256sum /usr/local/bin/polkadot | sed -n 's/^\(\S*\).*/sha256:\1/p'
+  args:
+    executable: /bin/bash
+  register: polkadot_sha256
+
 - name: download polkadot binary
   get_url:
     url: '{{ polkadot_binary_url | quote }}'
@@ -7,12 +14,17 @@
     mode: '0700'
     owner: 'polkadot'
     group: 'polkadot'
+  when: polkadot_sha256.stdout != polkadot_binary_checksum
+
 
 - name: stop polkadot service
   systemd:
     name: polkadot.service
     state: stopped
+    daemon_reload: yes
   tags: molecule-idempotence-notest
+  
+
 
 - name: substitute new polkadot binary
   shell: |
@@ -26,6 +38,8 @@
   args:
     executable: /bin/bash
   changed_when: False
+  when: polkadot_sha256.stdout != polkadot_binary_checksum
+
 
 - name: restart polkadot service
   import_role:

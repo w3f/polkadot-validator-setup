@@ -4,18 +4,27 @@
     state: directory
     mode: '0755'
 
+- name: get current node_exporter sha256
+  shell: |
+    sha256sum /root/node_exporter/archive.tar.gz | sed -n 's/^\(\S*\).*/sha256:\1/p'
+  args:
+    executable: /bin/bash
+  register: node_exporter_sha256
+
 - name: download node_exporter
   get_url:
     url: '{{ node_exporter_binary_url | quote }}'
     checksum: '{{ node_exporter_binary_checksum | quote }}'
     dest: /root/node_exporter/archive.tar.gz
     mode: '0700'
+  when: node_exporter_sha256.stdout != node_exporter_binary_checksum
 
 - name: unarchive node_exporter
   unarchive:
     src: /root/node_exporter/archive.tar.gz
     remote_src: yes
     dest: /root/node_exporter
+  when: node_exporter_sha256.stdout != node_exporter_binary_checksum
 
 - name: copy node_exporter binary
   shell: |
@@ -26,6 +35,7 @@
   args:
     executable: /bin/bash
   changed_when: False
+  when: node_exporter_sha256.stdout != node_exporter_binary_checksum
 
 - name: create node_exporter systemd unit
   copy:
