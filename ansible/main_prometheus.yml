@@ -1,0 +1,14 @@
+---
+- name: prometheus
+  hosts: prometheus
+  gather_facts: yes
+  become: yes
+  roles:
+  - prometheus
+
+- name: nginx-auth
+  hosts: prometheus
+  become: yes
+  strategy: free
+  roles:
+  - nginx-auth  
