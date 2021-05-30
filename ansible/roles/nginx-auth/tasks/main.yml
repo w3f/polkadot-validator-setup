@@ -31,6 +31,12 @@
   changed_when: true
   tags: molecule-idempotence-notest
 
+- name: create nginx config for prometheus
+  copy:
+    src: prometheus.nginx.conf
+    dest: /etc/nginx/sites-enabled/prometheus.conf
+  when: prometheus_enabled|bool
+
 - name: create nginx config for node exporter
   copy:
     src: node_exporter.nginx.conf
