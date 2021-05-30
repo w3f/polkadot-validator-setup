@@ -58,6 +58,8 @@ $ ssh-keygen -m PEM -f <path>
 $ ssh-add <path>
 ```
 
+Note: The key paths MUST be added to `ssh-add`.
+
 ### Synchronization
 
 ```
@@ -95,7 +97,7 @@ A possibile configuration can be:
       "checksum": "sha256:4f61a99e4b00acb335aff52f2383880d53b30617c0ae67ac47c611e7bf6971ff"
     },
     ...
-}    
+}
 ```
 
 ### Update Binary
