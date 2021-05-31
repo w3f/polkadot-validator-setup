@@ -20,6 +20,11 @@
   when:
     - ufw_status_result.stdout is search(node_exporter_port ~ ".*ALLOW IN.*Anywhere")
 
+- name: ufw already enabled, check 2
+  command: ufw status verbose
+  register: ufw_status_result
+  changed_when: False
+
 # And now we can open the correct ones!
 - name: open polkadot_metrics port to prometheus node only
   command: ufw allow from {{ groups['prometheus'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(" ") }} to any port {{ polkadot_metrics_port }}
