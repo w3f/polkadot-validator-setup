@@ -1,4 +1,11 @@
 ---
+- name: Wait for system ready
+  hosts: all
+  gather_facts: yes
+  tasks:
+  - name: Wait for nodes to become reachable
+    wait_for_connection:
+
 - name: prometheus
   hosts: prometheus
   gather_facts: yes
