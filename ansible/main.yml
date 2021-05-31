@@ -39,7 +39,7 @@
   roles:
   - nginx-auth  
 
-# This is needed to break the circular dependency (validator needs to allow access to prometheus machine only on 9090, prometheus needs to configure the validator IP)
+# This is needed to break the circular dependency (validator needs to allow access to prometheus machine only on 9091, prometheus needs to configure the validator IP)
 - name: validator_allow_prometheus_port
   hosts: validator
   become: yes

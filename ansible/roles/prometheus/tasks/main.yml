@@ -9,6 +9,9 @@
 - name: user and group
   import_tasks: user.yml
 
+- name: proxy setup
+  import_tasks: proxy.yml
+
 - name: create_dirs
   import_tasks: dir_setup.yml
 
