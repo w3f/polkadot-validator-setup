@@ -10,7 +10,7 @@ ansible_user=alice
 # Set an individual node name (optional)
 node_name='Alice Validator'
 # Setup one or multiple telemetry endpoints (optional)
-telemetry_url='wss://telemetry.polkadot.io/submit/,wss://telemetry.polkadot.io/submit/'
+telemetry_url='wss://telemetry.polkadot.io/submit/,wss://telemetry-backend.w3f.community/submit'
 # Only log specify levels, e.g. warnings (optional)
 logging_filter='sync=warn,afg=warn,babe=warn'
 # Location for database, keys, etc (optional)
