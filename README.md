@@ -13,7 +13,7 @@ There are two ways of using this repository:
 
 * **Platform & Application Layer**
 
-  Configure credentials for infrastructure providers such as AWS, Azure, GCP
+  Configure credentials for infrastructure providers such as AWS, Azure, GCP, digitalocean,
   and/or Packet, then execute the Terraform process to automatically deploy the
   required machines ([Platform Layer](#platform-layer)) and setup the
   [Application Layer](#application-layer).
