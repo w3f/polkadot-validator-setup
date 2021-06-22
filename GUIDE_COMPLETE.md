@@ -34,6 +34,7 @@ the service account you want to use; this service account needs to have write
 access to compute and network resources).
 * PACKET: `TF_VAR_auth_token`.
 * DigitalOcean: `TF_VAR_do_token`.
+* Hetzner: `TF_VAR_hcloud_token`.
 
 The tool allows you to specify which providers to use, so you don't need to have
 accounts in all of them, see [here](https://github.com/w3f/polkadot-secure-validator/blob/master/config/main.sample.json)

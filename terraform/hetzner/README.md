@@ -16,7 +16,9 @@ You need to create a Hetzner API token to be able to use their service. Follow t
 ### SSH Keys
 Hetzner won't let you deploy the same key twice (no override), which becomes problematic during re-applying the state.
 
-You should do that independently by creating the ssh key locally & uploading to your Hetzner console. Make sure that `public_key_name` (Name) & `public_key` (SSH Key) match.
+The specified resource `hcloud_ssh_key` will be deployed if no key with the existing name exists in the Hetzner console.
+
+If your workflow is that of apply-reapply state, rather than apply-destroy, you should probably remove the `hcloud_ssh_key` resource, and instead independently deploy tke key, by creating the ssh key locally & uploading to your Hetzner console. Make sure that `public_key_name` (Name) & `public_key` (SSH Key) match.
 
 ### Terraform variables
 
