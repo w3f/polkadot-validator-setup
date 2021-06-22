@@ -1,3 +1,7 @@
+variable "name" {
+  default = "w3f"
+}
+
 variable "hcloud_token" {
   default = "your token"
 }
@@ -11,7 +15,7 @@ variable "public_key_name" {
 }
 
 variable "node_count" {
-  type = number
+  type    = number
   default = 1
 }
 
