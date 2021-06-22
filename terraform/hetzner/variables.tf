@@ -38,3 +38,7 @@ variable "image" {
 variable "password_hash" {
   default = "$6$Y.TqqXVTsCf91DQl$u72Gkgnb5gLkVjwNLhznzf/j740mfhhtVaH.6k0ghIkBEoQqXi0uSI8iYjiC486LpMM16c0GD8mmPwsfRq5NC1"
 }
+
+variable "ssh_user" {
+  default = "polkadot"
+}

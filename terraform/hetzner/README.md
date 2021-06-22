@@ -2,7 +2,7 @@
 
 ### Ansible user setup
 
-The included script `setup_users.sh` will create an `ansible` user with the specified password hash. This password can also be used when applying the ansible playbook with:
+The included script `setup_users.sh` will create a `ssh_user` user with the specified password hash. This password can also be used when applying the ansible playbook with:
 
 `ansible-playbook main.yml --become --extra-vars "ansible_become_pass='$SUDO_PW'"`
 
