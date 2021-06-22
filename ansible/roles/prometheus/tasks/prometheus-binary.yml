@@ -16,7 +16,7 @@
 # TODO handle any binary version
 - name: copy prometheus binary
   copy: 
-    src: /tmp/prometheus-2.26.0.linux-amd64/prometheus
+    src: /tmp/prometheus-2.28.0.linux-amd64/prometheus
     dest: /usr/local/bin/
     owner: prometheus
     group: prometheus
@@ -25,7 +25,7 @@
 
 - name: copy promtool binary
   copy:
-    src: /tmp/prometheus-2.26.0.linux-amd64/promtool
+    src: /tmp/prometheus-2.28.0.linux-amd64/promtool
     dest: /usr/local/bin/
     owner: prometheus
     group: prometheus
@@ -34,7 +34,7 @@
 
 - name: copy libs
   copy:
-    src: /tmp/prometheus-2.26.0.linux-amd64/consoles
+    src: /tmp/prometheus-2.28.0.linux-amd64/consoles
     dest: /etc/prometheus
     owner: prometheus
     group: prometheus
@@ -42,7 +42,7 @@
 
 - name: copy libs 2
   copy:
-    src: /tmp/prometheus-2.26.0.linux-amd64/console_libraries
+    src: /tmp/prometheus-2.28.0.linux-amd64/console_libraries
     dest: /etc/prometheus
     owner: prometheus
     group: prometheus

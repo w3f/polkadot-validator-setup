@@ -92,6 +92,6 @@ prometheus_enabled='false'
 123.45.678.90
 
 [prometheus:vars]
-ansible_user=ansible
-prometheus_binary_url="https://github.com/prometheus/prometheus/releases/download/v2.26.0/prometheus-2.26.0.linux-amd64.tar.gz"
-prometheus_binary_checksum="sha256:8dd6786c338dc62728e8891c13b62eda66c7f28a01398869f2b3712895b441b9"
+ansible_user=prometheus
+prometheus_binary_url="https://github.com/prometheus/prometheus/releases/download/v2.28.0/prometheus-2.28.0.linux-amd64.tar.gz"
+prometheus_binary_checksum="sha256:d2d0ded275090a13208114b633abe41c40e14c83ff5ec07230d79b4da1d8e701"
