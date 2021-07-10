@@ -1,0 +1,7 @@
+---
+- name: auto-payout
+  hosts: validator
+  become: yes
+  strategy: free
+  roles:
+    - { role: auto-payout, when: auto_payout_enabled|bool }

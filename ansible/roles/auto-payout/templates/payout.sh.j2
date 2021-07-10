@@ -1,0 +1,7 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+
+set -e
+
+# TODO at the moment we can only payout one stash account, we should enable this for multiple accounts
+node autopayout-validators.js -p {{ auto_payout_password }} -v {{ auto_payout_stash_account }}

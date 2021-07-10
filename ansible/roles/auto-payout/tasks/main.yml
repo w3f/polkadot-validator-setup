@@ -1,0 +1,59 @@
+---
+- name: Install the gpg key for nodejs LTS
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+
+- name: Install the nodejs LTS repos
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_14.x {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: yes
+
+- name: Install the nodejs
+  apt:
+    name: nodejs
+    state: present
+
+- name: install git
+  apt:
+    name: git
+    state: present
+    update_cache: yes
+
+- name: Install "yarn" node.js package globally.
+  community.general.npm:
+    name: yarn
+    global: yes
+
+- name: add payout user
+  user:
+    name: payout
+
+- name: clone the substrate-auto-payout repo
+  git:
+    repo: 'https://github.com/mmagician/substrate-auto-payout.git'
+    dest: /home/payout/substrate-auto-payout
+    version: master
+    force: yes
+
+- name: install deps
+  community.general.yarn:
+    path: /home/payout/substrate-auto-payout
+
+- name: copy the password-protected keystore file
+  copy:
+    src: "{{ auto_payout_keystore_file }}"
+    dest: /home/payout/substrate-auto-payout/keystores/account.json
+
+- name: simply payout script template
+  template:
+    src: payout.sh.j2
+    dest: /home/payout/substrate-auto-payout/payout.sh
+
+- name: Creates a cron job for auto-payout once per day
+  cron:
+    name: auto-payout daily
+    minute: "0"
+    hour: "8"
+    job: "bash /home/payout/substrate-auto-payout/payout.sh > /home/payout/daily_payout.log 2>&1"
