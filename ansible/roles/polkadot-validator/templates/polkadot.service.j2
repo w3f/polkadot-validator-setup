@@ -25,6 +25,8 @@
 {# --- #}
 [Unit]
 Description=Polkadot Node
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 User=polkadot
@@ -76,8 +78,8 @@ ExecStart=/usr/local/bin/polkadot \
   --listen-addr=/ip4/127.0.0.1/tcp/{{ p2p_port }} \
   --rpc-methods=Unsafe
 
-Restart=always
-RestartSec=60
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
