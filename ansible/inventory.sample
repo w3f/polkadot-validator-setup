@@ -14,7 +14,7 @@ telemetry_url='wss://telemetry.polkadot.io/submit/,wss://telemetry-backend.w3f.c
 # Only log specify levels, e.g. warnings (optional)
 logging_filter='sync=warn,afg=warn,babe=warn'
 # Location for database, keys, etc (optional)
-base_path='/mnt/volume'
+#base_path='/mnt/volume'
 # Setup a nginx reverse proxy in front of the binary (optional). Disabled by default.
 enable_reverse_proxy = false
 # Any additional flags passed on to the 'polkadot' binary (optional)
