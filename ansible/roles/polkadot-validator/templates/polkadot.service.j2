@@ -51,7 +51,7 @@ ExecStart=/usr/local/bin/polkadot \
   {% else %}
   --no-telemetry \
   {% endif %}
-  {% if enable_reverse_proxy is not none and enable_reverse_proxy is sameas true %}
+  {% if enable_reverse_proxy is not none and enable_reverse_proxy == 'true' %}
   --public-addr=/ip4/{{ hostvars[inventory_hostname].public_ip.json.ip }}/tcp/{{ proxy_port }} \
   {% endif %}
   {% if logging_filter is not none and logging_filter|length %}
