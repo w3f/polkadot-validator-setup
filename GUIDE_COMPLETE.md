@@ -61,6 +61,15 @@ $ ssh-add <path>
 
 Note: The key paths MUST be added to `ssh-add`.
 
+### Provider Account Setup & Configuration
+
+* Create a project in Google Cloud Provider (GCP). This is currently the only supported backend for Terrafrom state changes. Copy the project ID for the next step.
+* Create a project in the cloud Provider account of your choice with the name of the ID that you copied in the GCP project. e.g. `My-Project-1234567`
+    - Note: Under the hood Terraform uses the `projectId` field in your `config/main.json` to store the state using this format.
+* The ssh username in `config.main.json` only works with `root` with some providers such as digitalocean.
+* Inside your `config/main.json` the `machineType` field must have a slug value. e.g. for [DigitalOcean](https://slugs.do-api.dev/). `s-4vcpu-8gb-amd`.
+
+
 ### Synchronization
 
 ```
