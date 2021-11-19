@@ -8,7 +8,7 @@
 [validator_0:vars]
 ansible_user=alice
 # Set an individual node name (optional)
-node_name='Alice Validator'
+node_name='Alice_Validator'
 # Setup one or multiple telemetry endpoints (optional)
 telemetry_url='wss://telemetry.polkadot.io/submit/,wss://telemetry-backend.w3f.community/submit'
 # Only log specify levels, e.g. warnings (optional)
