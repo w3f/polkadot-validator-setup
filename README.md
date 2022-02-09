@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/w3f/polkadot-secure-validator.svg?style=svg)](https://circleci.com/gh/w3f/polkadot-secure-validator)
+NOTE: this repository isn't actively maintained
 
 # Polkadot Validator Setup
 
